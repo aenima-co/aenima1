@@ -1,0 +1,79 @@
+/* ── Announcement bar ─────────────────────────────────────── */
+
+.announcement-bar {
+  background-color: #7f6cff;
+  padding: 14px 12px;
+  text-align: center;
+  color: #ffffff;
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.announcement-highlight {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* ── Main nav row ──────────────────────────────────────────── */
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  padding: 24px 64px;
+  position: relative;
+  background-color: #ffffff;
+}
+
+.header-logo {
+  width: 200px;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ── Navbar (absolutely centered) ─────────────────────────── */
+
+.navbar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 96px;
+}
+
+/* Sliding border indicator */
+.navbar-indicator {
+  position: absolute;
+  top: -8px;
+  height: calc(100% + 16px);
+  border: 1.5px solid #c5bcc5;
+  border-radius: 60px;
+  pointer-events: none;
+  transition:
+    left 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    width 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nav-item {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: #0a0b15;
+  padding: 8px 20px;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ── Contact Us button (pushed to the right) ──────────────── */
+
+.header-actions {
+  margin-left: auto;
+}
