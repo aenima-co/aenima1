@@ -2,13 +2,18 @@
 
 .announcement-bar {
   background-color: #7f6cff;
-  padding: 14px 12px;
+  padding: 10px 16px;
   text-align: center;
   color: #ffffff;
   font-family: "Guanabara Sans", sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.4;
+}
+
+.announcement-bar a {
+  color: #ffffff;
+  text-decoration: none;
 }
 
 .announcement-highlight {
@@ -21,31 +26,25 @@
 .header-nav {
   display: flex;
   align-items: center;
-  padding: 24px 64px;
+  justify-content: space-between;
+  padding: 16px 24px;
   position: relative;
   background-color: #ffffff;
 }
 
 .header-logo {
-  width: 200px;
-  height: 42px;
+  width: 120px;
+  height: auto;
   object-fit: contain;
   flex-shrink: 0;
 }
 
-/* ── Navbar (absolutely centered) ─────────────────────────── */
+/* ── Navbar — oculto no mobile ─────────────────────────────── */
 
 .navbar {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  display: flex;
-  align-items: center;
-  gap: 96px;
+  display: none;
 }
 
-/* Sliding border indicator */
 .navbar-indicator {
   position: absolute;
   top: -8px;
@@ -61,9 +60,9 @@
 .nav-item {
   font-family: "Guanabara Sans", sans-serif;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 16px;
   color: #0a0b15;
-  padding: 8px 20px;
+  padding: 8px 16px;
   cursor: pointer;
   text-decoration: none;
   position: relative;
@@ -72,8 +71,101 @@
   user-select: none;
 }
 
-/* ── Contact Us button (pushed to the right) ──────────────── */
+/* ── Contact Us button ────────────────────────────────────── */
 
 .header-actions {
   margin-left: auto;
+}
+
+/* ── Menu hamburguer — só no mobile ───────────────────────── */
+
+.header-menu-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 16px;
+}
+
+.header-menu-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: #0a0b15;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* ── TABLET (768px+) ──────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .announcement-bar {
+    font-size: 14px;
+    padding: 12px 24px;
+  }
+
+  .header-nav {
+    padding: 20px 40px;
+  }
+
+  .header-logo {
+    width: 160px;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  .header-menu-toggle {
+    display: none;
+  }
+}
+
+/* ── DESKTOP (1024px+) ────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .header-nav {
+    padding: 24px 64px;
+  }
+
+  .header-logo {
+    width: 200px;
+    height: 42px;
+  }
+
+  .navbar {
+    gap: 96px;
+  }
+
+  .nav-item {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar--aberto {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    z-index: 100;
+  }
+
+  .navbar--aberto .nav-item {
+    font-size: 32px;
+  }
 }

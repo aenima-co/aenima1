@@ -1,0 +1,87 @@
+/* ===== MOBILE (base) ===== */
+.hero {
+  color: #ffffff;
+  min-height: calc(100svh - 120px);
+  padding: 32px 24px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  background-color: #0d0d0d;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero__content {
+  max-width: 100%;
+}
+
+.hero__subtitulo {
+  font-size: 13px;
+  color: #aaaaaa;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 280px;
+}
+
+.hero__titulo {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(36px, 10vw, 96px);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 24px 0;
+}
+
+.hero__titulo-linha1,
+.hero__titulo-linha2 {
+  color: #ffffff;
+  display: block;
+}
+
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.hero__especialistas {
+  font-size: 12px;
+  color: #aaaaaa;
+  margin: 0;
+}
+
+/* ===== TABLET (768px+) ===== */
+@media (min-width: 768px) {
+  .hero {
+    padding: 48px 40px;
+  }
+
+  .hero__subtitulo {
+    font-size: 14px;
+    max-width: 400px;
+  }
+
+  .hero__actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* ===== DESKTOP (1024px+) ===== */
+@media (min-width: 1024px) {
+  .hero {
+    padding: 60px 48px;
+    min-height: 80vh;
+  }
+
+  .hero__subtitulo {
+    max-width: 500px;
+  }
+}

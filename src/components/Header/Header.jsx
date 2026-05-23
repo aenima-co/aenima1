@@ -1,14 +1,26 @@
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import logo from '../../assets/img/logo.svg';
 import Button from '../Button/Button';
+import { getBannerTopo, getMenuItens, getNavbar } from '../../api';
 import './Header.css';
-
-const NAV_ITEMS = ['Home', 'Work', 'About', 'Blog'];
 
 export default function Header() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [indicatorStyle, setIndicatorStyle] = useState({});
   const itemRefs = useRef([]);
+
+  // Estados para os dados do Strapi
+  const [bannerTopo, setBannerTopo] = useState(null);
+  const [menuItens, setMenuItens] = useState([]);
+  const [navbar, setNavbar] = useState(null);
+  const [menuAberto, setMenuAberto] = useState(false);
+
+  // Busca os dados do Strapi ao carregar
+  useEffect(() => {
+    getBannerTopo().then(setBannerTopo);
+    getMenuItens().then(setMenuItens);
+    getNavbar().then(setNavbar);
+  }, []);
 
   const updateIndicator = (index) => {
     const el = itemRefs.current[index];
@@ -21,15 +33,18 @@ export default function Header() {
 
   useLayoutEffect(() => {
     updateIndicator(activeIndex);
-  }, [activeIndex]);
+  }, [activeIndex, menuItens]);
 
   return (
     <header className="site-header">
-      <div className="announcement-bar">
-        ⭐ Get a FREE Expert Audit of Your{' '}
-        <span className="announcement-highlight">Website, App, or Product</span>
-        {' '}⭐
-      </div>
+      {/* Banner topo — só aparece se ativo = true */}
+      {bannerTopo?.ativo && (
+        <div className="announcement-bar">
+          <a href={bannerTopo.link}>
+            {bannerTopo.texto}
+          </a>
+        </div>
+      )}
 
       <div className="header-nav">
         <img
@@ -39,27 +54,42 @@ export default function Header() {
           width={242}
           height={42}
         />
-
+        <button
+          className="header-menu-toggle"
+          onClick={() => setMenuAberto(!menuAberto)}
+          aria-label="Menu"
+        >
+          {menuAberto ? '✕' : (
+            <>
+          <span />
+          <span />
+          <span />
+        </>
+      )}
+        </button>
         <nav
-          className="navbar"
+          className={`navbar ${menuAberto ? 'navbar--aberto' : ''}`}
           onMouseLeave={() => updateIndicator(activeIndex)}
         >
           <div className="navbar-indicator" style={indicatorStyle} />
-          {NAV_ITEMS.map((item, i) => (
+          {menuItens.map((item, i) => (
             <a
-              key={item}
+              key={item.id}
               ref={(el) => (itemRefs.current[i] = el)}
+              href={item.link}
               className={`nav-item${activeIndex === i ? ' nav-item--active' : ''}`}
               onMouseEnter={() => updateIndicator(i)}
               onClick={() => setActiveIndex(i)}
             >
-              {item}
+              {item.label}
             </a>
           ))}
         </nav>
 
         <div className="header-actions">
-          <Button>Contact Us</Button>
+          <Button href={navbar?.contact_us?.link}>
+            {navbar?.contact_us?.texto || 'Contact Us'}
+          </Button>
         </div>
       </div>
     </header>
