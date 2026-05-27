@@ -9,13 +9,11 @@ export default function Header() {
   const [indicatorStyle, setIndicatorStyle] = useState({});
   const itemRefs = useRef([]);
 
-  // Estados para os dados do Strapi
   const [bannerTopo, setBannerTopo] = useState(null);
   const [menuItens, setMenuItens] = useState([]);
   const [navbar, setNavbar] = useState(null);
   const [menuAberto, setMenuAberto] = useState(false);
 
-  // Busca os dados do Strapi ao carregar
   useEffect(() => {
     getBannerTopo().then(setBannerTopo);
     getMenuItens().then(setMenuItens);
@@ -37,40 +35,26 @@ export default function Header() {
 
   return (
     <header className="site-header">
-      {/* Banner topo — só aparece se ativo = true */}
       {bannerTopo?.ativo && (
         <div className="announcement-bar">
-          <a href={bannerTopo.link}>
-            {bannerTopo.texto}
-          </a>
+          <a href={bannerTopo.link}>{bannerTopo.texto}</a>
         </div>
       )}
 
       <div className="header-nav">
-        <img
-          src={logo}
-          alt="Aenima"
-          className="header-logo"
-          width={242}
-          height={42}
-        />
+        <img src={logo} alt="Aenima" className="header-logo" width={242} height={42} />
+
         <button
-          className="header-menu-toggle"
+          className={`header-menu-toggle${menuAberto ? ' header-menu-toggle--open' : ''}`}
           onClick={() => setMenuAberto(!menuAberto)}
-          aria-label="Menu"
+          aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu'}
         >
-          {menuAberto ? '✕' : (
-            <>
           <span />
           <span />
           <span />
-        </>
-      )}
         </button>
-        <nav
-          className={`navbar ${menuAberto ? 'navbar--aberto' : ''}`}
-          onMouseLeave={() => updateIndicator(activeIndex)}
-        >
+
+        <nav className="navbar" onMouseLeave={() => updateIndicator(activeIndex)}>
           <div className="navbar-indicator" style={indicatorStyle} />
           {menuItens.map((item, i) => (
             <a
@@ -88,6 +72,27 @@ export default function Header() {
 
         <div className="header-actions">
           <Button href={navbar?.contact_us?.link}>
+            {navbar?.contact_us?.texto || 'Contact Us'}
+          </Button>
+        </div>
+      </div>
+
+      <div className={`mobile-menu${menuAberto ? ' mobile-menu--open' : ''}`}>
+        <nav className="mobile-menu__nav">
+          {menuItens.map((item, i) => (
+            <a
+              key={item.id}
+              href={item.link}
+              className={`mobile-menu__item${activeIndex === i ? ' mobile-menu__item--active' : ''}`}
+              onClick={() => { setActiveIndex(i); setMenuAberto(false); }}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="mobile-menu__actions">
+          <Button variant="light" href={navbar?.contact_us?.link}>
             {navbar?.contact_us?.texto || 'Contact Us'}
           </Button>
         </div>

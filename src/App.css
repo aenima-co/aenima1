@@ -50,7 +50,15 @@
 @font-face {
   font-family: "ZT Talk";
   src: url("./assets/fonts/ZTTalk-Light.otf") format("opentype");
-  font-weight: 100 900;
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ZT Talk";
+  src: url("./assets/fonts/ZTTalk-Regular-BF66593cc9a9565.otf")
+    format("opentype");
+  font-weight: 400;
   font-style: normal;
 }
 

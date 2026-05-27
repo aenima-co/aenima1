@@ -2,7 +2,7 @@
   display: inline-flex;
   align-items: center;
   gap: 16px;
-  padding: 10px 12px 10px 32px;
+  padding: 10px 12px 10px clamp(20px, calc(2.17vw + 3.8px), 32px);
   background-color: #0a0b15;
   border: none;
   border-radius: 60px;
@@ -32,7 +32,7 @@
 .cta-btn__text {
   font-family: "Guanabara Sans", sans-serif;
   font-weight: 500;
-  font-size: 20px;
+  font-size: clamp(16px, calc(0.87vw + 8.7px), 20px);
   color: #f5f3f5;
   position: relative;
   z-index: 1;
@@ -43,8 +43,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, calc(1.74vw + 17.4px), 40px);
+  height: clamp(32px, calc(1.74vw + 17.4px), 40px);
   background-color: #ea4202;
   border-radius: 50%;
   position: relative;
