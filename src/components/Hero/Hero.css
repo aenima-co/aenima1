@@ -1,18 +1,145 @@
-/* ===== MOBILE (base) ===== */
+/* ── Outer section ─────────────────────────────────────────── */
+
 .hero {
-  color: #ffffff;
-  min-height: calc(100svh - 120px);
-  padding: 32px 24px;
-  padding-bottom: 40px;
+  padding: 0 36px;
+}
+
+/* ── Background image container ────────────────────────────── */
+
+.hero__bg {
+  height: 821px;
+  padding: 48px 64px 64px 64px;
+  background-size: cover;
+  background-position: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  overflow: hidden;
-  background-color: #0d0d0d;
-  background-size: cover;
-  background-position: center;
+  overflow: visible;
+  border-radius: 32px;
 }
+
+/* ── Top row: avatares + texto_especialistas ────────────────── */
+
+.hero__top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ── Members row ────────────────────────────────────────────── */
+
+.hero__members {
+  display: flex;
+  align-items: center;
+}
+
+.hero__member {
+  position: relative;
+  cursor: pointer;
+}
+
+.hero__member + .hero__member {
+  margin-left: -14px;
+}
+
+.hero__member:hover {
+  z-index: 1;
+}
+
+.hero__member-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 2px solid rgba(10, 11, 21, 0.4);
+  transition: transform 0.25s ease;
+}
+
+.hero__member:hover .hero__member-avatar {
+  transform: translateX(-6px);
+}
+
+/* ── Tooltip balloon ─────────────────────────────────────────── */
+
+.hero__member-tooltip {
+  position: absolute;
+  top: 53px;
+  left: -4px;
+  width: 240px;
+  background-color: #0a0b15;
+  border-radius: 8px;
+  padding: 14px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.2s ease;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* Arrow pointing up toward the image center */
+.hero__member-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 16px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #0a0b15;
+}
+
+.hero__member:hover .hero__member-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.hero__member-tooltip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero__member-name {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: #f5f3f5;
+  line-height: 1.2;
+}
+
+.hero__member-linkedin {
+  display: flex;
+  align-items: center;
+  color: #5c5d68;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.hero__member-linkedin:hover {
+  color: #f5f3f5;
+}
+
+.hero__member-role {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  color: #5c5d68;
+  line-height: 1.4;
+}
+
+/* ── Existing content ─────────────────────────────────────────── */
 
 .hero__content {
   max-width: 100%;
@@ -22,7 +149,7 @@
   font-size: 13px;
   color: #aaaaaa;
   line-height: 1.6;
-  margin-bottom: 24px;
+  margin: 0;
   max-width: 280px;
 }
 
@@ -34,20 +161,19 @@
   line-height: 1;
   text-transform: uppercase;
   margin: 0;
-  padding: 24px 0;
+  color: #ffffff;
 }
 
 .hero__titulo-linha1,
 .hero__titulo-linha2 {
-  color: #ffffff;
   display: block;
 }
 
 .hero__actions {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   gap: 16px;
-  margin-top: 40px;
 }
 
 .hero__especialistas {
@@ -56,32 +182,26 @@
   margin: 0;
 }
 
-/* ===== TABLET (768px+) ===== */
-@media (min-width: 768px) {
+/* ── Mobile ─────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
   .hero {
-    padding: 48px 40px;
+    padding: 0 16px;
+  }
+
+  .hero__bg {
+    height: auto;
+    min-height: 90svh;
+    padding: 32px 24px 40px;
+    border-radius: 12px;
   }
 
   .hero__subtitulo {
-    font-size: 14px;
-    max-width: 400px;
+    max-width: 280px;
   }
 
   .hero__actions {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-}
-
-/* ===== DESKTOP (1024px+) ===== */
-@media (min-width: 1024px) {
-  .hero {
-    padding: 60px 48px;
-    min-height: 80vh;
-  }
-
-  .hero__subtitulo {
-    max-width: 500px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

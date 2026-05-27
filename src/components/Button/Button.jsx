@@ -21,9 +21,9 @@ function ArrowIcon({ className }) {
   );
 }
 
-export default function Button({ children, className = '', ...props }) {
+export default function Button({ children, className = '', variant = 'dark', ...props }) {
   return (
-    <button className={`cta-btn ${className}`} {...props}>
+    <button className={`cta-btn cta-btn--${variant} ${className}`} {...props}>
       <span className="cta-btn__text">{children}</span>
       <span className="cta-btn__circle">
         <ArrowIcon className="cta-btn__arrow" />

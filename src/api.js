@@ -46,7 +46,17 @@ export async function getEspecialidades() {
 }
 
 export async function getHome() {
-  const res = await fetch(`${API_URL}/home?populate[hero][populate]=*`)
+  const res = await fetch(
+    `${API_URL}/home` +
+    `?populate[0]=hero.imagem_fundo` +
+    `&populate[1]=hero.botao_principal` +
+    `&populate[2]=hero.memberCard` +
+    `&populate[3]=hero.memberCard.members_image`
+  )
+  if (!res.ok) {
+    console.error('[getHome] erro HTTP:', res.status)
+    return null
+  }
   const data = await res.json()
   return data.data
 }
