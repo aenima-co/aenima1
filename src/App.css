@@ -1,50 +1,67 @@
 @font-face {
-  font-family: 'Guanabara Sans';
-  src: url('./assets/fonts/GuanabaraSansTest-Thin.woff') format('woff');
+  font-family: "Guanabara Sans";
+  src: url("./assets/fonts/GuanabaraSansTest-Thin.woff") format("woff");
   font-weight: 100;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Guanabara Sans';
-  src: url('./assets/fonts/GuanabaraSansTest-Light.woff') format('woff');
+  font-family: "Guanabara Sans";
+  src: url("./assets/fonts/GuanabaraSansTest-Light.woff") format("woff");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Guanabara Sans';
-  src: url('./assets/fonts/GuanabaraSansTest-Regular.woff') format('woff');
+  font-family: "Guanabara Sans";
+  src: url("./assets/fonts/GuanabaraSansTest-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Guanabara Sans';
-  src: url('./assets/fonts/GuanabaraSansTest-Medium.woff') format('woff');
+  font-family: "Guanabara Sans";
+  src: url("./assets/fonts/GuanabaraSansTest-Medium.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Guanabara Sans';
-  src: url('./assets/fonts/GuanabaraSansTest-Bold.woff') format('woff');
+  font-family: "Guanabara Sans";
+  src: url("./assets/fonts/GuanabaraSansTest-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Guanabara Sans';
-  src: url('./assets/fonts/GuanabaraSansTest-Black.woff') format('woff');
+  font-family: "Guanabara Sans";
+  src: url("./assets/fonts/GuanabaraSansTest-Black.woff") format("woff");
   font-weight: 900;
   font-style: normal;
 }
 
-*, *::before, *::after {
+@font-face {
+  font-family: "Argent Pixel CF";
+  src: url("./assets/fonts/ARGENTPIXELCF-REGULAR.OTF") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ZT Talk";
+  src: url("./assets/fonts/ZTTalk-Light.otf") format("opentype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
 }

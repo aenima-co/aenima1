@@ -3,7 +3,7 @@
   align-items: center;
   gap: 16px;
   padding: 10px 12px 10px 32px;
-  background-color: #0A0B15;
+  background-color: #0a0b15;
   border: none;
   border-radius: 60px;
   cursor: pointer;
@@ -15,10 +15,10 @@
 
 /* Paint-bucket fill: circle expands from bottom center upward */
 .cta-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: #EA4202;
+  background: #ea4202;
   clip-path: circle(0% at 50% 100%);
   transition: clip-path 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 0;
@@ -30,10 +30,10 @@
 }
 
 .cta-btn__text {
-  font-family: 'Guanabara Sans', sans-serif;
-  font-weight: 700;
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 500;
   font-size: 20px;
-  color: #F5F3F5;
+  color: #f5f3f5;
   position: relative;
   z-index: 1;
   transition: color 0.3s ease;
@@ -45,18 +45,20 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background-color: #EA4202;
+  background-color: #ea4202;
   border-radius: 50%;
   position: relative;
   z-index: 1;
   flex-shrink: 0;
-  color: #F5F3F5;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  color: #f5f3f5;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .cta-btn:hover .cta-btn__circle {
-  background-color: #F5F3F5;
-  color: #0A0B15;
+  background-color: #f5f3f5;
+  color: #0a0b15;
 }
 
 .cta-btn__arrow {
@@ -67,18 +69,18 @@
 /* ── Light variant (Hero) ──────────────────────────────────── */
 
 .cta-btn--light {
-  background-color: #F5F3F5;
+  background-color: #f5f3f5;
 }
 
 .cta-btn--light .cta-btn__text {
-  color: #0A0B15;
+  color: #0a0b15;
 }
 
 .cta-btn--light:hover .cta-btn__text {
-  color: #F5F3F5;
+  color: #f5f3f5;
 }
 
 .cta-btn--light:hover .cta-btn__circle {
-  background-color: #F5F3F5;
-  color: #0A0B15;
+  background-color: #f5f3f5;
+  color: #0a0b15;
 }

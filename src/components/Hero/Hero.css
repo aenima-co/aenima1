@@ -78,9 +78,9 @@
   visibility: hidden;
   transform: translateY(-6px);
   transition:
-    opacity 0.2s ease,
-    visibility 0.2s ease,
-    transform 0.2s ease;
+    opacity 0.4s ease,
+    visibility 0.4s ease,
+    transform 0.4s ease;
   z-index: 20;
   pointer-events: none;
 }
@@ -139,45 +139,67 @@
   line-height: 1.4;
 }
 
-/* ── Existing content ─────────────────────────────────────────── */
+/* ── Bottom row: texto + título (esquerda) e botão (direita) ── */
+
+.hero__bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
 
 .hero__content {
-  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
 }
 
 .hero__subtitulo {
-  font-size: 13px;
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 300;
+  font-size: 20px;
   color: #aaaaaa;
   line-height: 1.6;
   margin: 0;
-  max-width: 280px;
+  max-width: 464px;
 }
 
 .hero__titulo {
   display: flex;
   flex-direction: column;
-  font-size: clamp(36px, 10vw, 96px);
-  font-weight: 700;
-  line-height: 1;
+  line-height: 0.8;
   text-transform: uppercase;
   margin: 0;
-  color: #ffffff;
+  color: #f5f3f5;
 }
 
 .hero__titulo-linha1,
 .hero__titulo-linha2 {
   display: block;
+  font-size: 128px;
+  letter-spacing: -2px;
+}
+
+.hero__titulo-linha1 {
+  font-family: "ZT Talk", sans-serif;
+  font-weight: 300;
+}
+
+.hero__titulo-linha2 {
+  font-family: "Argent Pixel CF", sans-serif;
+  font-weight: 400;
 }
 
 .hero__actions {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  align-items: flex-end;
+  flex-shrink: 0;
 }
 
 .hero__especialistas {
-  font-size: 12px;
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
   color: #aaaaaa;
   margin: 0;
 }

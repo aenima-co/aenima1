@@ -68,17 +68,15 @@ export default function Hero() {
                     <div className="hero__member-tooltip" role="tooltip">
                       <div className="hero__member-tooltip-header">
                         <span className="hero__member-name">{member.nome}</span>
-                        {member.linkedin && (
-                          <a
-                            href={member.linkedin}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="hero__member-linkedin"
-                            aria-label={`LinkedIn de ${member.nome}`}
-                          >
-                            <LinkedInIcon />
-                          </a>
-                        )}
+                        <a
+                          href={member.linkedin || '#'}
+                          target={member.linkedin ? '_blank' : undefined}
+                          rel="noreferrer"
+                          className="hero__member-linkedin"
+                          aria-label={`LinkedIn de ${member.nome}`}
+                        >
+                          <LinkedInIcon />
+                        </a>
                       </div>
                       <span className="hero__member-role">{member.funcao}</span>
                     </div>
@@ -92,19 +90,20 @@ export default function Hero() {
           )}
         </div>
 
-        <div className="hero__content">
-          <p className="hero__subtitulo">{hero.subtitulo}</p>
-        </div>
+        <div className="hero__bottom">
+          <div className="hero__content">
+            <p className="hero__subtitulo">{hero.subtitulo}</p>
+            <h1 className="hero__titulo">
+              <span className="hero__titulo-linha1">{hero.titulo_linha1}</span>
+              <span className="hero__titulo-linha2">{hero.titulo_linha2}</span>
+            </h1>
+          </div>
 
-        <h1 className="hero__titulo">
-          <span className="hero__titulo-linha1">{hero.titulo_linha1}</span>
-          <span className="hero__titulo-linha2">{hero.titulo_linha2}</span>
-        </h1>
-
-        <div className="hero__actions">
-          <Button variant="light">
-            {hero.botao_principal?.texto || "Start a project"}
-          </Button>
+          <div className="hero__actions">
+            <Button variant="light">
+              {hero.botao_principal?.texto || "Start a project"}
+            </Button>
+          </div>
         </div>
       </div>
     </section>
