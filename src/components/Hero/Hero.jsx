@@ -43,14 +43,17 @@ export default function Hero() {
   };
 
   const imagemFundo = resolveMedia(hero.imagem_fundo);
+  const imagemFundoMobile = resolveMedia(hero.imagem_fundo_mobile);
   const members = hero.memberCard || [];
+
+  const bgStyle = {
+    ...(imagemFundo && { '--bg-desktop': `url(${imagemFundo})` }),
+    ...(imagemFundoMobile && { '--bg-mobile': `url(${imagemFundoMobile})` }),
+  };
 
   return (
     <section className="hero">
-      <div
-        className="hero__bg"
-        style={imagemFundo ? { backgroundImage: `url(${imagemFundo})` } : {}}
-      >
+      <div className="hero__bg" style={bgStyle}>
         <div className="hero__top">
           {members.length > 0 && (
             <div className="hero__members">

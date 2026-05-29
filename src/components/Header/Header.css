@@ -45,6 +45,12 @@
   height: 32px;
   object-fit: contain;
   flex-shrink: 0;
+  transition: filter 0.3s ease;
+  cursor: pointer;
+}
+
+.header-logo:hover {
+  filter: brightness(0) saturate(100%) invert(12%) sepia(96%) saturate(5000%) hue-rotate(252deg) brightness(93%);
 }
 
 /* ── Navbar — oculto no mobile ─────────────────────────────── */
