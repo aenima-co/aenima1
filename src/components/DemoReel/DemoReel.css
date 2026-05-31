@@ -1,0 +1,178 @@
+/* ── Section ────────────────────────────────────────────────── */
+
+.demo-reel {
+  padding: 0 clamp(20px, calc(3.5vw - 9.4px), 36px);
+}
+
+/* ── Title ──────────────────────────────────────────────────── */
+
+.demo-reel__titulo {
+  text-align: center;
+  margin-top: 128px;
+  margin-bottom: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.demo-reel__linha1,
+.demo-reel__linha2,
+.demo-reel__linha3 {
+  font-family: "ZT Talk", sans-serif;
+  font-weight: 400;
+  font-size: 112px;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.demo-reel__linha1 {
+  color: #0a0b15;
+}
+
+.demo-reel__linha2,
+.demo-reel__linha3 {
+  color: #5c5d68;
+}
+
+/* ── Video stage — centra o wrapper ─────────────────────────── */
+
+.demo-reel__stage {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 128px;
+}
+
+/* ── Wrapper: posição relativa para overlay e imagens ───────── */
+
+.demo-reel__wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1184px;
+  height: 666px;
+  border-radius: 36.24px;
+  overflow: visible;
+}
+
+/* ── Iframe ─────────────────────────────────────────────────── */
+
+.demo-reel__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 36.24px;
+  display: block;
+}
+
+/* ── Custom play overlay ────────────────────────────────────── */
+
+.demo-reel__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  border-radius: 36.24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-reel__play-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background-color: #ea4202;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.demo-reel__play-btn:hover {
+  transform: scale(1.08);
+  background-color: #c73700;
+}
+
+/* ── Decorative images ──────────────────────────────────────── */
+
+.demo-reel__decor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.demo-reel__decor--1 {
+  width: 148px;
+  height: auto;
+  bottom: -40px;
+  left: -64px;
+}
+
+.demo-reel__decor--2 {
+  width: 128px;
+  height: auto;
+  top: -36px;
+  right: -52px;
+}
+
+.demo-reel__decor--3 {
+  width: 118px;
+  height: auto;
+  bottom: -48px;
+  right: -28px;
+}
+
+/* ── Mobile ─────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .demo-reel__titulo {
+    margin-top: 80px;
+    margin-bottom: 48px;
+  }
+
+  .demo-reel__linha1,
+  .demo-reel__linha2,
+  .demo-reel__linha3 {
+    font-size: 48px;
+  }
+
+  .demo-reel__wrapper {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+  }
+
+  .demo-reel__iframe {
+    border-radius: 16px;
+  }
+
+  .demo-reel__overlay {
+    border-radius: 16px;
+  }
+
+  .demo-reel__play-btn {
+    width: 56px;
+    height: 56px;
+  }
+
+  .demo-reel__decor--1 {
+    width: 80px;
+    bottom: -20px;
+    left: -20px;
+  }
+
+  .demo-reel__decor--2 {
+    width: 70px;
+    top: -20px;
+    right: -16px;
+  }
+
+  .demo-reel__decor--3 {
+    width: 64px;
+    bottom: -24px;
+    right: -12px;
+  }
+}

@@ -62,6 +62,20 @@ export async function getHome() {
   return data.data
 }
 
+export async function getDemoReel() {
+  const res = await fetch(
+    `${API_URL}/demo-reel` +
+    `?populate[0]=demo_titulo` +
+    `&populate[1]=stickers`
+  )
+  if (!res.ok) {
+    console.error('[getDemoReel] erro HTTP:', res.status)
+    return null
+  }
+  const data = await res.json()
+  return data.data
+}
+
 export async function getFooter() {
   const res = await fetch(`${API_URL}/footer`)
   const data = await res.json()

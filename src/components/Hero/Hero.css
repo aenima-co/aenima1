@@ -2,6 +2,7 @@
 
 .hero {
   padding: 0 clamp(20px, calc(3.5vw - 9.4px), 36px);
+  margin-bottom: 36px;
 }
 
 /* ── Background image container ────────────────────────────── */
