@@ -1,15 +1,18 @@
 /* ===== MOBILE (base) ===== */
 .blog {
-  padding: 48px 24px;
+  padding: 64px 0 32px 24px;
   background-color: #ffffff;
 }
 
 .blog__tag {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  color: #999999;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #0a0b1540;
   display: block;
-  margin-bottom: 24px;
 }
 
 .blog__grid-wrap {
@@ -17,6 +20,8 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   cursor: grab;
+  padding-top: 64px;
+  padding-bottom: 32px;
 }
 
 .blog__grid-wrap::-webkit-scrollbar {
@@ -36,14 +41,13 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 280px;
   flex-shrink: 0;
 }
 
 .blog__imagem-wrap {
   width: 100%;
   height: 260px;
-  min-height: 260px;
+  min-width: 360px;
   max-height: 260px;
   border-radius: 24px;
   overflow: hidden;
@@ -77,20 +81,21 @@
 }
 
 .blog__titulo {
-  font-family: 'ZT Talk', serif;
+  font-family: "ZT Talk", serif;
   font-weight: 400;
-  font-size: 22px;
+  font-size: 48px;
+  letter-spacing: -2%;
   margin: 0 0 4px;
-  color: #0A0B15;
+  color: #0a0b15;
 }
 
 .blog__subtitulo {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  font-weight: 600;
-  color: #5C5D68;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5c5d68;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 5%;
   margin: 0;
 }
 
@@ -113,6 +118,10 @@
 
 /* ===== DESKTOP (1024px+) ===== */
 @media (min-width: 1024px) {
+  .blog {
+    padding: 64px;
+  }
+
   .blog__grid-wrap {
     overflow: visible;
     cursor: default;
@@ -131,13 +140,12 @@
   }
 
   .blog__imagem-wrap {
-    height: 220px;
-    min-height: 220px;
-    max-height: 220px;
-    width: 100%;
+    width: 424px;
+    height: 308px;
   }
 
   .blog__titulo {
-    font-size: 26px;
+    font-size: 48px;
+    letter-spacing: -2%;
   }
 }
