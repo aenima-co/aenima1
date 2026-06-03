@@ -29,7 +29,9 @@ export async function getProjetos(apenasDestaque = false) {
 }
 
 export async function getPosts(apenasDestaque = false) {
-  const filtro = apenasDestaque ? '?filters[destaque]=true&sort=ordem' : '?sort=ordem'
+  const filtro = apenasDestaque
+    ? '?filters[destaque]=true&sort=ordem&populate=*'
+    : '?sort=ordem&populate=*'
   const res = await fetch(`${API_URL}/posts${filtro}`)
   const data = await res.json()
   return data.data
