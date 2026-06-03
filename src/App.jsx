@@ -4,6 +4,7 @@ import Hero from "./components/Hero/Hero";
 import DemoReel from "./components/DemoReel/DemoReel";
 import BestWork from "./components/BestWork/BestWork";
 import SecaoAbout from "./components/SecaoAbout/SecaoAbout";
+import Blog from "./components/Blog/Blog";
 
 import "./App.css";
 
@@ -15,6 +16,7 @@ const App = () => {
       <DemoReel />
       <BestWork />
       <SecaoAbout />
+      <Blog />
     </>
   );
 };
