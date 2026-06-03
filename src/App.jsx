@@ -3,6 +3,8 @@ import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 import DemoReel from "./components/DemoReel/DemoReel";
 import BestWork from "./components/BestWork/BestWork";
+import SecaoAbout from "./components/SecaoAbout/SecaoAbout";
+
 import "./App.css";
 
 const App = () => {
@@ -12,6 +14,7 @@ const App = () => {
       <Hero />
       <DemoReel />
       <BestWork />
+      <SecaoAbout />
     </>
   );
 };

@@ -1,0 +1,89 @@
+import { useEffect, useState, useRef } from 'react';
+import { getHome, getEspecialidades } from '../../api';
+import './SecaoAbout.css';
+
+const STRAPI_URL = 'http://localhost:1337';
+
+export default function SecaoAbout() {
+  const [about, setAbout] = useState(null);
+  const [especialidades, setEspecialidades] = useState([]);
+  const pillsRef = useRef(null);
+
+  useEffect(() => {
+    getHome().then((data) => setAbout(data?.secao_about_preview));
+    getEspecialidades().then(setEspecialidades);
+  }, []);
+
+  const handleMouseDown = (e) => {
+    const el = pillsRef.current;
+    el.dataset.dragging = 'true';
+    el.dataset.startX = e.pageX - el.offsetLeft;
+    el.dataset.scrollLeft = el.scrollLeft;
+  };
+
+  const handleMouseMove = (e) => {
+    const el = pillsRef.current;
+    if (el.dataset.dragging !== 'true') return;
+    const x = e.pageX - el.offsetLeft;
+    const walk = x - Number(el.dataset.startX);
+    el.scrollLeft = Number(el.dataset.scrollLeft) - walk;
+  };
+
+  const handleMouseUp = () => {
+    pillsRef.current.dataset.dragging = 'false';
+  };
+
+  if (!about) return null;
+
+  return (
+    <section className="secao-about">
+      <div className="secao-about__topo">
+        <span className="secao-about__tag">// ABOUT</span>
+
+        <div className="secao-about__layout">
+          <div className="secao-about__titulo-wrap">
+            <h2 className="secao-about__titulo">
+              <span className="secao-about__titulo-parte1">
+                {about.titulo_parte1} {about.titulo_parte2}
+              </span>
+              <span className="secao-about__titulo-destaque">{about.titulo_destaque}</span>
+            </h2>
+          </div>
+
+          <div className="secao-about__direita">
+            {about.icone?.url && (
+              <img
+                src={`${STRAPI_URL}${about.icone.url}`}
+                alt="ícone"
+                className="secao-about__icone"
+              />
+            )}
+            <p className="secao-about__descricao">{about.descricao}</p>
+            <a href={about.link_url} className="secao-about__link">
+              {about.link_texto}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {especialidades.length > 0 && (
+        <div
+          className="secao-about__pills-wrap"
+          ref={pillsRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+        >
+          <div className="secao-about__pills">
+            {especialidades.map((esp) => (
+              <span key={esp.id} className="secao-about__pill">
+                {esp.nome}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}

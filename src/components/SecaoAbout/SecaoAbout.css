@@ -1,0 +1,155 @@
+/* ===== MOBILE (base) ===== */
+.secao-about {
+  padding: 64px 24px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.secao-about__tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #0a0b1540;
+  display: block;
+}
+
+.secao-about__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 64px 0;
+}
+
+.secao-about__titulo {
+  display: block;
+  font-family: "Guanabara Sans", sans-serif;
+  line-height: 1.1;
+  color: #0a0b15;
+  margin: 0;
+}
+
+/* parte 1 — "We are a {{ brazilian digital studio" */
+.secao-about__titulo-parte1 {
+  font-weight: 100;
+  font-size: 64px;
+  font-family: "ZT Talk";
+  color: #5c5d68;
+  line-height: 90%;
+  letter-spacing: -4%;
+}
+
+/* parte 2 — "that deliver globally" */
+.secao-about__titulo-parte2 {
+  font-weight: 100;
+  font-size: 64px;
+  font-family: "ZT Talk";
+  font-size: clamp(32px, 8vw, 72px);
+  color: #5c5d68;
+}
+
+/* parte 3 — ">> UI, UX & Web Design." */
+
+.secao-about__direita {
+  display: flex;
+  flex-direction: column;
+  gap: 66px;
+}
+
+.secao-about__icone {
+  width: 96px;
+  margin-bottom: 0px;
+}
+
+.secao-about__titulo-destaque {
+  font-weight: 500;
+  font-size: 64px;
+  font-family: "ZT Talk";
+  display: block;
+  color: #0a0b15;
+  line-height: 1.1;
+  letter-spacing: -3%;
+}
+
+.secao-about__descricao {
+  font-weight: 300;
+  font-size: 18px;
+  letter-spacing: -2%;
+  line-height: 1.5;
+  color: #5c5d68;
+  margin: 0;
+}
+
+.secao-about__link {
+  font-size: 20px;
+  color: #5c5d68;
+  text-underline-offset: 4px;
+}
+
+/* Pills */
+.secao-about__pills-wrap {
+  margin-top: 40px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.secao-about__pills-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.secao-about__pills {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  padding-bottom: 8px;
+}
+
+.secao-about__pill {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 24px;
+  color: #5e25ff;
+  border: 1.5px solid #5e25ff;
+  border-radius: 100px;
+  padding: 40px 70px;
+  white-space: nowrap;
+}
+
+/* ===== DESKTOP (1024px+) ===== */
+@media (min-width: 1024px) {
+  .secao-about {
+    padding: 80px 64px;
+  }
+
+  .secao-about__layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 64px;
+  }
+
+  .secao-about__titulo-wrap {
+    flex: 1.2;
+  }
+
+  .secao-about__titulo-parte1,
+  .secao-about__titulo-destaque {
+    font-size: 128px;
+  }
+
+  .secao-about__direita {
+    flex: 0 1 400px;
+    padding-top: 8px;
+  }
+
+  .secao-about__descricao {
+    font-size: 20px;
+  }
+
+  .secao-about__pills {
+    width: auto;
+    flex-wrap: nowrap;
+  }
+}
