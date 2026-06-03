@@ -10,6 +10,7 @@
   text-align: center;
   margin-top: 128px;
   margin-bottom: 96px;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -39,7 +40,7 @@
 .demo-reel__stage {
   display: flex;
   justify-content: center;
-  margin-bottom: 128px;
+  margin-bottom: 96px;
 }
 
 /* ── Wrapper: posição relativa para overlay e imagens ───────── */
@@ -88,7 +89,9 @@
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .demo-reel__play-btn:hover {
@@ -136,7 +139,8 @@
   .demo-reel__linha1,
   .demo-reel__linha2,
   .demo-reel__linha3 {
-    font-size: 48px;
+    font-size: 64px;
+    letter-spacing: -3%;
   }
 
   .demo-reel__wrapper {

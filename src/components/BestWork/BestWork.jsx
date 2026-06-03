@@ -82,7 +82,7 @@ export default function BestWork() {
         </div>
         {botao && (
           <a href={botao.link} className="best-work__botao-link">
-            <Button>{botao.texto}</Button>
+            <Button variant="light">{botao.texto}</Button>
           </a>
         )}
       </div>
