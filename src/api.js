@@ -20,7 +20,9 @@ export async function getMenuItens() {
 }
 
 export async function getProjetos(apenasDestaque = false) {
-  const filtro = apenasDestaque ? '?filters[destaque]=true&sort=ordem' : '?sort=ordem'
+  const filtro = apenasDestaque
+    ? '?filters[destaque]=true&sort=ordem&populate=*'
+    : '?sort=ordem&populate=*'
   const res = await fetch(`${API_URL}/projetos${filtro}`)
   const data = await res.json()
   return data.data
@@ -52,7 +54,8 @@ export async function getHome() {
     `&populate[1]=hero.imagem_fundo_mobile` +
     `&populate[2]=hero.botao_principal` +
     `&populate[3]=hero.memberCard` +
-    `&populate[4]=hero.memberCard.members_image`
+    `&populate[4]=hero.memberCard.members_image`+
+    `&populate[5]=botao_projeto`
   )
   if (!res.ok) {
     console.error('[getHome] erro HTTP:', res.status)
