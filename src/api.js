@@ -54,8 +54,10 @@ export async function getHome() {
     `&populate[1]=hero.imagem_fundo_mobile` +
     `&populate[2]=hero.botao_principal` +
     `&populate[3]=hero.memberCard` +
-    `&populate[4]=hero.memberCard.members_image`+
-    `&populate[5]=botao_projeto`
+    `&populate[4]=hero.memberCard.members_image` +
+    `&populate[5]=botao_projeto` +
+    `&populate[6]=secao_about_preview` +
+    `&populate[7]=secao_about_preview.icone`
   )
   if (!res.ok) {
     console.error('[getHome] erro HTTP:', res.status)
