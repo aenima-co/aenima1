@@ -30,7 +30,7 @@
 
 .best-work__imagem-wrap {
   width: 100%;
-  border-radius: 16px;
+  border-radius: 36px;
   overflow: hidden;
   aspect-ratio: 4/3;
 }
@@ -74,11 +74,21 @@
   gap: 32px;
 }
 
+/* mobile — mostra info dentro do card principal */
+.best-work__info--mobile {
+  display: block;
+}
+
+/* mobile — esconde título do rodapé, mostra só o botão */
 .best-work__rodape {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 24px;
+}
+
+.best-work__rodape > div {
+  display: none;
 }
 
 /* ===== TABLET (768px+) ===== */
@@ -113,22 +123,10 @@
     flex: 1.2;
   }
 
-  @media (min-width: 1024px) {
-    .best-work__secundarios {
-     flex-direction: row; 
-     gap: 24px;
-   }
-
-   .best-work__card--principal .best-work__imagem-wrap {
-     height: 640px;
-     border-radius: 36px;
-   }
-
-   .best-work__card--secundario .best-work__imagem-wrap {
-     height: 308px;
-     border-radius: 36px;
-   }
- }
+  .best-work__secundarios {
+    flex-direction: row;
+    gap: 24px;
+  }
 
   .best-work__imagem-wrap {
     aspect-ratio: auto;
@@ -147,30 +145,18 @@
   .best-work__titulo {
     font-size: 28px;
   }
-}
 
-/* mobile — esconde o rodapé desktop */
-.best-work__rodape > div {
-  display: none;
-}
-
-/* mobile — mostra info dentro do card */
-.best-work__info--mobile {
-  display: block;
-}
-
-/* desktop */
-  @media (min-width: 1024px) {
-    .best-work__rodape {
-      justify-content: space-between;
-    }
-
-    .best-work__rodape > div {
-      display: block;
-    }
+  /* desktop — esconde info dentro do card principal */
+  .best-work__info--mobile {
+    display: none;
   }
 
-  /* esconde info dentro do card principal */
-  .best-work__info--mobile {
+  /* desktop — mostra título + botão lado a lado no rodapé */
+  .best-work__rodape {
+    justify-content: space-between;
+  }
+
+  .best-work__rodape > div {
     display: block;
   }
+}
