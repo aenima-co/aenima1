@@ -84,7 +84,20 @@ export async function getDemoReel() {
 }
 
 export async function getFooter() {
-  const res = await fetch(`${API_URL}/footer`)
+  const res = await fetch(
+    `${API_URL}/footer` +
+    `?populate[0]=background` +
+    `&populate[1]=backmobile` +
+    `&populate[2]=arrow_icon` +
+    `&populate[3]=logo` +
+    `&populate[4]=redes_sociais` +
+    `&populate[5]=memberCard` +
+    `&populate[6]=memberCard.members_image`
+  )
+  if (!res.ok) {
+    console.error('[getFooter] erro HTTP:', res.status)
+    return null
+  }
   const data = await res.json()
   return data.data
 }

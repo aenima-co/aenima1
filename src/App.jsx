@@ -5,6 +5,7 @@ import DemoReel from "./components/DemoReel/DemoReel";
 import BestWork from "./components/BestWork/BestWork";
 import SecaoAbout from "./components/SecaoAbout/SecaoAbout";
 import Blog from "./components/Blog/Blog";
+import Footer from "./components/Footer/Footer";
 
 import "./App.css";
 
@@ -17,6 +18,7 @@ const App = () => {
       <BestWork />
       <SecaoAbout />
       <Blog />
+      <Footer />
     </>
   );
 };
