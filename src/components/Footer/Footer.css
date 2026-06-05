@@ -288,7 +288,6 @@
 
   .footer__row3 {
     flex-direction: row;
-    align-items: flex-start;
     gap: 64px;
     margin-top: 0;
     flex: unset;
