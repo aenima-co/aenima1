@@ -264,7 +264,7 @@
 
   .footer__inner {
     padding: 48px clamp(20px, calc(3.5vw - 9.4px), 48px) 48px;
-    min-height: 1300px;
+    height: 1500px;
   }
 
   .footer__row1,
