@@ -1,0 +1,305 @@
+/* ── Footer ─────────────────────────────────────────────────── */
+
+.footer {
+  background-image: var(--bg-mobile, var(--bg-desktop));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.footer__inner {
+  padding: 48px 20px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 1026px;
+}
+
+/* ── Linha 1: members + título ──────────────────────────────── */
+
+.footer__row1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer__members {
+  display: flex;
+  align-items: center;
+}
+
+.footer__member {
+  position: relative;
+  cursor: pointer;
+}
+
+.footer__member + .footer__member {
+  margin-left: -10px;
+}
+
+.footer__member:hover {
+  z-index: 1;
+}
+
+.footer__member:hover .footer__avatar {
+  transform: translateX(-6px);
+}
+
+/* ── Tooltip ─────────────────────────────────────────────────── */
+
+.footer__member-tooltip {
+  position: absolute;
+  top: 50px;
+  left: -4px;
+  width: 240px;
+  background-color: #0a0b15;
+  border-radius: 8px;
+  padding: 14px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.4s ease,
+    visibility 0.4s ease,
+    transform 0.4s ease;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.footer__member-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 16px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #0a0b15;
+}
+
+.footer__member:hover .footer__member-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.footer__member-tooltip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer__member-name {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: #f5f3f5;
+  line-height: 1.2;
+}
+
+.footer__member-linkedin {
+  display: flex;
+  align-items: center;
+  color: #5c5d68;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.footer__member-linkedin:hover {
+  color: #f5f3f5;
+}
+
+.footer__member-role {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  color: #5c5d68;
+  line-height: 1.4;
+}
+
+.footer__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: none;
+  margin-left: -10px;
+}
+
+.footer__avatar:first-child {
+  margin-left: 0;
+}
+
+.footer__title {
+  font-family: "ZT Talk", sans-serif;
+  font-weight: 300;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -2%;
+  color: #f5f3f580;
+  margin: 0;
+}
+
+/* ── Linha 2: arrow + cta ───────────────────────────────────── */
+
+.footer__row2 {
+  display: flex;
+  align-items: center;
+  gap: 7.5px;
+  margin-top: 20px;
+}
+
+.footer__arrow {
+  width: 29px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+.footer__cta-link {
+  font-family: "ZT Talk", sans-serif;
+  font-weight: 300;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #f5f3f5;
+  text-decoration: none;
+}
+
+.footer__cta-link:hover {
+  opacity: 0.8;
+}
+
+/* ── Linha 3: socials + meta ────────────────────────────────── */
+
+.footer__row3 {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 64px;
+  height: 128px;
+  flex: 1;
+}
+
+.footer__socials {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.footer__social-item {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #f5f3f5;
+  text-decoration: none;
+}
+
+.footer__social-item:hover {
+  opacity: 0.7;
+}
+
+.footer__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footer__back-top,
+.footer__clock,
+.footer__copyright {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #f5f3f5;
+  margin: 0;
+  text-align: right;
+}
+
+.footer__back-top {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.footer__back-top:hover {
+  opacity: 0.7;
+}
+
+.footer__clock {
+  line-height: 1.5;
+}
+
+/* ── Logo ───────────────────────────────────────────────────── */
+
+.footer__logo-wrap {
+  margin-top: 48px;
+}
+
+.footer__logo {
+  width: 100%;
+  height: auto;
+}
+
+/* ── Desktop (768px+) ───────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .footer {
+    background-image: var(--bg-desktop);
+    min-height: 1300px;
+  }
+
+  .footer__inner {
+    padding: 48px clamp(20px, calc(3.5vw - 9.4px), 48px) 48px;
+    min-height: 1300px;
+  }
+
+  .footer__row1,
+  .footer__row2 {
+    width: fit-content;
+  }
+
+  /* Desktop: left (row1+row2) e right (row3) lado a lado */
+  .footer__top-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex: 1;
+  }
+
+  .footer__left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer__row3 {
+    flex-direction: row;
+    gap: 64px;
+    margin-top: 0;
+    flex: unset;
+  }
+
+  .footer__meta {
+    align-items: flex-end;
+  }
+
+  .footer__logo {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+}
