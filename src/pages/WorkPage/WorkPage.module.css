@@ -1,0 +1,191 @@
+/* ── Página ── */
+.page {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #0c0c0c;
+  font-family: "Guanabara Sans", sans-serif;
+  padding-bottom: 0;
+}
+
+/* ── Hero ── */
+.hero {
+  padding: 128px 2rem 2.5rem;
+}
+
+.heroTitle {
+  font-family: "ZT Talk", sans-serif;
+  font-size: clamp(2rem, 6vw, 10rem);
+  font-weight: 500;
+  line-height: 1.05;
+  margin: 0 0 30px;
+  letter-spacing: -0.02em;
+  color: #0c0c0c;
+}
+
+.heroSubtitle {
+  max-width:28ch;
+  font-family: "Guanabara Sans", sans-serif;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #5C5D68;
+  margin: 0 0 45px;
+}
+
+/* ── Botão hero ── */
+.heroBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: #0c0c0c;
+  color: #ffffff;
+  font-family: "Guanabara Sans", sans-serif;
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  padding: 10px 12px 10px 32px;
+  border-radius: 36px;
+  transition: background 0.2s ease;
+  width: 235px;
+  height: 64px;
+  margin-bottom: 30px;
+}
+.heroBtn:hover {
+  background: #333;
+}
+
+.heroBtnIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  min-height: 46px;
+  background: #ff5c00;
+  color: #fff;
+  border-radius: 36px;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* ── Grid ── */
+.grid {
+  padding: 2.5rem 2rem 128px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem 1.25rem;
+}
+
+/* ── Card ── */
+.card {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: cardIn 0.45s ease forwards;
+  animation-delay: calc(var(--card-index) * 0.06s);
+}
+
+@keyframes cardIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cardLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cardImageWrap {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: #f0ede8;
+  border-radius: 36px;
+  margin-bottom: 0.65rem;
+}
+
+.cardImg,
+.cardPlaceholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card:hover .cardImg,
+.card:hover .cardPlaceholder {
+  transform: scale(1.04);
+}
+
+.cardInfo {
+  padding: 0 0.1rem;
+}
+
+.cardTitle {
+  font-family: "ZT Talk", sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6rem;
+  color: #0c0c0c;
+}
+
+.cardClient {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.35);
+  margin: 0;
+}
+
+/* ── Estados ── */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40vh;
+  color: rgba(0, 0, 0, 0.3);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  padding: 6rem 0;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.25);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+}
+
+/* ── Responsivo ── */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem 1rem;
+    padding: 2rem 1.25rem 3rem;
+  }
+  .hero {
+    padding: 3rem 1.25rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 0.75rem;
+    padding: 1.5rem 1rem 3rem;
+  }
+}
