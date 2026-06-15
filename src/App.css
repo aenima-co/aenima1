@@ -78,10 +78,15 @@
   box-sizing: border-box;
 }
 
+h1 {
+  margin: 0;
+}
+
 body,
 html {
   margin: 0;
   padding: 0;
   font-family: "Guanabara Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
+  background: #f5f3f5;
 }
