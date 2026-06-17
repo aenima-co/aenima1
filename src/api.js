@@ -121,3 +121,23 @@ export async function getWorkPage() {
   const data = await res.json()
   return data.data
 }
+
+export async function getWorkBySlug(slugOrId) {
+  // Try by slug first
+  const bySlug = await fetch(
+    `${API_URL}/works?filters[slug][$eq]=${encodeURIComponent(slugOrId)}&populate=*`
+  )
+  if (bySlug.ok) {
+    const data = await bySlug.json()
+    if (data.data?.length) return data.data[0]
+  }
+  // Fallback to numeric id
+  if (!isNaN(slugOrId)) {
+    const byId = await fetch(`${API_URL}/works/${slugOrId}?populate=*`)
+    if (byId.ok) {
+      const data = await byId.json()
+      return data.data ?? null
+    }
+  }
+  return null
+}

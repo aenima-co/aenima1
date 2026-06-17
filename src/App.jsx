@@ -8,6 +8,7 @@ import SecaoAbout from "./components/SecaoAbout/SecaoAbout";
 import Blog from "./components/Blog/Blog";
 import Footer from "./components/Footer/Footer";
 import WorkPage from "./pages/WorkPage/WorkPage";
+import PortfolioPage from "./pages/PortfolioPage/PortfolioPage";
 
 import "./App.css";
 
@@ -28,6 +29,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/work" element={<WorkPage />} />
+        <Route path="/work/:slug" element={<PortfolioPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
