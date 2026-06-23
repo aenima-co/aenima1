@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap");
 
 @font-face {
   font-family: "Guanabara Sans";
@@ -6,8 +6,6 @@
   font-weight: 100;
   font-style: normal;
 }
-
-
 
 @font-face {
   font-family: "Guanabara Sans";
@@ -66,16 +64,29 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "ZT Talk";
+  src: url("./assets/fonts/ZTTalk-Medium-BF66593cc74918d.otf")
+    format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+h1 {
+  margin: 0;
+}
+
 body,
 html {
   margin: 0;
   padding: 0;
-  font-family: 'Guanabara Sans', sans-serif;
+  font-family: "Guanabara Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
+  background: #f5f3f5;
 }
