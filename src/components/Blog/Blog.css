@@ -1,0 +1,151 @@
+/* ===== MOBILE (base) ===== */
+.blog {
+  padding: 64px 0 32px 24px;
+  background-color: #ffffff;
+}
+
+.blog__tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #0a0b1540;
+  display: block;
+}
+
+.blog__grid-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+  padding-top: 64px;
+  padding-bottom: 32px;
+}
+
+.blog__grid-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.blog__grid {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  width: max-content;
+}
+
+.blog__card {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.blog__imagem-wrap {
+  width: 100%;
+  height: 260px;
+  min-width: 360px;
+  max-height: 260px;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.blog__imagem-wrap--antropofagia .blog__imagem {
+  object-fit: cover;
+  object-position: center center;
+  transform: scale(1.3);
+}
+
+.blog__card:hover .blog__imagem-wrap--antropofagia .blog__imagem {
+  transform: scale(1.33);
+}
+
+.blog__imagem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.4s ease;
+}
+
+.blog__card:hover .blog__imagem {
+  transform: scale(1.03);
+}
+
+.blog__titulo {
+  font-family: "ZT Talk", serif;
+  font-weight: 400;
+  font-size: 48px;
+  letter-spacing: -2%;
+  margin: 0 0 4px;
+  color: #0a0b15;
+}
+
+.blog__subtitulo {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5c5d68;
+  text-transform: uppercase;
+  letter-spacing: 5%;
+  margin: 0;
+}
+
+/* ===== TABLET (768px+) ===== */
+@media (min-width: 768px) {
+  .blog {
+    padding: 64px 40px;
+  }
+
+  .blog__grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .blog__card {
+    flex: 1 1 calc(50% - 12px);
+  }
+}
+
+/* ===== DESKTOP (1024px+) ===== */
+@media (min-width: 1024px) {
+  .blog {
+    padding: 64px;
+  }
+
+  .blog__grid-wrap {
+    overflow: visible;
+    cursor: default;
+  }
+
+  .blog__grid {
+    width: auto;
+    flex-wrap: nowrap;
+    gap: 24px;
+  }
+
+  .blog__card {
+    width: auto;
+    flex: 1;
+    flex-shrink: 1;
+  }
+
+  .blog__imagem-wrap {
+    width: 424px;
+    height: 308px;
+  }
+
+  .blog__titulo {
+    font-size: 48px;
+    letter-spacing: -2%;
+  }
+}

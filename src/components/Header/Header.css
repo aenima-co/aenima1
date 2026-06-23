@@ -37,12 +37,12 @@
   justify-content: space-between;
   padding: 24px 20px;
   position: relative;
-  background-color: #ffffff;
+  background-color: #f5f3f5;
 }
 
 .header-logo {
-  width: 184.7px;
-  height: 32px;
+  width: 242.42px;
+  height: 42px;
   object-fit: contain;
   flex-shrink: 0;
   transition: filter 0.3s ease;
@@ -50,7 +50,8 @@
 }
 
 .header-logo:hover {
-  filter: brightness(0) saturate(100%) invert(12%) sepia(96%) saturate(5000%) hue-rotate(252deg) brightness(93%);
+  filter: brightness(0) saturate(100%) invert(12%) sepia(96%) saturate(5000%)
+    hue-rotate(252deg) brightness(93%);
 }
 
 /* ── Navbar — oculto no mobile ─────────────────────────────── */
@@ -162,7 +163,8 @@
   }
 
   .header-logo {
-    width: 160px;
+    width: 184.7px;
+    height: 32px;
   }
 
   .navbar {
@@ -188,7 +190,7 @@
   }
 
   .header-logo {
-    width: clamp(160px, calc(8.7vw + 87px), 200px);
+    width: clamp(160px, calc(8.7vw + 87px), 242.42px);
     height: 42px;
   }
 

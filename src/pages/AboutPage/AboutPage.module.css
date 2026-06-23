@@ -1,0 +1,249 @@
+/* ── Página ── */
+.page {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #0c0c0c;
+  font-family: "Guanabara Sans", sans-serif;
+}
+
+/* ── Loading ── */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+/* ── Hero ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  padding: 5rem 5vw 6rem;
+  align-items: stretch;
+  padding-top: 128px;
+}
+
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 942px;
+}
+
+.heroTitle {
+  font-family: "ZT Talk", sans-serif;
+  font-weight: 500;
+  font-size: 144px;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  margin: 0 0 1.5rem;
+  color: #0c0c0c;
+  text-transform: uppercase;
+  width: 880px;
+}
+
+.heroSubtitle {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0 0 4rem;
+  width: 880px;
+}
+
+/* ── Valores ── */
+.values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  width: 880px;
+  height: 300px;
+  margin-top: auto;
+}
+
+.valueCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.valueIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.valueIconPlaceholder {
+  font-size: 1.5rem;
+  color: #0c0c0c;
+}
+
+.valueTitle {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: #5C5D68;
+}
+
+.valueDesc {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: #5C5D68;
+  margin: 0;
+}
+
+/* ── Hero Right ── */
+.heroRight {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.heroRightLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-top: 150px;
+}
+
+.heroCardImg {
+  width: 424px;
+  height: 380px;
+  border-radius: 24px;
+  object-fit: cover;
+  display: block;
+}
+
+.heroCardImgOrange {
+  width: 424px;
+  height: 640px;
+  border-radius: 24px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Time ── */
+.team {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  padding: 4rem 5vw;
+  border-top: none;
+  padding-bottom: 128px;
+}
+
+.memberCard {
+  background: #ffffff;
+  border-radius: 36px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 32px;
+  width: 100%;
+  height: 798px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.memberPhoto {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #e8e6e0;
+}
+
+.memberImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.memberCard:hover .memberImg {
+  transform: scale(1.04);
+}
+
+.memberPhotoPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: #e0ddd8;
+}
+
+.memberInfo {
+  padding: 1.5rem;
+}
+
+.memberName {
+  font-family: "ZT Talk", sans-serif;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.3rem;
+  color: #0A0B15;
+}
+
+.memberRole {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color:#5C5D68;
+  margin: 0 0 1rem;
+}
+
+.memberBio {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: #5C5D68;
+  margin: 0;
+}
+
+/* ── Responsivo ── */
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .team {
+    grid-template-columns: 1fr;
+    padding: 3rem 1.5rem;
+  }
+  .values {
+    grid-template-columns: 1fr;
+  }
+  .hero {
+    padding: 3rem 1.5rem;
+  }
+  .heroRight {
+    flex-direction: column;
+  }
+  .heroCardImg,
+  .heroCardImgOrange {
+    width: 100%;
+    height: auto;
+  }
+}
