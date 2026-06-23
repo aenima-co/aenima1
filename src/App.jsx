@@ -7,8 +7,7 @@ import BestWork from "./components/BestWork/BestWork";
 import SecaoAbout from "./components/SecaoAbout/SecaoAbout";
 import Blog from "./components/Blog/Blog";
 import Footer from "./components/Footer/Footer";
-import WorkPage from "./pages/WorkPage/WorkPage";
-import PortfolioPage from "./pages/PortfolioPage/PortfolioPage";
+import AboutPage from "./pages/AboutPage/AboutPage";
 
 import "./App.css";
 
@@ -28,8 +27,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/work" element={<WorkPage />} />
-        <Route path="/work/:slug" element={<PortfolioPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
