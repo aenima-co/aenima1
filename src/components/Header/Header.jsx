@@ -1,4 +1,5 @@
 import { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../../assets/img/logo.svg';
 import Button from '../Button/Button';
 import { getBannerTopo, getMenuItens, getNavbar } from '../../api';
@@ -42,7 +43,9 @@ export default function Header() {
       )}
 
       <div className="header-nav">
-        <img src={logo} alt="Aenima" className="header-logo" width={242} height={42} />
+        <Link to="/">
+          <img src={logo} alt="Aenima" className="header-logo" width={242} height={42} />
+        </Link>
 
         <button
           className={`header-menu-toggle${menuAberto ? ' header-menu-toggle--open' : ''}`}
