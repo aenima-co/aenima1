@@ -1,0 +1,333 @@
+/* ── Página ── */
+.page {
+  padding: 128px 64px;
+  background: #f5f3f5;
+  color: #0a0b15;
+}
+
+/* ── Linha 1: Título + Resume ── */
+.row1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.title {
+  font-family: "ZT Talk", sans-serif;
+  font-weight: 500;
+  font-size: 112px;
+  line-height: 90%;
+  letter-spacing: -0.03em;
+  color: #0a0b15;
+  margin: 0;
+}
+
+.resume {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  color: #5c5d68;
+  margin: 0;
+}
+
+/* ── Linha 2: Segunda imagem ── */
+.row2 {
+  margin-top: 128px;
+}
+
+.coverImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Linha 3: Info + Descrição ── */
+.row3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 152px;
+  margin-top: 128px;
+  align-items: stretch;
+}
+
+.infoTable {
+  display: flex;
+  flex-direction: column;
+}
+
+.infoRow {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 152px;
+  align-items: center;
+  border-bottom: 1px solid rgba(10, 11, 21, 0.1);
+  padding: 20px 0;
+}
+
+.infoRow:last-child {
+  border-bottom: none;
+}
+
+.infoLabel,
+.infoValue {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #5c5d68;
+  margin: 0;
+}
+
+.infoValue {
+  text-align: right;
+}
+
+.descSection {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+.sectionLabel {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  color: #000000;
+  margin: 0;
+}
+
+.sectionText {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  color: #5c5d68;
+  margin: 0;
+}
+
+.detailsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.detailsList li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.detailsList li::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  border-radius: 50%;
+  background: #5c5d68;
+}
+
+/* ── Galeria ── */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 128px;
+}
+
+.galleryImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Carrossel ── */
+.carouselSection {
+  margin-top: 128px;
+}
+
+.carousel {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel.dragging {
+  cursor: grabbing;
+}
+
+.carouselCard {
+  flex-shrink: 0;
+  width: 420px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.carouselImageWrap {
+  aspect-ratio: 4 / 3;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: #e8e4dc;
+}
+
+.carouselImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.carouselCard:hover .carouselImg {
+  transform: scale(1.03);
+}
+
+.carouselPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: #e8e4dc;
+}
+
+.carouselInfo {
+  padding: 0 4px;
+}
+
+.carouselTitle {
+  font-family: "ZT Talk", sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #0c0c0c;
+  margin: 0 0 8px;
+}
+
+.carouselClient {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #5c5d68;
+  margin: 0;
+}
+
+/* ── Estados ── */
+.loading,
+.notFound {
+  padding: 128px 64px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.15em;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .page {
+    padding: 64px 24px;
+  }
+
+  .row1 {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .title {
+    font-size: clamp(40px, 64px, 72px);
+    line-height: 95%;
+  }
+
+  .resume {
+    font-size: 18px;
+    line-height: 150%;
+  }
+
+  .row2 {
+    margin-top: 64px;
+  }
+
+  .coverImg {
+    border-radius: 24px;
+  }
+
+  .row3 {
+    grid-template-columns: 1fr;
+    gap: 64px;
+    margin-top: 48px;
+  }
+
+  .infoLabel,
+  .infoValue {
+    font-size: 13px;
+  }
+
+  .infoRow {
+    padding: 14px 0;
+  }
+
+  .descSection {
+    gap: 48px;
+  }
+
+  .sectionLabel {
+    font-size: 20px;
+  }
+
+  .sectionText {
+    font-size: 18px;
+    line-height: 140%;
+  }
+
+  .detailsList {
+    gap: 16px;
+  }
+
+  .detailsList li::before {
+    width: 4px;
+    height: 4px;
+    min-width: 4px;
+  }
+
+  .gallery {
+    margin-top: 48px;
+    gap: 16px;
+  }
+
+  .galleryImg {
+    border-radius: 24px;
+  }
+
+  .carouselSection {
+    margin-top: 64px;
+  }
+
+  .carouselCard {
+    width: 280px;
+  }
+
+  .carouselTitle {
+    font-size: 22px;
+  }
+}

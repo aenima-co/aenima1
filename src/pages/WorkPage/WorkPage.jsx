@@ -6,10 +6,11 @@ const STRAPI_URL = "http://localhost:1337";
 
 // ─── Card individual ──────────────────────────────────────────────────────────
 function WorkCard({ work, index }) {
-  const imageUrl = work.cover?.url
-    ? `${STRAPI_URL}${work.cover.url}`
-    : work.cover?.formats?.large?.url
-    ? `${STRAPI_URL}${work.cover.formats.large.url}`
+  const firstCover = Array.isArray(work.cover) ? work.cover[0] : work.cover;
+  const imageUrl = firstCover?.url
+    ? `${STRAPI_URL}${firstCover.url}`
+    : firstCover?.formats?.large?.url
+    ? `${STRAPI_URL}${firstCover.formats.large.url}`
     : null;
 
   const placeholders = [
