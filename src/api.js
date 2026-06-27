@@ -131,3 +131,23 @@ export async function getTeamMembers() {
   const data = await res.json()
   return data.data
 }
+
+export async function getWorkPage() {
+  const res = await fetch(`${API_URL}/work-page`)
+  if (!res.ok) {
+    console.error('[getWorkPage] erro HTTP:', res.status)
+    return null
+  }
+  const data = await res.json()
+  return data.data
+}
+
+export async function getWorks() {
+  const res = await fetch(`${API_URL}/works?populate=cover&sort=createdAt:desc`)
+  if (!res.ok) {
+    console.error('[getWorks] erro HTTP:', res.status)
+    return []
+  }
+  const data = await res.json()
+  return data.data
+}
