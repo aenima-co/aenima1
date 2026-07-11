@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { getAboutPage, getValues, getTeamMembers } from "../../api";
+import { getAboutPage } from "../../api";
 import styles from "./AboutPage.module.css";
-import cardPurple from "../../assets/img/about-card-purple.png";
+import Button from "../../components/Button/Button";
 import cardPixel from "../../assets/img/about-card-pixel.png";
 import cardOrange from "../../assets/img/about-card-orange.png";
 
@@ -30,23 +30,24 @@ function ValueCard({ value }) {
 
 // ─── Card de Membro ───────────────────────────────────────────────────────────
 function MemberCard({ member }) {
-  const photoUrl = member.photo?.url
-    ? `${STRAPI_URL}${member.photo.url}`
-    : null;
+  const photo = Array.isArray(member.member_pic)
+    ? member.member_pic[0]
+    : member.member_pic;
+  const photoUrl = photo?.url ? `${STRAPI_URL}${photo.url}` : null;
 
   return (
     <div className={styles.memberCard}>
       <div className={styles.memberPhoto}>
         {photoUrl ? (
-          <img src={photoUrl} alt={member.name} className={styles.memberImg} />
+          <img src={photoUrl} alt={member.member_name} className={styles.memberImg} />
         ) : (
           <div className={styles.memberPhotoPlaceholder} />
         )}
       </div>
       <div className={styles.memberInfo}>
-        <h3 className={styles.memberName}>{member.name}</h3>
-        <p className={styles.memberRole}>{member.role}</p>
-        <p className={styles.memberBio}>{member.bio}</p>
+        <h3 className={styles.memberName}>{member.member_name}</h3>
+        <p className={styles.memberRole}>{member.member_function}</p>
+        <p className={styles.memberBio}>{member.member_description}</p>
       </div>
     </div>
   );
@@ -55,21 +56,13 @@ function MemberCard({ member }) {
 // ─── Página principal ─────────────────────────────────────────────────────────
 export default function AboutPage() {
   const [pageData, setPageData] = useState(null);
-  const [values, setValues] = useState([]);
-  const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       try {
-        const [page, vals, team] = await Promise.all([
-          getAboutPage(),
-          getValues(),
-          getTeamMembers(),
-        ]);
+        const page = await getAboutPage();
         setPageData(page);
-        setValues(vals || []);
-        setMembers(team || []);
       } catch (err) {
         console.error("[AboutPage] erro ao carregar:", err);
       } finally {
@@ -88,7 +81,7 @@ export default function AboutPage() {
       <section className={styles.hero}>
         <div className={styles.heroLeft}>
           <h1 className={styles.heroTitle}>
-            {pageData?.hero_title || "// FEARLESS AUTHENTIC >> & (( EXPERTS"}
+            {pageData?.hero_title || "// FEARLESS\nAUTHENTIC >>\n& (( EXPERTS"}
           </h1>
           <p className={styles.heroSubtitle}>
             {pageData?.hero_subtitle || "We craft unique websites creating meaningful and memorable experiences."}
@@ -96,7 +89,7 @@ export default function AboutPage() {
 
           {/* Valores ficam aqui no layout desktop */}
           <div className={styles.values}>
-            {values.map((v) => (
+            {(pageData?.about_description || []).map((v) => (
               <ValueCard key={v.id} value={v} />
             ))}
           </div>
@@ -104,7 +97,12 @@ export default function AboutPage() {
 
         <div className={styles.heroRight}>
           <div className={styles.heroRightLeft}>
-            <img src={cardPurple} alt="" className={styles.heroCardImg} />
+            <div className={styles.heroCardText}>
+              <p className={styles.heroCardTextContent}>
+                We craft unique websites creating
+              </p>
+              <Button>Contact Us</Button>
+            </div>
             <img src={cardPixel} alt="" className={styles.heroCardImg} />
           </div>
           <img src={cardOrange} alt="" className={styles.heroCardImgOrange} />
@@ -113,7 +111,7 @@ export default function AboutPage() {
 
       {/* ── Time ── */}
       <section className={styles.team}>
-        {members.map((m) => (
+        {(pageData?.members_detail || []).map((m) => (
           <MemberCard key={m.id} member={m} />
         ))}
       </section>

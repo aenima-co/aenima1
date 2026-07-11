@@ -103,7 +103,13 @@ export async function getFooter() {
 }
 
 export async function getAboutPage() {
-  const res = await fetch(`${API_URL}/about-page`)
+  const res = await fetch(
+    `${API_URL}/about-page` +
+    `?populate[0]=about_description` +
+    `&populate[1]=about_description.icon` +
+    `&populate[2]=members_detail` +
+    `&populate[3]=members_detail.member_pic`
+  )
   if (!res.ok) {
     console.error('[getAboutPage] erro HTTP:', res.status)
     return null
