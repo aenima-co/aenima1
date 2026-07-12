@@ -80,7 +80,6 @@
   height: clamp(48px, 4vw, 64px);
   display: flex;
   align-items: center;
-  justify-content: center;
   margin-bottom: 8px;
 }
 
@@ -129,7 +128,6 @@
 
 .heroCardText {
   width: 100%;
-  max-width: 424px;
   aspect-ratio: 424 / 380;
   border-radius: clamp(16px, 2vw, 24px);
   background-color: #7f6cff;
@@ -257,12 +255,22 @@
 @media (max-width: 1024px) {
   .hero {
     grid-template-columns: 1fr;
-    gap: 46px;
+    gap: 64px;
+  }
+
+  .heroSubtitle {
+    margin-bottom: 80px;
+  }
+
+  .valueIcon img {
+    width: 48px;
+    height: 48px;
   }
 
   .heroRightLeft {
     padding-top: 10px;
   }
+
   .team {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -278,8 +286,40 @@
 }
 
 @media (max-width: 640px) {
+  .hero {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .heroTitle {
+    font-size: 64px;
+  }
+  .heroTitle,
+  .heroSubtitle {
+    margin-bottom: 48px;
+  }
+
   .values {
     grid-template-columns: 1fr;
+    margin-bottom: 64px;
+    gap: 48px;
+  }
+
+  .valueIcon {
+    margin-bottom: 0;
+  }
+
+  .valueCard {
+    gap: 24px;
+  }
+
+  .valueIcon img {
+    width: 36px;
+    height: 36px;
+  }
+  .valueTitle,
+  .valieDesc {
+    font-size: 18px;
   }
 
   .heroRight {
@@ -296,7 +336,21 @@
     max-width: none;
   }
 
+  .heroCardText {
+    align-items: flex-start;
+    max-height: 285px;
+  }
+
+  .heroCardTextContent {
+    font-size: 24px;
+  }
+  .heroCardImg {
+    max-height: 285px;
+  }
+
   .team {
     grid-template-columns: 1fr;
+    margin-top: 22px;
+    margin-bottom: 48px;
   }
 }
