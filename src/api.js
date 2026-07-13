@@ -131,12 +131,16 @@ export async function getWorkBySlug(slugOrId) {
     const data = await bySlug.json()
     if (data.data?.length) return data.data[0]
   }
-  // Fallback to numeric id
+  // Fallback to numeric id. Strapi v5's single-item route (/works/:id)
+  // expects documentId, not the numeric id, so filter the collection
+  // instead of hitting that route directly.
   if (!isNaN(slugOrId)) {
-    const byId = await fetch(`${API_URL}/works/${slugOrId}?populate=*`)
+    const byId = await fetch(
+      `${API_URL}/works?filters[id][$eq]=${encodeURIComponent(slugOrId)}&populate=*`
+    )
     if (byId.ok) {
       const data = await byId.json()
-      return data.data ?? null
+      if (data.data?.length) return data.data[0]
     }
   }
   return null
