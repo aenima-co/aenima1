@@ -1,7 +1,7 @@
 /* ===== MOBILE (base) ===== */
 .best-work {
   padding: 48px 24px;
-  background-color: #ffffff;
+  background-color: #f5f3f5;
 }
 
 .best-work__tag {
@@ -103,7 +103,7 @@
   gap: 32px;
   padding: 32px 32px 32px 56px;
   justify-content: space-between;
-  background-color: #ffffff;
+  background-color: #f5f3f5;
   border: 1.5px solid #d5d4d4;
 }
 

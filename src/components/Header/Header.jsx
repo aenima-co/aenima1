@@ -1,12 +1,12 @@
 import { useState, useRef, useLayoutEffect, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/img/logo.svg';
 import Button from '../Button/Button';
 import { getBannerTopo, getMenuItens, getNavbar } from '../../api';
 import './Header.css';
 
 export default function Header() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const location = useLocation();
   const [indicatorStyle, setIndicatorStyle] = useState({});
   const itemRefs = useRef([]);
 
@@ -14,6 +14,8 @@ export default function Header() {
   const [menuItens, setMenuItens] = useState([]);
   const [navbar, setNavbar] = useState(null);
   const [menuAberto, setMenuAberto] = useState(false);
+
+  const activeIndex = menuItens.findIndex((item) => item.link === location.pathname);
 
   useEffect(() => {
     getBannerTopo().then(setBannerTopo);
@@ -23,10 +25,14 @@ export default function Header() {
 
   const updateIndicator = (index) => {
     const el = itemRefs.current[index];
-    if (!el) return;
+    if (!el) {
+      setIndicatorStyle({ opacity: 0 });
+      return;
+    }
     setIndicatorStyle({
       left: el.offsetLeft + 'px',
       width: el.offsetWidth + 'px',
+      opacity: 1,
     });
   };
 
@@ -60,16 +66,15 @@ export default function Header() {
         <nav className="navbar" onMouseLeave={() => updateIndicator(activeIndex)}>
           <div className="navbar-indicator" style={indicatorStyle} />
           {menuItens.map((item, i) => (
-            <a
+            <Link
               key={item.id}
               ref={(el) => (itemRefs.current[i] = el)}
-              href={item.link}
+              to={item.link}
               className={`nav-item${activeIndex === i ? ' nav-item--active' : ''}`}
               onMouseEnter={() => updateIndicator(i)}
-              onClick={() => setActiveIndex(i)}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -83,14 +88,14 @@ export default function Header() {
       <div className={`mobile-menu${menuAberto ? ' mobile-menu--open' : ''}`}>
         <nav className="mobile-menu__nav">
           {menuItens.map((item, i) => (
-            <a
+            <Link
               key={item.id}
-              href={item.link}
+              to={item.link}
               className={`mobile-menu__item${activeIndex === i ? ' mobile-menu__item--active' : ''}`}
-              onClick={() => { setActiveIndex(i); setMenuAberto(false); }}
+              onClick={() => setMenuAberto(false)}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
