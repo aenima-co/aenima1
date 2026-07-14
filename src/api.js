@@ -132,6 +132,19 @@ export async function getTeamMembers() {
   return data.data
 }
 
+<<<<<<< HEAD
+=======
+export async function getWorks() {
+  const res = await fetch(`${API_URL}/works?populate=cover`)
+  if (!res.ok) {
+    console.error('[getWorks] erro HTTP:', res.status)
+    return null
+  }
+  const data = await res.json()
+  return data.data
+}
+
+>>>>>>> feat/pagina-work
 export async function getWorkPage() {
   const res = await fetch(`${API_URL}/work-page`)
   if (!res.ok) {
@@ -140,6 +153,7 @@ export async function getWorkPage() {
   }
   const data = await res.json()
   return data.data
+<<<<<<< HEAD
 }
 
 export async function getWorks() {
@@ -150,4 +164,6 @@ export async function getWorks() {
   }
   const data = await res.json()
   return data.data
+=======
+>>>>>>> feat/pagina-work
 }

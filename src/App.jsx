@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
@@ -39,3 +40,5 @@ const App = () => {
 };
 
 export default App;
+=======
+>>>>>>> feat/pagina-work
