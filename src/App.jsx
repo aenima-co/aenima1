@@ -9,6 +9,7 @@ import Blog from "./components/Blog/Blog";
 import Footer from "./components/Footer/Footer";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import WorkPage from "./pages/WorkPage/WorkPage";
+import PortfolioPage from "./pages/PortfolioPage/PortfolioPage";
 import BlogPage from "./pages/BlogPage/BlogPage";
 
 import "./App.css";
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/work" element={<WorkPage />} />
+        <Route path="/work/:slug" element={<PortfolioPage />} />
         <Route path="/blog" element={<BlogPage />} />
       </Routes>
       <Footer />
