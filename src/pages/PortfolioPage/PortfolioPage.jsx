@@ -19,7 +19,12 @@ function CarouselCard({ work }) {
     <a href={`/work/${work.slug || work.id}`} className={styles.carouselCard}>
       <div className={styles.carouselImageWrap}>
         {imgUrl ? (
-          <img src={imgUrl} alt={work.title} className={styles.carouselImg} loading="lazy" />
+          <img
+            src={imgUrl}
+            alt={work.title}
+            className={styles.carouselImg}
+            loading="lazy"
+          />
         ) : (
           <div className={styles.carouselPlaceholder} />
         )}
@@ -43,7 +48,11 @@ export default function PortfolioPage() {
 
   function onMouseDown(e) {
     const el = carouselRef.current;
-    dragState.current = { isDown: true, startX: e.pageX - el.offsetLeft, scrollLeft: el.scrollLeft };
+    dragState.current = {
+      isDown: true,
+      startX: e.pageX - el.offsetLeft,
+      scrollLeft: el.scrollLeft,
+    };
     el.classList.add(styles.dragging);
   }
 
@@ -57,7 +66,8 @@ export default function PortfolioPage() {
     e.preventDefault();
     const el = carouselRef.current;
     const x = e.pageX - el.offsetLeft;
-    el.scrollLeft = dragState.current.scrollLeft - (x - dragState.current.startX) * 1.5;
+    el.scrollLeft =
+      dragState.current.scrollLeft - (x - dragState.current.startX) * 1.5;
   }
 
   useEffect(() => {
@@ -79,13 +89,14 @@ export default function PortfolioPage() {
   }, [slug]);
 
   if (loading) return <div className={styles.loading}>Carregando…</div>;
-  if (!work) return <div className={styles.notFound}>Projeto não encontrado.</div>;
+  if (!work)
+    return <div className={styles.notFound}>Projeto não encontrado.</div>;
 
   const covers = Array.isArray(work.cover)
     ? work.cover
     : work.cover
-    ? [work.cover]
-    : [];
+      ? [work.cover]
+      : [];
 
   const secondCover = getCoverUrl(covers[1]);
   const galleryCover = covers.slice(2);
@@ -107,7 +118,6 @@ export default function PortfolioPage() {
 
   return (
     <div className={styles.page}>
-
       {/* Linha 1: Título + Resume */}
       <div className={styles.row1}>
         <h1 className={styles.title}>{work.title}</h1>
@@ -123,7 +133,6 @@ export default function PortfolioPage() {
 
       {/* Linha 3: Info + Descrição */}
       <div className={styles.row3}>
-
         {/* Coluna 1: tabela de info */}
         <div className={styles.infoTable}>
           {infoLabels.map((label, i) => (
@@ -171,13 +180,13 @@ export default function PortfolioPage() {
       {works.length > 0 && (
         <div className={styles.carouselSection}>
           <div
-          className={styles.carousel}
-          ref={carouselRef}
-          onMouseDown={onMouseDown}
-          onMouseLeave={onMouseLeaveOrUp}
-          onMouseUp={onMouseLeaveOrUp}
-          onMouseMove={onMouseMove}
-        >
+            className={styles.carousel}
+            ref={carouselRef}
+            onMouseDown={onMouseDown}
+            onMouseLeave={onMouseLeaveOrUp}
+            onMouseUp={onMouseLeaveOrUp}
+            onMouseMove={onMouseMove}
+          >
             {works.map((w) => (
               <CarouselCard key={w.id} work={w} />
             ))}

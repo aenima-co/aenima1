@@ -162,8 +162,24 @@ export async function getWorks() {
     console.error('[getWorks] erro HTTP:', res.status)
     return []
   }
+<<<<<<< HEAD
   const data = await res.json()
   return data.data
 =======
 >>>>>>> feat/pagina-work
+=======
+  // Fallback to numeric id. Strapi v5's single-item route (/works/:id)
+  // expects documentId, not the numeric id, so filter the collection
+  // instead of hitting that route directly.
+  if (!isNaN(slugOrId)) {
+    const byId = await fetch(
+      `${API_URL}/works?filters[id][$eq]=${encodeURIComponent(slugOrId)}&populate=*`
+    )
+    if (byId.ok) {
+      const data = await byId.json()
+      if (data.data?.length) return data.data[0]
+    }
+  }
+  return null
+>>>>>>> feat/portifolio
 }
