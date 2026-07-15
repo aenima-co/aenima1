@@ -10,6 +10,12 @@ function getCoverUrl(item) {
   return item.url ? `${STRAPI_URL}${item.url}` : null;
 }
 
+function isFullWidthImage(item) {
+  const title =
+    `${item?.name || ""} ${item?.alternativeText || ""}`.toLowerCase();
+  return title.includes("full");
+}
+
 // ─── Carousel card ────────────────────────────────────────────────────────────
 function CarouselCard({ work }) {
   const firstCover = Array.isArray(work.cover) ? work.cover[0] : work.cover;
@@ -170,7 +176,11 @@ export default function PortfolioPage() {
               key={i}
               src={getCoverUrl(img)}
               alt={`${work.title} ${i + 3}`}
-              className={styles.galleryImg}
+              className={
+                isFullWidthImage(img)
+                  ? `${styles.galleryImg} ${styles.galleryImgFull}`
+                  : styles.galleryImg
+              }
             />
           ))}
         </div>
