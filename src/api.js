@@ -149,6 +149,7 @@ export async function getWorks() {
 }
 
 export async function getWorkBySlug(slugOrId) {
+  // Try by slug first
   const bySlug = await fetch(
     `${API_URL}/works?filters[slug][$eq]=${encodeURIComponent(
       slugOrId,
@@ -163,6 +164,9 @@ export async function getWorkBySlug(slugOrId) {
     }
   }
 
+  // Fallback to numeric id. Strapi v5's single-item route (/works/:id)
+  // expects documentId, not the numeric id, so filter the collection
+  // instead of hitting that route directly.
   if (!isNaN(slugOrId)) {
     const byId = await fetch(
       `${API_URL}/works?filters[id][$eq]=${encodeURIComponent(
