@@ -10,20 +10,24 @@ function WorkCard({ work, index }) {
   const imageUrl = firstCover?.url
     ? `${STRAPI_URL}${firstCover.url}`
     : firstCover?.formats?.large?.url
-    ? `${STRAPI_URL}${firstCover.formats.large.url}`
-    : null;
+      ? `${STRAPI_URL}${firstCover.formats.large.url}`
+      : null;
 
   const placeholders = [
-    "#e8e4dc", "#ddd8ce", "#e0dbd0", "#d8d4ca",
-    "#e4e0d8", "#dcd8d0", "#e2ddd5", "#d6d2c8", "#dedad2",
+    "#e8e4dc",
+    "#ddd8ce",
+    "#e0dbd0",
+    "#d8d4ca",
+    "#e4e0d8",
+    "#dcd8d0",
+    "#e2ddd5",
+    "#d6d2c8",
+    "#dedad2",
   ];
   const bgColor = placeholders[index % placeholders.length];
 
   return (
-    <article
-      className={styles.card}
-      style={{ "--card-index": index }}
-    >
+    <article className={styles.card} style={{ "--card-index": index }}>
       <a href={`/work/${work.slug || work.id}`} className={styles.cardLink}>
         <div className={styles.cardImageWrap}>
           {imageUrl ? (
@@ -43,9 +47,7 @@ function WorkCard({ work, index }) {
 
         <div className={styles.cardInfo}>
           <h3 className={styles.cardTitle}>{work.title}</h3>
-          {work.client && (
-            <p className={styles.cardClient}>{work.client}</p>
-          )}
+          {work.client && <p className={styles.cardClient}>{work.client}</p>}
         </div>
       </a>
     </article>
@@ -78,16 +80,19 @@ export default function WorkPage() {
 
   return (
     <div className={styles.page}>
-
       {/* Hero */}
       <header className={styles.hero}>
         <h1 className={styles.heroTitle}>
           {pageData?.hero_title || "Selected Works"}
         </h1>
         <p className={styles.heroSubtitle}>
-          {pageData?.hero_subtitle || "We craft unique websites creating meaningful and memorable experiences."}
+          {pageData?.hero_subtitle ||
+            "We craft unique websites creating meaningful and memorable experiences."}
         </p>
-        <a href="/contact" className={`cta-btn cta-btn--dark ${styles.heroBtn}`}>
+        <a
+          href="/contact"
+          className={`cta-btn cta-btn--dark ${styles.heroBtn}`}
+        >
           <span className="cta-btn__text">
             {pageData?.cta_button_label || "Start a Project"}
           </span>

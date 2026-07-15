@@ -1,7 +1,7 @@
 /* ── Página ── */
 .page {
   min-height: 100vh;
-  background: #ffffff;
+  background: #f5f3f5;
   color: #0c0c0c;
   font-family: "Guanabara Sans", sans-serif;
 }
@@ -21,66 +21,66 @@
 /* ── Hero ── */
 .hero {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 2rem;
-  padding: 5rem 5vw 6rem;
+  grid-template-columns: minmax(0, 1fr) clamp(560px, 42vw, 860px);
+  gap: clamp(24px, 2vw, 48px);
+  padding: clamp(48px, 9vw, 128px) clamp(20px, 4.5vw, 64px);
   align-items: stretch;
-  padding-top: 128px;
 }
 
 .heroLeft {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 942px;
 }
 
 .heroTitle {
   font-family: "ZT Talk", sans-serif;
   font-weight: 500;
-  font-size: 144px;
+  font-size: clamp(90px, 7vw, 144px);
   line-height: 0.9;
   letter-spacing: -0.03em;
   margin: 0 0 1.5rem;
   color: #0c0c0c;
   text-transform: uppercase;
-  width: 880px;
+  white-space: pre-line;
+  width: 100%;
+  max-width: 880px;
 }
 
 .heroSubtitle {
   font-family: "Guanabara Sans", sans-serif;
   font-weight: 300;
-  font-size: 32px;
+  font-size: clamp(20px, 1.8vw, 32px);
   line-height: 1.5;
   letter-spacing: -0.02em;
   color: rgba(0, 0, 0, 0.5);
-  margin: 0 0 4rem;
-  width: 880px;
+  margin: 0 0 clamp(32px, 5vw, 64px);
+  width: 100%;
+  max-width: 880px;
 }
 
 /* ── Valores ── */
 .values {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  width: 880px;
-  height: 300px;
+  gap: clamp(16px, 2vw, 32px);
+  width: 100%;
+  max-width: 880px;
   margin-top: auto;
 }
 
 .valueCard {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: clamp(12px, 1.5vw, 16px);
 }
 
 .valueIcon {
-  width: 40px;
-  height: 40px;
+  width: clamp(48px, 4vw, 64px);
+  height: clamp(48px, 4vw, 64px);
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 8px;
 }
 
 .valueIconPlaceholder {
@@ -91,20 +91,20 @@
 .valueTitle {
   font-family: "Guanabara Sans", sans-serif;
   font-weight: 700;
-  font-size: 32px;
-  line-height: 1.5;
+  font-size: clamp(20px, 1.8vw, 32px);
+  line-height: 1.3;
   letter-spacing: -0.02em;
   margin: 0;
-  color: #5C5D68;
+  color: #5c5d68;
 }
 
 .valueDesc {
   font-family: "Guanabara Sans", sans-serif;
   font-weight: 300;
-  font-size: 32px;
+  font-size: clamp(18px, 1.6vw, 28px);
   line-height: 1.5;
-  letter-spacing: -0.02em;
-  color: #5C5D68;
+  letter-spacing: -0.03em;
+  color: #5c5d68;
   margin: 0;
 }
 
@@ -112,29 +112,58 @@
 .heroRight {
   display: flex;
   flex-direction: row;
-  gap: 32px;
+  gap: clamp(16px, 2vw, 32px);
   align-items: flex-start;
+  width: 100%;
 }
 
 .heroRightLeft {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: clamp(16px, 2vw, 32px);
   padding-top: 150px;
+  flex: 1;
+  min-width: 0;
+}
+
+.heroCardText {
+  width: 100%;
+  aspect-ratio: 424 / 380;
+  border-radius: clamp(16px, 2vw, 24px);
+  background-color: #7f6cff;
+  padding: clamp(20px, 2vw, 32px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.heroCardTextContent {
+  width: 100%;
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 300;
+  font-size: clamp(18px, 1.8vw, 28px);
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: #0a0b15;
+  margin: 0;
 }
 
 .heroCardImg {
-  width: 424px;
-  height: 380px;
-  border-radius: 24px;
+  width: 100%;
+  max-width: 424px;
+  aspect-ratio: 424 / 380;
+  border-radius: clamp(16px, 2vw, 24px);
   object-fit: cover;
   display: block;
 }
 
 .heroCardImgOrange {
-  width: 424px;
-  height: 640px;
-  border-radius: 24px;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  max-width: 424px;
+  aspect-ratio: 424 / 640;
+  border-radius: clamp(16px, 2vw, 24px);
   object-fit: cover;
   display: block;
 }
@@ -143,26 +172,22 @@
 .team {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  padding: 4rem 5vw;
-  border-top: none;
-  padding-bottom: 128px;
+  gap: clamp(20px, 2vw, 32px);
+  padding: 0 clamp(20px, 4.5vw, 64px) clamp(48px, 9vw, 128px);
 }
 
 .memberCard {
-  background: #ffffff;
-  border-radius: 36px;
+  background: #f5f3f5;
+  border-radius: clamp(24px, 2vw, 36px);
   border: 1px solid rgba(0, 0, 0, 0.06);
-  padding: 32px;
-  width: 100%;
-  height: 798px;
+  padding: clamp(20px, 2vw, 32px);
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: clamp(20px, 2vw, 32px);
 }
 
 .memberPhoto {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1;
   overflow: hidden;
   background: #e8e6e0;
 }
@@ -186,17 +211,16 @@
 }
 
 .memberInfo {
-  padding: 1.5rem;
+  padding: clamp(20px, 2vw, 24px);
 }
 
 .memberName {
   font-family: "ZT Talk", sans-serif;
   font-weight: 400;
-  font-size: 48px;
+  font-size: clamp(32px, 3vw, 48px);
   line-height: 1;
   letter-spacing: -0.02em;
-  margin: 0 0 0.3rem;
-  color: #0A0B15;
+  margin: 0 0 24px;
 }
 
 .memberRole {
@@ -206,44 +230,127 @@
   line-height: 1;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color:#5C5D68;
-  margin: 0 0 1rem;
+  color: #5c5d68;
+  margin: 0 0 32px;
 }
 
 .memberBio {
   font-family: "Guanabara Sans", sans-serif;
-  font-weight: 400;
-  font-size: 20px;
+  font-weight: 300;
+  font-size: clamp(18px, 1.5vw, 20px);
   line-height: 1.5;
   letter-spacing: -0.02em;
-  color: #5C5D68;
+  color: #5c5d68;
   margin: 0;
 }
 
 /* ── Responsivo ── */
-@media (max-width: 1024px) {
-  .hero {
-    grid-template-columns: 1fr;
+
+@media (max-width: 1440px) {
+  .heroRightLeft {
+    padding-top: 100px;
   }
 }
 
-@media (max-width: 768px) {
-  .team {
+@media (max-width: 1024px) {
+  .hero {
     grid-template-columns: 1fr;
-    padding: 3rem 1.5rem;
+    gap: 64px;
   }
+
+  .heroSubtitle {
+    margin-bottom: 80px;
+  }
+
+  .valueIcon img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .heroRightLeft {
+    padding-top: 10px;
+  }
+
+  .team {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .heroRight {
+    align-items: stretch;
+  }
+
+  .heroCardImgOrange {
+    height: 100%;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .heroTitle {
+    font-size: 64px;
+  }
+  .heroTitle,
+  .heroSubtitle {
+    margin-bottom: 48px;
+  }
+
   .values {
     grid-template-columns: 1fr;
+    margin-bottom: 64px;
+    gap: 48px;
   }
-  .hero {
-    padding: 3rem 1.5rem;
+
+  .valueIcon {
+    margin-bottom: 0;
   }
+
+  .valueCard {
+    gap: 24px;
+  }
+
+  .valueIcon img {
+    width: 36px;
+    height: 36px;
+  }
+  .valueTitle,
+  .valieDesc {
+    font-size: 18px;
+  }
+
   .heroRight {
     flex-direction: column;
   }
+
+  .heroRightLeft {
+    padding-top: 0;
+  }
+
   .heroCardImg,
-  .heroCardImgOrange {
-    width: 100%;
-    height: auto;
+  .heroCardImgOrange,
+  .heroCardText {
+    max-width: none;
+  }
+
+  .heroCardText {
+    align-items: flex-start;
+    max-height: 285px;
+  }
+
+  .heroCardTextContent {
+    font-size: 24px;
+  }
+  .heroCardImg {
+    max-height: 285px;
+  }
+
+  .team {
+    grid-template-columns: 1fr;
+    margin-top: 22px;
+    margin-bottom: 48px;
   }
 }
