@@ -102,6 +102,36 @@ export async function getFooter() {
   return data.data
 }
 
+export async function getAboutPage() {
+  const res = await fetch(`${API_URL}/about-page`)
+  if (!res.ok) {
+    console.error('[getAboutPage] erro HTTP:', res.status)
+    return null
+  }
+  const data = await res.json()
+  return data.data
+}
+
+export async function getValues() {
+  const res = await fetch(`${API_URL}/values?sort=order&populate=*`)
+  if (!res.ok) {
+    console.error('[getValues] erro HTTP:', res.status)
+    return null
+  }
+  const data = await res.json()
+  return data.data
+}
+
+export async function getTeamMembers() {
+  const res = await fetch(`${API_URL}/team-members?sort=order&populate=*`)
+  if (!res.ok) {
+    console.error('[getTeamMembers] erro HTTP:', res.status)
+    return null
+  }
+  const data = await res.json()
+  return data.data
+}
+
 export async function getWorks() {
   const res = await fetch(`${API_URL}/works?populate=*&sort=createdAt:desc`)
   if (!res.ok) {
