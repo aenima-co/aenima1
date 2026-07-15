@@ -98,8 +98,8 @@ export default function PortfolioPage() {
       ? [work.cover]
       : [];
 
-  const secondCover = getCoverUrl(covers[1]);
-  const galleryCover = covers.slice(2);
+  const firstCover = getCoverUrl(covers[0]);
+  const galleryCover = covers.slice(1);
 
   const infoLabels = ["SERVICES", "INDUSTRY", "YEAR", "COUNTRY"];
   const infoValues = [
@@ -124,10 +124,10 @@ export default function PortfolioPage() {
         <p className={styles.resume}>{work.resume}</p>
       </div>
 
-      {/* Linha 2: Segunda imagem do cover */}
-      {secondCover && (
+      {/* Linha 2: Primeira imagem do cover */}
+      {firstCover && (
         <div className={styles.row2}>
-          <img src={secondCover} alt={work.title} className={styles.coverImg} />
+          <img src={firstCover} alt={work.title} className={styles.coverImg} />
         </div>
       )}
 
