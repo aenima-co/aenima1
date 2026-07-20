@@ -2,10 +2,13 @@ import { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/img/logo.svg';
 import Button from '../Button/Button';
+import LanguageToggle from '../LanguageToggle/LanguageToggle';
 import { getBannerTopo, getMenuItens, getNavbar } from '../../api';
+import { useLang } from '../../contexts/LanguageContext';
 import './Header.css';
 
 export default function Header() {
+  const { locale } = useLang();
   const location = useLocation();
   const [indicatorStyle, setIndicatorStyle] = useState({});
   const itemRefs = useRef([]);
@@ -18,10 +21,10 @@ export default function Header() {
   const activeIndex = menuItens.findIndex((item) => item.link === location.pathname);
 
   useEffect(() => {
-    getBannerTopo().then(setBannerTopo);
-    getMenuItens().then(setMenuItens);
-    getNavbar().then(setNavbar);
-  }, []);
+    getBannerTopo(locale).then(setBannerTopo);
+    getMenuItens(locale).then(setMenuItens);
+    getNavbar(locale).then(setNavbar);
+  }, [locale]);
 
   const updateIndicator = (index) => {
     const el = itemRefs.current[index];
@@ -82,6 +85,7 @@ export default function Header() {
           <Button href={navbar?.contact_us?.link}>
             {navbar?.contact_us?.texto || 'Contact Us'}
           </Button>
+          <LanguageToggle />
         </div>
       </div>
 

@@ -1,0 +1,242 @@
+/* ─────────────────────────────────────────────
+   MOBILE FIRST
+───────────────────────────────────────────── */
+
+.page {
+  background: #f5f3f5;
+  display: flex;
+  flex-direction: column;
+  padding: 64px 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ── Title ── */
+.title {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 700;
+  font-size: 22.4px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: #5c5d68;
+  margin: 0 0 48px 0;
+}
+
+/* ── Subtitle ── */
+.subtitle {
+  font-family: "ZT Talk", sans-serif;
+  font-weight: 500;
+  font-size: 96px;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: #0a0b15;
+  margin: 0 0 64px 0;
+}
+
+/* ── Form ── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.label {
+  display: block;
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: #5c5d68;
+}
+
+.input {
+  height: 67px;
+  border: 1.88px solid #dbdbdc;
+  background: #ffffff;
+  padding: 27px;
+  border-radius: 8px;
+  font-family: "Guanabara Sans", sans-serif;
+  font-size: 16px;
+  color: #0a0b15;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.input::placeholder {
+  color: #b0b0b8;
+}
+
+.input:focus {
+  border-color: #7f6cff;
+}
+
+.textarea {
+  height: auto;
+  resize: vertical;
+  min-height: 140px;
+}
+
+/* ── Botão ── */
+.btnWrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0;
+}
+
+.btn {
+  border: 1.13px solid #d5d4d4 !important;
+  padding: 24px !important;
+}
+
+.btnText {
+  font-family: "ZT Talk", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 31.5px !important;
+  line-height: 0.9 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── Sociais mobile ── */
+.socialsMobile {
+  display: flex;
+  gap: 7.36px;
+  margin-top: 64px;
+}
+
+/* ── Col 1 rodapé (desktop socials + date) ── */
+.col1Foot {
+  margin-top: 27px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* Ícones desktop — ocultos no mobile */
+.socialsDesktop {
+  display: none;
+  gap: 9.82px;
+}
+
+/* ── Ícone social (compartilhado) ── */
+.socialIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.socialIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Date ── */
+.date {
+  font-family: "Guanabara Sans", sans-serif;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: #0a0b15;
+}
+
+/* ─────────────────────────────────────────────
+   DESKTOP — 2 colunas a partir de 768px
+   DOM order: col1Head → form → socialsMobile → col1Foot
+   Grid rearrange: col1Head (col1 row1) | form (col2 rows1+2)
+                   col1Foot (col1 row2)
+───────────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "head form"
+      "foot form";
+    column-gap: 64px;
+    padding: 128px 64px;
+  }
+
+  .col1Head {
+    grid-area: head;
+  }
+
+  .form {
+    grid-area: form;
+    gap: 24px;
+  }
+
+  /* Social mobile: oculto no desktop */
+  .socialsMobile {
+    display: none;
+  }
+
+  /* Col 1 rodapé: empurrado para o fim da coluna */
+  .col1Foot {
+    grid-area: foot;
+    align-self: end;
+    margin-top: 0;
+  }
+
+  /* Social desktop: visível */
+  .socialsDesktop {
+    display: flex;
+  }
+
+  /* ── Overrides de tipografia desktop ── */
+  .title {
+    font-size: 32px;
+  }
+
+  .subtitle {
+    font-size: 144px;
+  }
+
+  .label {
+    font-size: 32px;
+  }
+
+  .date {
+    font-size: 32px;
+  }
+
+  /* ── Overrides de form desktop ── */
+  .field {
+    gap: 20px;
+  }
+
+  .input {
+    height: auto;
+    padding: 36px;
+    border-radius: 10px;
+  }
+
+  /* ── Overrides de botão desktop ── */
+  .btn {
+    padding: 32px 32px 32px 56px !important;
+  }
+
+  .btnText {
+    font-size: 42px !important;
+  }
+
+  .btnWrap {
+    margin-top: 20px;
+  }
+}

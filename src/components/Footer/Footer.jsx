@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getFooter } from '../../api';
+import { useLang } from '../../contexts/LanguageContext';
 import './Footer.css';
 
 const STRAPI_URL = 'http://localhost:1337';
@@ -47,16 +48,17 @@ function useClock() {
 }
 
 export default function Footer() {
+  const { locale } = useLang();
   const [footer, setFooter] = useState(null);
   const [members, setMembers] = useState([]);
   const clock = useClock();
 
   useEffect(() => {
-    getFooter().then(data => {
+    getFooter(locale).then(data => {
       setFooter(data);
       setMembers(data?.memberCard || []);
     });
-  }, []);
+  }, [locale]);
 
   const bgDesktop = resolveMedia(footer?.background);
   const bgMobile = resolveMedia(footer?.backmobile);
@@ -141,7 +143,7 @@ export default function Footer() {
 
             <div className="footer__meta">
               <button className="footer__back-top" onClick={scrollToTop}>
-                ↑ BACK TO TOP
+                {footer?.top || '↑ BACK TO TOP'}
               </button>
               <p className="footer__clock">
                 {clock.time}<br />{clock.date}

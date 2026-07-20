@@ -1,22 +1,35 @@
 const API_URL = "http://localhost:1337/api";
 
-export async function getBannerTopo() {
-  const res = await fetch(`${API_URL}/bannertopo`);
-  const data = await res.json();
-  return data.data;
+// Tenta com locale; se o content type não tiver i18n habilitado no Strapi (404/400), retorna sem locale
+async function withLocaleFallback(urlWithLocale, urlWithoutLocale) {
+  let res = await fetch(urlWithLocale);
+  if (res.status === 404 || res.status === 400) {
+    res = await fetch(urlWithoutLocale);
+  }
+  if (!res.ok) return null;
+  const json = await res.json();
+  return json.data ?? null;
 }
 
-export async function getNavbar() {
-  const res = await fetch(`${API_URL}/navebar?populate=*`);
-  const data = await res.json();
-  return data.data;
+export async function getBannerTopo(locale = "pt-BR") {
+  return withLocaleFallback(
+    `${API_URL}/bannertopo?locale=${locale}`,
+    `${API_URL}/bannertopo`,
+  );
 }
 
-export async function getMenuItens() {
-  const res = await fetch(`${API_URL}/menu-items?sort=ordem`);
-  const data = await res.json();
-  //   console.log('menu-items:', data) // para debugar
-  return data.data;
+export async function getNavbar(locale = "pt-BR") {
+  return withLocaleFallback(
+    `${API_URL}/navebar?populate=*&locale=${locale}`,
+    `${API_URL}/navebar?populate=*`,
+  );
+}
+
+export async function getMenuItens(locale = "pt-BR") {
+  return withLocaleFallback(
+    `${API_URL}/menu-items?sort=ordem&locale=${locale}`,
+    `${API_URL}/menu-items?sort=ordem`,
+  );
 }
 
 export async function getProjetos(apenasDestaque = false) {
@@ -49,57 +62,34 @@ export async function getEspecialidades() {
   return data.data;
 }
 
-export async function getHome() {
-  const res = await fetch(
-    `${API_URL}/home` +
-      `?populate[0]=hero.imagem_fundo` +
-      `&populate[1]=hero.imagem_fundo_mobile` +
-      `&populate[2]=hero.botao_principal` +
-      `&populate[3]=hero.memberCard` +
-      `&populate[4]=hero.memberCard.members_image` +
-      `&populate[5]=botao_projeto` +
-      `&populate[6]=secao_about_preview` +
-      `&populate[7]=secao_about_preview.icone`,
+export async function getHome(locale = "pt-BR") {
+  const POPULATE =
+    `populate[0]=hero.imagem_fundo` +
+    `&populate[1]=hero.imagem_fundo_mobile` +
+    `&populate[2]=hero.botao_principal` +
+    `&populate[3]=hero.memberCard` +
+    `&populate[4]=hero.memberCard.members_image` +
+    `&populate[5]=botao_projeto` +
+    `&populate[6]=secao_about_preview` +
+    `&populate[7]=secao_about_preview.icone`;
+  return withLocaleFallback(
+    `${API_URL}/home?locale=${locale}&${POPULATE}`,
+    `${API_URL}/home?${POPULATE}`,
   );
-  if (!res.ok) {
-    console.error("[getHome] erro HTTP:", res.status);
-    return null;
-  }
-  const data = await res.json();
-  return data.data;
 }
 
-export async function getDemoReel() {
-  const res = await fetch(
-    `${API_URL}/demo-reel` +
-      `?populate[0]=demo_titulo` +
-      `&populate[1]=stickers`,
+export async function getDemoReel(locale = "pt-BR") {
+  return withLocaleFallback(
+    `${API_URL}/demo-reel?locale=${locale}&populate[0]=demo_titulo&populate[1]=stickers`,
+    `${API_URL}/demo-reel?populate[0]=demo_titulo&populate[1]=stickers`,
   );
-  if (!res.ok) {
-    console.error("[getDemoReel] erro HTTP:", res.status);
-    return null;
-  }
-  const data = await res.json();
-  return data.data;
 }
 
-export async function getFooter() {
-  const res = await fetch(
-    `${API_URL}/footer` +
-      `?populate[0]=background` +
-      `&populate[1]=backmobile` +
-      `&populate[2]=arrow_icon` +
-      `&populate[3]=logo` +
-      `&populate[4]=redes_sociais` +
-      `&populate[5]=memberCard` +
-      `&populate[6]=memberCard.members_image`,
+export async function getFooter(locale = "pt-BR") {
+  return withLocaleFallback(
+    `${API_URL}/footer?locale=${locale}&populate[0]=background&populate[1]=backmobile&populate[2]=arrow_icon&populate[3]=logo&populate[4]=redes_sociais&populate[5]=memberCard&populate[6]=memberCard.members_image`,
+    `${API_URL}/footer?populate[0]=background&populate[1]=backmobile&populate[2]=arrow_icon&populate[3]=logo&populate[4]=redes_sociais&populate[5]=memberCard&populate[6]=memberCard.members_image`,
   );
-  if (!res.ok) {
-    console.error("[getFooter] erro HTTP:", res.status);
-    return null;
-  }
-  const data = await res.json();
-  return data.data;
 }
 
 export async function getValues() {
@@ -184,6 +174,17 @@ export async function getWorkBySlug(slugOrId) {
   }
 
   return null;
+}
+
+export async function getContact(locale = "pt-BR") {
+  const POPULATE =
+    `populate[form][populate]=*` +
+    `&populate[social_mobile][populate][icon][populate]=*` +
+    `&populate[social_desktop][populate][icon][populate]=*`;
+  return withLocaleFallback(
+    `${API_URL}/contact?locale=${locale}&${POPULATE}`,
+    `${API_URL}/contact?${POPULATE}`,
+  );
 }
 
 export async function getAboutPage() {

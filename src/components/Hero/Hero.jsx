@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getHome } from "../../api";
+import { useLang } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import "./Hero.css";
 
@@ -26,11 +27,12 @@ function LinkedInIcon() {
 }
 
 export default function Hero() {
+  const { locale } = useLang();
   const [hero, setHero] = useState(null);
 
   useEffect(() => {
-    getHome().then((data) => data && setHero(data.hero));
-  }, []);
+    getHome(locale).then((data) => data && setHero(data.hero));
+  }, [locale]);
 
   if (!hero) return null;
 

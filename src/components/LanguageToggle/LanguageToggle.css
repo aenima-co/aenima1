@@ -1,0 +1,30 @@
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(10, 11, 21, 0.06);
+  border: none;
+  border-radius: 100px;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.lang-toggle__opt {
+  font-family: "Guanabara Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 5px 11px;
+  border-radius: 100px;
+  color: rgba(10, 11, 21, 0.35);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+  line-height: 1;
+  user-select: none;
+}
+
+.lang-toggle__opt--active {
+  background: #7f6cff;
+  color: #ffffff;
+}
