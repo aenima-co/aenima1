@@ -1,4 +1,6 @@
-const API_URL = "http://localhost:1337/api";
+import { STRAPI_URL } from "./config";
+
+const API_URL = `${STRAPI_URL}/api`;
 
 // Tenta com locale; se o content type não tiver i18n habilitado no Strapi (404/400), retorna sem locale
 async function withLocaleFallback(urlWithLocale, urlWithoutLocale) {

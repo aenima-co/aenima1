@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getWorkBySlug, getWorks } from "../../api";
 import styles from "./PortfolioPage.module.css";
-
-const STRAPI_URL = "http://localhost:1337";
+import { STRAPI_URL } from "../../config";
 
 function getCoverUrl(item) {
   if (!item) return null;

@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { getContact } from "../../api";
 import { useLang } from "../../contexts/LanguageContext";
 import styles from "./ContactPage.module.css";
-
-const STRAPI_URL = "http://localhost:1337";
+import { STRAPI_URL } from "../../config";
 
 const ArrowIcon = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">

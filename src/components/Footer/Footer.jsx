@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { getFooter } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import './Footer.css';
-
-const STRAPI_URL = 'http://localhost:1337';
+import { STRAPI_URL } from '../../config';
 
 function LinkedInIcon() {
   return (

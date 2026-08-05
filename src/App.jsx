@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
@@ -29,7 +29,7 @@ const Home = () => (
 const App = () => {
   return (
     <LanguageProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -40,7 +40,7 @@ const App = () => {
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
         <Footer />
-      </BrowserRouter>
+      </HashRouter>
     </LanguageProvider>
   );
 };

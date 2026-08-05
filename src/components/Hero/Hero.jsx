@@ -3,8 +3,7 @@ import { getHome } from "../../api";
 import { useLang } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import "./Hero.css";
-
-const STRAPI_URL = "http://localhost:1337";
+import { STRAPI_URL } from "../../config";
 
 // Campos esperados em cada item de members_image no Strapi:
 //   foto     → Media (imagem do membro)

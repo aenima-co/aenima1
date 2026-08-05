@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { getBlogPage } from "../../api";
 import styles from "./BlogPage.module.css";
-
-const STRAPI_URL = "http://localhost:1337";
+import { STRAPI_URL } from "../../config";
 
 export default function BlogPage() {
   const [page, setPage] = useState(null);

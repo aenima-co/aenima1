@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getDemoReel } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import './DemoReel.css';
-
-const STRAPI_URL = 'http://localhost:1337';
+import { STRAPI_URL } from '../../config';
 
 function PlayIcon() {
   return (
