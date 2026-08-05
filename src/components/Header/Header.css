@@ -10,16 +10,16 @@
 
 .announcement-bar {
   background-color: #7f6cff;
-  padding: 10px 16px;
+  padding: 10px 20px;
   text-align: center;
   color: #ffffff;
-  font-family: "Guanabara Sans", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
   font-weight: 400;
   font-size: 13px;
   line-height: 1.4;
 }
 
-.announcement-bar a {
+.announcement-bar__text {
   color: #ffffff;
   text-decoration: none;
 }
@@ -73,11 +73,11 @@
 }
 
 .nav-item {
-  font-family: "Guanabara Sans", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
   font-weight: 500;
   font-size: 16px;
   color: #0a0b15;
-  padding: 8px 16px;
+  padding: 8px 26px;
   cursor: pointer;
   text-decoration: none;
   position: relative;
@@ -158,7 +158,7 @@
 @media (min-width: 768px) {
   .announcement-bar {
     font-size: 14px;
-    padding: 12px 24px;
+    padding: 12px 40px;
   }
 
   .header-nav {
@@ -269,7 +269,7 @@
     padding: 16px 24px;
     border: 1.5px solid #c5bcc540;
     border-radius: 60px;
-    font-family: "Guanabara Sans", sans-serif;
+    font-family: "Instrument Sans", sans-serif;
     font-weight: 500;
     font-size: 20px;
     color: #0a0b15;

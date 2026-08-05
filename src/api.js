@@ -20,8 +20,8 @@ export async function getBannerTopo(locale = "pt-BR") {
 
 export async function getNavbar(locale = "pt-BR") {
   return withLocaleFallback(
-    `${API_URL}/navebar?populate=*&locale=${locale}`,
-    `${API_URL}/navebar?populate=*`,
+    `${API_URL}/navebar?populate[0]=logo&populate[1]=contact_us&locale=${locale}`,
+    `${API_URL}/navebar?populate[0]=logo&populate[1]=contact_us`,
   );
 }
 
@@ -124,6 +124,15 @@ export async function getWorkPage() {
   return data.data;
 }
 
+export async function getBestWorks() {
+  const res = await fetch(
+    `${API_URL}/works?filters[bestWork][$eq]=true&populate=cover&sort=createdAt:desc`,
+  );
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.data ?? [];
+}
+
 export async function getWorks() {
   const res = await fetch(
     `${API_URL}/works?populate=cover&sort=createdAt:desc`,
@@ -187,20 +196,22 @@ export async function getContact(locale = "pt-BR") {
   );
 }
 
-export async function getAboutPage() {
-  const res = await fetch(
-    `${API_URL}/about-page` +
-      `?populate[0]=about_description` +
-      `&populate[1]=about_description.icon` +
-      `&populate[2]=members_detail` +
-      `&populate[3]=members_detail.member_pic`,
-  );
-
-  if (!res.ok) {
-    console.error("[getAboutPage] erro HTTP:", res.status);
-    return null;
-  }
-
+export async function getBlogPage() {
+  const res = await fetch(`${API_URL}/blog-page?populate=*`);
+  if (!res.ok) return null;
   const data = await res.json();
-  return data.data;
+  return data.data ?? null;
+}
+
+export async function getAboutPage(locale = "pt-BR") {
+  const POPULATE =
+    `?populate[0]=about_description` +
+    `&populate[1]=about_description.icon` +
+    `&populate[2]=members_detail` +
+    `&populate[3]=members_detail.member_pic` +
+    `&populate[4]=right_cards`;
+  return withLocaleFallback(
+    `${API_URL}/about-page${POPULATE}&locale=${locale}`,
+    `${API_URL}/about-page${POPULATE}`,
+  );
 }

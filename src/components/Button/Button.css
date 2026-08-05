@@ -30,7 +30,7 @@
 }
 
 .cta-btn__text {
-  font-family: "Guanabara Sans", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
   font-weight: 500;
   font-size: clamp(16px, calc(0.87vw + 8.7px), 20px);
   color: #f5f3f5;

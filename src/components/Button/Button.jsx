@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Button.css';
 
 function ArrowIcon({ className }) {
@@ -21,13 +22,23 @@ function ArrowIcon({ className }) {
   );
 }
 
-export default function Button({ children, className = '', variant = 'dark', ...props }) {
-  return (
-    <button className={`cta-btn cta-btn--${variant} ${className}`} {...props}>
+export default function Button({ children, className = '', variant = 'dark', href, ...props }) {
+  const cls = `cta-btn cta-btn--${variant} ${className}`;
+  const content = (
+    <>
       <span className="cta-btn__text">{children}</span>
       <span className="cta-btn__circle">
         <ArrowIcon className="cta-btn__arrow" />
       </span>
-    </button>
+    </>
   );
+
+  if (href) {
+    const isInternal = href.startsWith('/');
+    return isInternal
+      ? <Link to={href} className={cls} {...props}>{content}</Link>
+      : <a href={href} className={cls} target="_blank" rel="noreferrer" {...props}>{content}</a>;
+  }
+
+  return <button className={cls} {...props}>{content}</button>;
 }

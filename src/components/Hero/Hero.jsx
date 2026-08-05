@@ -106,7 +106,7 @@ export default function Hero() {
           </div>
 
           <div className="hero__actions">
-            <Button variant="light">
+            <Button variant="light" href={hero.botao_principal?.link}>
               {hero.botao_principal?.texto || "Start a project"}
             </Button>
           </div>

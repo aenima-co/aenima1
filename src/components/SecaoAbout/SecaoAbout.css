@@ -25,7 +25,7 @@
 
 .secao-about__titulo {
   display: block;
-  font-family: "Guanabara Sans", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
   line-height: 1.1;
   color: #0a0b15;
   margin: 0;
@@ -88,24 +88,26 @@
   text-underline-offset: 4px;
 }
 
-/* Pills */
-.secao-about__pills-wrap {
-  margin-top: 40px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  cursor: grab;
+/* Pills — marquee automático */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-.secao-about__pills-wrap::-webkit-scrollbar {
-  display: none;
+.secao-about__pills-wrap {
+  margin-top: 40px;
+  overflow: hidden;
 }
 
 .secao-about__pills {
   display: flex;
   gap: 12px;
   width: max-content;
-  padding-bottom: 8px;
+  animation: marquee 20s linear infinite;
+}
+
+.secao-about__pills:hover {
+  animation-play-state: paused;
 }
 
 .secao-about__pill {
@@ -149,7 +151,6 @@
   }
 
   .secao-about__pills {
-    width: auto;
     flex-wrap: nowrap;
   }
 }

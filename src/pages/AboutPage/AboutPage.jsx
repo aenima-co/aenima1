@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
 import { getAboutPage } from "../../api";
+import { useLang } from "../../contexts/LanguageContext";
 import styles from "./AboutPage.module.css";
 import Button from "../../components/Button/Button";
-import cardPixel from "../../assets/img/about-card-pixel.png";
-import cardOrange from "../../assets/img/about-card-orange.png";
 
 const STRAPI_URL = "http://localhost:1337";
 
 // ─── Card de Valor ────────────────────────────────────────────────────────────
 function ValueCard({ value }) {
-  const iconUrl = value.icon?.url
-    ? `${STRAPI_URL}${value.icon.url}`
-    : null;
+  const iconUrl = value.icon?.url ? `${STRAPI_URL}${value.icon.url}` : null;
 
   return (
     <div className={styles.valueCard}>
@@ -28,6 +25,22 @@ function ValueCard({ value }) {
   );
 }
 
+function FeatureText({ text }) {
+  if (!text) return null;
+  const keyword = "features:";
+  const idx = text.toLowerCase().indexOf(keyword);
+  if (idx === -1) return <p className={styles.memberFeatures}>{text}</p>;
+  const before = text.slice(0, idx);
+  const after = text.slice(idx + keyword.length);
+  return (
+    <p className={styles.memberFeatures}>
+      {before}
+      <span className={styles.memberFeaturesKeyword}>{text.slice(idx, idx + keyword.length)}</span>
+      {after}
+    </p>
+  );
+}
+
 // ─── Card de Membro ───────────────────────────────────────────────────────────
 function MemberCard({ member }) {
   const photo = Array.isArray(member.member_pic)
@@ -39,7 +52,11 @@ function MemberCard({ member }) {
     <div className={styles.memberCard}>
       <div className={styles.memberPhoto}>
         {photoUrl ? (
-          <img src={photoUrl} alt={member.member_name} className={styles.memberImg} />
+          <img
+            src={photoUrl}
+            alt={member.member_name}
+            className={styles.memberImg}
+          />
         ) : (
           <div className={styles.memberPhotoPlaceholder} />
         )}
@@ -48,6 +65,7 @@ function MemberCard({ member }) {
         <h3 className={styles.memberName}>{member.member_name}</h3>
         <p className={styles.memberRole}>{member.member_function}</p>
         <p className={styles.memberBio}>{member.member_description}</p>
+        <FeatureText text={member.member_features} />
       </div>
     </div>
   );
@@ -55,13 +73,14 @@ function MemberCard({ member }) {
 
 // ─── Página principal ─────────────────────────────────────────────────────────
 export default function AboutPage() {
+  const { locale } = useLang();
   const [pageData, setPageData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       try {
-        const page = await getAboutPage();
+        const page = await getAboutPage(locale);
         setPageData(page);
       } catch (err) {
         console.error("[AboutPage] erro ao carregar:", err);
@@ -70,13 +89,12 @@ export default function AboutPage() {
       }
     }
     load();
-  }, []);
+  }, [locale]);
 
   if (loading) return <div className={styles.loading}>Carregando…</div>;
 
   return (
     <div className={styles.page}>
-
       {/* ── Hero ── */}
       <section className={styles.hero}>
         <div className={styles.heroLeft}>
@@ -84,7 +102,8 @@ export default function AboutPage() {
             {pageData?.hero_title || "// FEARLESS\nAUTHENTIC >>\n& (( EXPERTS"}
           </h1>
           <p className={styles.heroSubtitle}>
-            {pageData?.hero_subtitle || "We craft unique websites creating meaningful and memorable experiences."}
+            {pageData?.hero_subtitle ||
+              "We craft unique websites creating meaningful and memorable experiences."}
           </p>
 
           {/* Valores ficam aqui no layout desktop */}
@@ -99,15 +118,31 @@ export default function AboutPage() {
           <div className={styles.heroRightLeft}>
             <div className={styles.heroCardText}>
               <p className={styles.heroCardTextContent}>
-                We craft unique websites creating
+                {pageData?.card_text || "We craft unique websites creating"}
               </p>
-              <Button>Contact Us</Button>
+              <Button href="/contact">Contact Us</Button>
             </div>
-            <img src={cardPixel} alt="" className={styles.heroCardImg} />
+            <img
+              src={
+                pageData?.right_cards?.[0]?.url
+                  ? `${STRAPI_URL}${pageData.right_cards[0].url}`
+                  : cardPixel
+              }
+              alt=""
+              className={styles.heroCardImg}
+            />
           </div>
-          <img src={cardOrange} alt="" className={styles.heroCardImgOrange} />
+          <img
+            src={
+              pageData?.right_cards?.[1]?.url
+                ? `${STRAPI_URL}${pageData.right_cards[1].url}`
+                : cardOrange
+            }
+            alt=""
+            className={styles.heroCardImgOrange}
+          />
         </div>
-      </section> 
+      </section>
 
       {/* ── Time ── */}
       <section className={styles.team}>
@@ -115,7 +150,6 @@ export default function AboutPage() {
           <MemberCard key={m.id} member={m} />
         ))}
       </section>
-
     </div>
   );
 }

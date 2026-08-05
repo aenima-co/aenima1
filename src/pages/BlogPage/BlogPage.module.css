@@ -1,26 +1,82 @@
 .page {
   min-height: 70vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: #f5f3f5;
   padding: 128px 64px;
   text-align: center;
+  gap: 36px;
 }
 
-.message {
+/* Ícone 1 — centralizado sozinho */
+.icon1 {
+  display: block;
+  width: 130px;
+}
+
+/* Linha título: ícone + texto + ícone */
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.title {
   font-family: "ZT Talk", sans-serif;
-  font-weight: 500;
-  font-size: clamp(40px, 7vw, 96px);
+  font-weight: 400;
+  font-size: clamp(40px, 7vw, 76px);
   line-height: 0.95;
   letter-spacing: -0.03em;
-  text-transform: uppercase;
-  color: #0c0c0c;
+  color: #0a0b15;
   margin: 0;
+}
+
+.icon2 {
+  display: block;
+  flex-shrink: 0;
+  height: 70px;
+}
+
+/* GIF loading bar */
+.loadingBar {
+  display: block;
+  width: 100%;
+  max-width: 780px;
+  height: auto;
+}
+
+/* Subtítulo + ícone3 */
+.subtitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.subtitle {
+  font-family: "Instrument Sans", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: #7f6cff;
+  margin: 10px 0;
+}
+
+.icon3 {
+  display: block;
+  flex-shrink: 0;
+  height: 18px;
 }
 
 @media (max-width: 640px) {
   .page {
     padding: 64px 24px;
+    gap: 28px;
+  }
+
+  .loadingBar {
+    max-width: 100%;
   }
 }

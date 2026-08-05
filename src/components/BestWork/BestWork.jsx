@@ -1,26 +1,31 @@
 import { useEffect, useState } from 'react';
-import { getProjetos, getHome } from '../../api';
+import { getBestWorks, getHome } from '../../api';
+import { Link } from 'react-router-dom';
+import { useLang } from '../../contexts/LanguageContext';
 import Button from '../Button/Button';
 import './BestWork.css';
 
 const STRAPI_URL = 'http://localhost:1337';
 
 export default function BestWork() {
-  const [projetos, setProjetos] = useState([]);
+  const { locale } = useLang();
+  const [works, setWorks] = useState([]);
   const [botao, setBotao] = useState(null);
 
   useEffect(() => {
-    getProjetos(true).then(setProjetos);
-    getHome().then((data) => setBotao(data?.botao_projeto));
-  }, []);
+    getBestWorks().then(setWorks);
+    getHome(locale).then((data) => setBotao(data?.botao_projeto));
+  }, [locale]);
 
-  if (!projetos.length) return null;
+  if (!works.length) return null;
 
-  const [principal, ...secundarios] = projetos;
+  const [principal, ...secundarios] = works;
 
-  const getImagem = (projeto) => {
-    const url = projeto.imagem?.[0]?.url;
-    return url ? `${STRAPI_URL}${url}` : null;
+  const getCover = (work) => {
+    const cover = work.cover;
+    if (!cover) return null;
+    if (Array.isArray(cover)) return cover[0]?.url ? `${STRAPI_URL}${cover[0].url}` : null;
+    return cover.url ? `${STRAPI_URL}${cover.url}` : null;
   };
 
   return (
@@ -30,45 +35,45 @@ export default function BestWork() {
       <div className="best-work__grid">
 
         {/* Card principal — grande */}
-        <a href={`/work/${principal.slug}`} className="best-work__card best-work__card--principal">
+        <Link to={`/work/${principal.slug}`} className="best-work__card best-work__card--principal">
           <div className="best-work__imagem-wrap">
-            {getImagem(principal) && (
+            {getCover(principal) && (
               <img
-                src={getImagem(principal)}
-                alt={principal.titulo}
+                src={getCover(principal)}
+                alt={principal.title}
                 className="best-work__imagem"
               />
             )}
           </div>
           {/* info visível só no mobile */}
           <div className="best-work__info best-work__info--mobile">
-            <h3 className="best-work__titulo">{principal.titulo}</h3>
-            <p className="best-work__subtitulo">{principal.subtitulo}</p>
+            <h3 className="best-work__titulo">{principal.title}</h3>
+            <p className="best-work__subtitulo">{principal.client}</p>
           </div>
-        </a>
+        </Link>
 
         {/* Cards secundários */}
         <div className="best-work__secundarios">
-          {secundarios.map((projeto) => (
-            <a
-              key={projeto.id}
-              href={`/work/${projeto.slug}`}
+          {secundarios.map((work) => (
+            <Link
+              key={work.id}
+              to={`/work/${work.slug}`}
               className="best-work__card best-work__card--secundario"
             >
               <div className="best-work__imagem-wrap">
-                {getImagem(projeto) && (
+                {getCover(work) && (
                   <img
-                    src={getImagem(projeto)}
-                    alt={projeto.titulo}
+                    src={getCover(work)}
+                    alt={work.title}
                     className="best-work__imagem"
                   />
                 )}
               </div>
               <div className="best-work__info">
-                <h3 className="best-work__titulo">{projeto.titulo}</h3>
-                <p className="best-work__subtitulo">{projeto.subtitulo}</p>
+                <h3 className="best-work__titulo">{work.title}</h3>
+                <p className="best-work__subtitulo">{work.client}</p>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -77,13 +82,13 @@ export default function BestWork() {
       {/* Rodapé — título + botão na mesma linha (só desktop) */}
       <div className="best-work__rodape">
         <div>
-          <h3 className="best-work__titulo">{principal.titulo}</h3>
-          <p className="best-work__subtitulo">{principal.subtitulo}</p>
+          <h3 className="best-work__titulo">{principal.title}</h3>
+          <p className="best-work__subtitulo">{principal.client}</p>
         </div>
         {botao && (
-          <a href={botao.link} className="best-work__botao-link">
-            <Button variant="light">{botao.texto}</Button>
-          </a>
+          <div className="best-work__botao-link">
+            <Button variant="light" href={botao.link}>{botao.texto}</Button>
+          </div>
         )}
       </div>
 
