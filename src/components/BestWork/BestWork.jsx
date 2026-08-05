@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLang } from '../../contexts/LanguageContext';
 import Button from '../Button/Button';
 import './BestWork.css';
-
-const STRAPI_URL = 'http://localhost:1337';
+import { STRAPI_URL } from '../../config';
 
 export default function BestWork() {
   const { locale } = useLang();

@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { getWorks, getWorkPage } from "../../api";
 import styles from "./WorkPage.module.css";
-
-const STRAPI_URL = "http://localhost:1337";
+import { STRAPI_URL } from "../../config";
 
 // ─── Card individual ──────────────────────────────────────────────────────────
 function WorkCard({ work, index }) {

@@ -5,6 +5,7 @@ import Button from '../Button/Button';
 import LanguageToggle from '../LanguageToggle/LanguageToggle';
 import { getBannerTopo, getMenuItens, getNavbar } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
+import { STRAPI_URL } from '../../config';
 import './Header.css';
 
 export default function Header() {
@@ -20,7 +21,7 @@ export default function Header() {
 
   const activeIndex = menuItens.findIndex((item) => item.link === location.pathname);
   const logoObj = Array.isArray(navbar?.logo) ? navbar.logo[0] : navbar?.logo;
-  const logoSrc = logoObj?.url ? `http://localhost:1337${logoObj.url}` : localLogo;
+  const logoSrc = logoObj?.url ? `${STRAPI_URL}${logoObj.url}` : localLogo;
 
   useEffect(() => {
     getBannerTopo(locale).then(setBannerTopo);

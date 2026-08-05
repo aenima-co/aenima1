@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getHome, getEspecialidades } from '../../api';
 import './SecaoAbout.css';
-
-const STRAPI_URL = 'http://localhost:1337';
+import { STRAPI_URL } from '../../config';
 
 export default function SecaoAbout() {
   const [about, setAbout] = useState(null);
