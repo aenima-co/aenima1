@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { getDemoReel } from '../../api';
+import { useLang } from '../../contexts/LanguageContext';
 import './DemoReel.css';
 
 const STRAPI_URL = 'http://localhost:1337';
@@ -24,13 +25,14 @@ function parseSrc(iframeStr) {
 }
 
 export default function DemoReel() {
+  const { locale } = useLang();
   const [data, setData] = useState(null);
   const [playing, setPlaying] = useState(false);
   const iframeRef = useRef(null);
 
   useEffect(() => {
-    getDemoReel().then(setData);
-  }, []);
+    getDemoReel(locale).then(setData);
+  }, [locale]);
 
   useEffect(() => {
     if (!playing) return;

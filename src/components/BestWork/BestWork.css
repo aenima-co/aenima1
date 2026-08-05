@@ -91,7 +91,7 @@
   margin-bottom: 48px;
 }
 
-.best-work__rodape > div {
+.best-work__rodape > div:not(.best-work__botao-link) {
   display: none;
 }
 

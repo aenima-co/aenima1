@@ -2,6 +2,7 @@
 .blog {
   padding: 64px 0 32px 24px;
   background-color: #f5f3f5;
+  display: none;
 }
 
 .blog__tag {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getHome } from "../../api";
+import { useLang } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import "./Hero.css";
 
@@ -26,18 +27,20 @@ function LinkedInIcon() {
 }
 
 export default function Hero() {
+  const { locale } = useLang();
   const [hero, setHero] = useState(null);
 
   useEffect(() => {
-    getHome().then((data) => data && setHero(data.hero));
-  }, []);
+    getHome(locale).then((data) => data && setHero(data.hero));
+  }, [locale]);
 
   if (!hero) return null;
 
   // Suporta tanto media múltipla (array) quanto single
   const resolveMedia = (field) => {
     if (!field) return null;
-    if (Array.isArray(field)) return field[0]?.url ? `${STRAPI_URL}${field[0].url}` : null;
+    if (Array.isArray(field))
+      return field[0]?.url ? `${STRAPI_URL}${field[0].url}` : null;
     if (field.url) return `${STRAPI_URL}${field.url}`;
     return null;
   };
@@ -47,8 +50,8 @@ export default function Hero() {
   const members = hero.memberCard || [];
 
   const bgStyle = {
-    ...(imagemFundo && { '--bg-desktop': `url(${imagemFundo})` }),
-    ...(imagemFundoMobile && { '--bg-mobile': `url(${imagemFundoMobile})` }),
+    ...(imagemFundo && { "--bg-desktop": `url(${imagemFundo})` }),
+    ...(imagemFundoMobile && { "--bg-mobile": `url(${imagemFundoMobile})` }),
   };
 
   return (
@@ -72,8 +75,8 @@ export default function Hero() {
                       <div className="hero__member-tooltip-header">
                         <span className="hero__member-name">{member.nome}</span>
                         <a
-                          href={member.linkedin || '#'}
-                          target={member.linkedin ? '_blank' : undefined}
+                          href={member.linkedin || "#"}
+                          target={member.linkedin ? "_blank" : undefined}
                           rel="noreferrer"
                           className="hero__member-linkedin"
                           aria-label={`LinkedIn de ${member.nome}`}
@@ -103,7 +106,7 @@ export default function Hero() {
           </div>
 
           <div className="hero__actions">
-            <Button variant="light">
+            <Button variant="light" href={hero.botao_principal?.link}>
               {hero.botao_principal?.texto || "Start a project"}
             </Button>
           </div>

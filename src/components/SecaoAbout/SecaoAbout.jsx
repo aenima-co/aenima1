@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { getHome, getEspecialidades } from '../../api';
 import './SecaoAbout.css';
 
@@ -7,31 +7,11 @@ const STRAPI_URL = 'http://localhost:1337';
 export default function SecaoAbout() {
   const [about, setAbout] = useState(null);
   const [especialidades, setEspecialidades] = useState([]);
-  const pillsRef = useRef(null);
 
   useEffect(() => {
     getHome().then((data) => setAbout(data?.secao_about_preview));
     getEspecialidades().then(setEspecialidades);
   }, []);
-
-  const handleMouseDown = (e) => {
-    const el = pillsRef.current;
-    el.dataset.dragging = 'true';
-    el.dataset.startX = e.pageX - el.offsetLeft;
-    el.dataset.scrollLeft = el.scrollLeft;
-  };
-
-  const handleMouseMove = (e) => {
-    const el = pillsRef.current;
-    if (el.dataset.dragging !== 'true') return;
-    const x = e.pageX - el.offsetLeft;
-    const walk = x - Number(el.dataset.startX);
-    el.scrollLeft = Number(el.dataset.scrollLeft) - walk;
-  };
-
-  const handleMouseUp = () => {
-    pillsRef.current.dataset.dragging = 'false';
-  };
 
   if (!about) return null;
 
@@ -67,19 +47,13 @@ export default function SecaoAbout() {
       </div>
 
       {especialidades.length > 0 && (
-        <div
-          className="secao-about__pills-wrap"
-          ref={pillsRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-        >
+        <div className="secao-about__pills-wrap">
           <div className="secao-about__pills">
             {especialidades.map((esp) => (
-              <span key={esp.id} className="secao-about__pill">
-                {esp.nome}
-              </span>
+              <span key={esp.id} className="secao-about__pill">{esp.nome}</span>
+            ))}
+            {especialidades.map((esp) => (
+              <span key={`dup-${esp.id}`} className="secao-about__pill" aria-hidden="true">{esp.nome}</span>
             ))}
           </div>
         </div>

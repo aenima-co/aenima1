@@ -1,11 +1,14 @@
 import { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../../assets/img/logo.svg';
+import localLogo from '../../assets/img/logo.svg';
 import Button from '../Button/Button';
+import LanguageToggle from '../LanguageToggle/LanguageToggle';
 import { getBannerTopo, getMenuItens, getNavbar } from '../../api';
+import { useLang } from '../../contexts/LanguageContext';
 import './Header.css';
 
 export default function Header() {
+  const { locale } = useLang();
   const location = useLocation();
   const [indicatorStyle, setIndicatorStyle] = useState({});
   const itemRefs = useRef([]);
@@ -16,12 +19,14 @@ export default function Header() {
   const [menuAberto, setMenuAberto] = useState(false);
 
   const activeIndex = menuItens.findIndex((item) => item.link === location.pathname);
+  const logoObj = Array.isArray(navbar?.logo) ? navbar.logo[0] : navbar?.logo;
+  const logoSrc = logoObj?.url ? `http://localhost:1337${logoObj.url}` : localLogo;
 
   useEffect(() => {
-    getBannerTopo().then(setBannerTopo);
-    getMenuItens().then(setMenuItens);
-    getNavbar().then(setNavbar);
-  }, []);
+    getBannerTopo(locale).then(setBannerTopo);
+    getMenuItens(locale).then(setMenuItens);
+    getNavbar(locale).then(setNavbar);
+  }, [locale]);
 
   const updateIndicator = (index) => {
     const el = itemRefs.current[index];
@@ -42,15 +47,21 @@ export default function Header() {
 
   return (
     <header className="site-header">
-      {bannerTopo?.ativo && (
+      {bannerTopo?.texto && bannerTopo?.ativo !== false && (
         <div className="announcement-bar">
-          <a href={bannerTopo.link}>{bannerTopo.texto}</a>
+          <a href={bannerTopo.link} className="announcement-bar__text">{bannerTopo.texto}</a>
         </div>
       )}
 
       <div className="header-nav">
         <Link to="/">
-          <img src={logo} alt="Aenima" className="header-logo" width={242} height={42} />
+          <img
+            src={logoSrc}
+            alt="Aenima"
+            className="header-logo"
+            width={242}
+            height={42}
+          />
         </Link>
 
         <button
@@ -79,6 +90,7 @@ export default function Header() {
         </nav>
 
         <div className="header-actions">
+          <LanguageToggle />
           <Button href={navbar?.contact_us?.link}>
             {navbar?.contact_us?.texto || 'Contact Us'}
           </Button>
