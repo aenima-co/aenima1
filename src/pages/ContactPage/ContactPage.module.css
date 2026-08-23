@@ -79,6 +79,21 @@
   border-color: #7f6cff;
 }
 
+.inputError {
+  border-color: #d1435b;
+}
+
+.inputError:focus {
+  border-color: #d1435b;
+}
+
+.fieldError {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 14px;
+  color: #d1435b;
+  margin: -8px 0 0 0;
+}
+
 .textarea {
   height: auto;
   resize: vertical;
@@ -105,12 +120,30 @@
   letter-spacing: -0.02em !important;
 }
 
-.formFeedback {
+.feedbackBanner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 8px;
   font-family: "Instrument Sans", sans-serif;
-  font-size: 16px;
-  color: #5c5d68;
-  margin: 12px 0 0 0;
-  text-align: right;
+  font-size: 13px;
+  line-height: 1.35;
+  box-sizing: border-box;
+}
+
+.feedbackBanner svg {
+  flex-shrink: 0;
+}
+
+.feedbackSuccess {
+  background: #e8f5ea;
+  color: #1e7e34;
+}
+
+.feedbackError {
+  background: #fbeaec;
+  color: #b3273a;
 }
 
 /* ── Sociais mobile ── */
@@ -246,5 +279,18 @@
 
   .btnWrap {
     margin-top: 20px;
+  }
+
+  /* ── Overrides de feedback desktop ── */
+  .feedbackBanner {
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px 20px;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .feedbackBanner svg {
+    margin-top: 1px;
   }
 }
