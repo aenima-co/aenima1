@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getContact } from "../../api";
+import { getContact, postContactSubmission } from "../../api";
 import { useLang } from "../../contexts/LanguageContext";
 import styles from "./ContactPage.module.css";
 import { STRAPI_URL } from "../../config";
@@ -37,12 +37,24 @@ export default function ContactPage() {
   const { locale } = useLang();
   const [page, setPage] = useState(null);
   const [formState, setFormState] = useState({ name: "", email: "", description: "" });
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
 
   useEffect(() => {
     getContact(locale).then(setPage);
   }, [locale]);
 
-  const handleSubmit = (e) => e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      await postContactSubmission(formState);
+      setStatus("success");
+      setFormState({ name: "", email: "", description: "" });
+    } catch (err) {
+      console.error("[ContactPage] erro ao enviar formulário:", err);
+      setStatus("error");
+    }
+  };
 
   // form é array de componente repetível no Strapi
   const form = Array.isArray(page?.form) ? page.form[0] : (page?.form ?? {});
@@ -98,12 +110,26 @@ export default function ContactPage() {
         </div>
 
         <div className={styles.btnWrap}>
-          <button type="submit" className={`cta-btn cta-btn--light ${styles.btn}`}>
-            <span className={`cta-btn__text ${styles.btnText}`}>{ctaText}</span>
+          <button
+            type="submit"
+            className={`cta-btn cta-btn--light ${styles.btn}`}
+            disabled={status === "sending"}
+          >
+            <span className={`cta-btn__text ${styles.btnText}`}>
+              {status === "sending" ? "Enviando..." : ctaText}
+            </span>
             <span className="cta-btn__circle">
               <ArrowIcon />
             </span>
           </button>
+          {status === "success" && (
+            <p className={styles.formFeedback}>Mensagem enviada com sucesso!</p>
+          )}
+          {status === "error" && (
+            <p className={styles.formFeedback}>
+              Não foi possível enviar sua mensagem. Tente novamente em instantes.
+            </p>
+          )}
         </div>
 
       </form>

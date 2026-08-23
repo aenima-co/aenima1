@@ -205,6 +205,19 @@ export async function getBlogPage() {
   return data.data ?? null;
 }
 
+export async function postContactSubmission({ name, email, description }) {
+  const res = await fetch(`${API_URL}/contact-submissions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: { name, email, description } }),
+  });
+  if (!res.ok) {
+    throw new Error(`Falha ao enviar contato (HTTP ${res.status})`);
+  }
+  const data = await res.json();
+  return data.data;
+}
+
 export async function getAboutPage(locale = "pt-BR") {
   const POPULATE =
     `?populate[0]=about_description` +
