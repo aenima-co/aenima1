@@ -10,6 +10,13 @@ const ArrowIcon = () => (
   </svg>
 );
 
+function getErrorMessage(err) {
+  const emailError = err.fieldErrors?.some((fe) => fe.path?.[0] === "email");
+  if (emailError) return "Informe um e-mail válido.";
+  if (err.status && err.status < 500) return "Verifique os dados preenchidos e tente novamente.";
+  return "Não foi possível enviar sua mensagem. Tente novamente em instantes.";
+}
+
 function SocialIcons({ items, className }) {
   if (!items?.length) return null;
   return (
@@ -38,6 +45,7 @@ export default function ContactPage() {
   const [page, setPage] = useState(null);
   const [formState, setFormState] = useState({ name: "", email: "", description: "" });
   const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     getContact(locale).then(setPage);
@@ -46,6 +54,7 @@ export default function ContactPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
+    setErrorMessage("");
     try {
       await postContactSubmission(formState);
       setStatus("success");
@@ -53,6 +62,7 @@ export default function ContactPage() {
     } catch (err) {
       console.error("[ContactPage] erro ao enviar formulário:", err);
       setStatus("error");
+      setErrorMessage(getErrorMessage(err));
     }
   };
 
@@ -126,9 +136,7 @@ export default function ContactPage() {
             <p className={styles.formFeedback}>Mensagem enviada com sucesso!</p>
           )}
           {status === "error" && (
-            <p className={styles.formFeedback}>
-              Não foi possível enviar sua mensagem. Tente novamente em instantes.
-            </p>
+            <p className={styles.formFeedback}>{errorMessage}</p>
           )}
         </div>
 

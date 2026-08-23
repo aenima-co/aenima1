@@ -211,11 +211,16 @@ export async function postContactSubmission({ name, email, description }) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ data: { name, email, description } }),
   });
+  const payload = await res.json().catch(() => null);
+
   if (!res.ok) {
-    throw new Error(`Falha ao enviar contato (HTTP ${res.status})`);
+    const err = new Error(payload?.error?.message || `Falha ao enviar contato (HTTP ${res.status})`);
+    err.status = res.status;
+    err.fieldErrors = payload?.error?.details?.errors ?? [];
+    throw err;
   }
-  const data = await res.json();
-  return data.data;
+
+  return payload?.data;
 }
 
 export async function getAboutPage(locale = "pt-BR") {
