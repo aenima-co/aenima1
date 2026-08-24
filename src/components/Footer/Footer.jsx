@@ -26,6 +26,15 @@ function getSocials(value) {
   return [];
 }
 
+// Links vindos do Strapi às vezes não têm protocolo (ex: "instagram.com"),
+// o que faz o navegador tratar como caminho relativo do próprio site em
+// vez de um link externo.
+function normalizeUrl(url) {
+  if (!url || url === '#') return '#';
+  if (/^(https?:)?\/\//i.test(url) || /^(mailto|tel):/i.test(url)) return url;
+  return `https://${url}`;
+}
+
 function useClock() {
   const [clock, setClock] = useState({ time: '', date: '' });
   useEffect(() => {
@@ -130,7 +139,7 @@ export default function Footer() {
               {socials.map((s, i) => (
                 <a
                   key={i}
-                  href={s.link || s.url || '#'}
+                  href={normalizeUrl(s.link || s.url)}
                   className="footer__social-item"
                   target="_blank"
                   rel="noreferrer"
