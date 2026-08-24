@@ -46,6 +46,12 @@ export default function Header() {
     updateIndicator(activeIndex);
   }, [activeIndex, menuItens]);
 
+  useEffect(() => {
+    const handleResize = () => updateIndicator(activeIndex);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [activeIndex]);
+
   return (
     <header className="site-header">
       {bannerTopo?.texto && bannerTopo?.ativo !== false && (

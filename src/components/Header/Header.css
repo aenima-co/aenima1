@@ -153,53 +153,49 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ── TABLET (768px+) ──────────────────────────────────────── */
+/* ── TABLET (768px+) — só ajustes que não dependem de espaço do nav ── */
 
 @media (min-width: 768px) {
   .announcement-bar {
     font-size: 14px;
     padding: 12px 40px;
   }
-
-  .header-nav {
-    padding: 20px 40px;
-  }
-
-  .header-logo {
-    width: 184.7px;
-    height: 32px;
-  }
-
-  .navbar {
-    display: flex;
-    align-items: center;
-    gap: 48px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
-  }
-
-  .header-menu-toggle {
-    display: none;
-  }
 }
 
-/* ── DESKTOP (800px+) ─────────────────────────────────────── */
+/* ── DESKTOP (1280px+) ────────────────────────────────────────────
+   O conteúdo do nav (logo + 4 itens + seletor de idioma + botão)
+   precisa de ~1256px pra caber numa linha sem cortar nada.
+   Abaixo disso, mantém o menu mobile (hamburguer). ── */
 
-@media (min-width: 800px) {
+@media (min-width: 1280px) {
   .header-nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     padding: 24px clamp(32px, calc(6.96vw - 26.5px), 64px);
   }
 
   .header-logo {
     width: clamp(160px, calc(8.7vw + 87px), 242.42px);
     height: 42px;
+    justify-self: start;
   }
 
   .navbar {
+    display: flex;
+    align-items: center;
     gap: clamp(48px, calc(10.43vw - 50.6px), 96px);
-    margin: 0 5px;
+    justify-self: center;
+    position: relative;
+  }
+
+  .header-actions {
+    justify-self: end;
+    margin-left: 0;
+  }
+
+  .header-menu-toggle {
+    display: none;
   }
 
   .nav-item {
@@ -213,9 +209,9 @@
   display: none;
 }
 
-/* ── MOBILE (max 767px) ───────────────────────────────────── */
+/* ── MOBILE/TABLET (até 1279px, abaixo do breakpoint do nav desktop) ── */
 
-@media (max-width: 767px) {
+@media (max-width: 1279px) {
   .header-actions {
     display: none;
   }
