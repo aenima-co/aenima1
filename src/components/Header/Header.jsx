@@ -77,15 +77,18 @@ export default function Header() {
           />
         </Link>
 
-        <button
-          className={`header-menu-toggle${menuAberto ? ' header-menu-toggle--open' : ''}`}
-          onClick={() => setMenuAberto(!menuAberto)}
-          aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu'}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <div className="header-mobile-actions">
+          <LanguageToggle />
+          <button
+            className={`header-menu-toggle${menuAberto ? ' header-menu-toggle--open' : ''}`}
+            onClick={() => setMenuAberto(!menuAberto)}
+            aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu'}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
 
         <nav className="navbar" onMouseLeave={() => updateIndicator(activeIndex)}>
           <div className="navbar-indicator" style={indicatorStyle} />
@@ -125,7 +128,6 @@ export default function Header() {
         </nav>
 
         <div className="mobile-menu__actions">
-          <LanguageToggle />
           <Button variant="light" href={navbar?.contact_us?.link}>
             {navbar?.contact_us?.texto || 'Contact Us'}
           </Button>
