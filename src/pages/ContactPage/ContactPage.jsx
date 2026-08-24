@@ -103,6 +103,15 @@ function DismissibleBanner({ variant, icon, message, onDismiss }) {
   );
 }
 
+// Links vindos do Strapi às vezes não têm protocolo (ex: "instagram.com"),
+// o que faz o navegador tratar como caminho relativo do próprio site em
+// vez de um link externo.
+function normalizeUrl(url) {
+  if (!url || url === "#") return "#";
+  if (/^(https?:)?\/\//i.test(url) || /^(mailto|tel):/i.test(url)) return url;
+  return `https://${url}`;
+}
+
 function SocialIcons({ items, className }) {
   if (!items?.length) return null;
   return (
@@ -112,11 +121,11 @@ function SocialIcons({ items, className }) {
         return (
           <a
             key={i}
-            href={s.link || "#"}
+            href={normalizeUrl(s.url)}
             className={styles.socialIcon}
             target="_blank"
             rel="noreferrer"
-            aria-label={s.name || `Social ${i + 1}`}
+            aria-label={s.nome || `Social ${i + 1}`}
           >
             {iconUrl && <img src={iconUrl} alt="" />}
           </a>
@@ -276,7 +285,7 @@ export default function ContactPage() {
 
       </form>
 
-      {/* Ícones mobile — aparece entre form e date no mobile */}
+      {/* Ícones mobile */}
       <SocialIcons items={page?.social_mobile} className={styles.socialsMobile} />
 
       {/* Col 1 rodapé — ícones desktop + date */}
