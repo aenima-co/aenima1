@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getWorks, getWorkPage } from "../../api";
+import { useLang } from "../../contexts/LanguageContext";
 import styles from "./WorkPage.module.css";
 import { STRAPI_URL } from "../../config";
 
@@ -55,6 +56,7 @@ function WorkCard({ work, index }) {
 
 // ─── Página principal ─────────────────────────────────────────────────────────
 export default function WorkPage() {
+  const { locale } = useLang();
   const [works, setWorks] = useState([]);
   const [pageData, setPageData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -64,7 +66,7 @@ export default function WorkPage() {
       try {
         const [worksData, page] = await Promise.all([
           getWorks(),
-          getWorkPage(),
+          getWorkPage(locale),
         ]);
         setWorks(worksData || []);
         setPageData(page);
@@ -75,45 +77,44 @@ export default function WorkPage() {
       }
     }
     load();
-  }, []);
+  }, [locale]);
 
   return (
     <div className={styles.page}>
       {/* Hero */}
       <header className={styles.hero}>
-        <h1 className={styles.heroTitle}>
-          {pageData?.hero_title || "Selected Works"}
-        </h1>
-        <p className={styles.heroSubtitle}>
-          {pageData?.hero_subtitle ||
-            "We craft unique websites creating meaningful and memorable experiences."}
-        </p>
-        <a
-          href="/contact"
-          className={`cta-btn cta-btn--dark ${styles.heroBtn}`}
-        >
-          <span className="cta-btn__text">
-            {pageData?.cta_button_label || "Start a Project"}
-          </span>
-          <span className="cta-btn__circle">
-            <svg
-              className="cta-btn__arrow"
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1 11L11 1M11 10V1H2"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-        </a>
+        {pageData?.hero_title && (
+          <h1 className={styles.heroTitle}>{pageData.hero_title}</h1>
+        )}
+        {pageData?.hero_subtitle && (
+          <p className={styles.heroSubtitle}>{pageData.hero_subtitle}</p>
+        )}
+        {pageData?.cta_button_label && (
+          <a
+            href="/contact"
+            className={`cta-btn cta-btn--dark ${styles.heroBtn}`}
+          >
+            <span className="cta-btn__text">{pageData.cta_button_label}</span>
+            <span className="cta-btn__circle">
+              <svg
+                className="cta-btn__arrow"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 11L11 1M11 10V1H2"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+          </a>
+        )}
       </header>
 
       {/* Grid */}

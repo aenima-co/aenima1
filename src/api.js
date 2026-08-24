@@ -114,16 +114,11 @@ export async function getTeamMembers() {
   return data.data;
 }
 
-export async function getWorkPage() {
-  const res = await fetch(`${API_URL}/work-page`);
-
-  if (!res.ok) {
-    console.error("[getWorkPage] erro HTTP:", res.status);
-    return null;
-  }
-
-  const data = await res.json();
-  return data.data;
+export async function getWorkPage(locale = "pt-BR") {
+  return withLocaleFallback(
+    `${API_URL}/work-page?locale=${locale}`,
+    `${API_URL}/work-page`,
+  );
 }
 
 export async function getBestWorks() {
