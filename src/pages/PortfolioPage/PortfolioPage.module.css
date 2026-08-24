@@ -8,7 +8,7 @@
 /* ── Linha 1: Título + Resume ── */
 .row1 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 32px;
   align-items: start;
 }
@@ -16,11 +16,12 @@
 .title {
   font-family: "ZT Talk", sans-serif;
   font-weight: 500;
-  font-size: 112px;
+  font-size: clamp(64px, calc(9.8vw - 11px), 112px);
   line-height: 90%;
   letter-spacing: -0.03em;
   color: #0a0b15;
   margin: 0;
+  overflow-wrap: break-word;
 }
 
 .resume {
@@ -48,7 +49,7 @@
 /* ── Linha 3: Info + Descrição ── */
 .row3 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 152px;
   margin-top: 128px;
   align-items: stretch;
@@ -61,7 +62,7 @@
 
 .infoRow {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
   column-gap: 152px;
   align-items: center;
   border-bottom: 1px solid rgba(10, 11, 21, 0.1);
