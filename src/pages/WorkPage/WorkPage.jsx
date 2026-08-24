@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { getWorks, getWorkPage } from "../../api";
 import { useLang } from "../../contexts/LanguageContext";
+import Button from "../../components/Button/Button";
 import styles from "./WorkPage.module.css";
 import { STRAPI_URL } from "../../config";
 
@@ -28,7 +30,7 @@ function WorkCard({ work, index }) {
 
   return (
     <article className={styles.card} style={{ "--card-index": index }}>
-      <a href={`/work/${work.slug || work.id}`} className={styles.cardLink}>
+      <Link to={`/work/${work.slug || work.id}`} className={styles.cardLink}>
         <div className={styles.cardImageWrap}>
           {imageUrl ? (
             <img
@@ -49,7 +51,7 @@ function WorkCard({ work, index }) {
           <h3 className={styles.cardTitle}>{work.title}</h3>
           {work.client && <p className={styles.cardClient}>{work.client}</p>}
         </div>
-      </a>
+      </Link>
     </article>
   );
 }
@@ -90,30 +92,9 @@ export default function WorkPage() {
           <p className={styles.heroSubtitle}>{pageData.hero_subtitle}</p>
         )}
         {pageData?.cta_button_label && (
-          <a
-            href="/contact"
-            className={`cta-btn cta-btn--dark ${styles.heroBtn}`}
-          >
-            <span className="cta-btn__text">{pageData.cta_button_label}</span>
-            <span className="cta-btn__circle">
-              <svg
-                className="cta-btn__arrow"
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1 11L11 1M11 10V1H2"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </a>
+          <Button href="/contact" className={styles.heroBtn}>
+            {pageData.cta_button_label}
+          </Button>
         )}
       </header>
 

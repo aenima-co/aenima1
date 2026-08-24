@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getWorkBySlug, getWorks } from "../../api";
 import styles from "./PortfolioPage.module.css";
 import { STRAPI_URL } from "../../config";
@@ -21,7 +21,7 @@ function CarouselCard({ work }) {
   const imgUrl = getCoverUrl(firstCover);
 
   return (
-    <a href={`/work/${work.slug || work.id}`} className={styles.carouselCard}>
+    <Link to={`/work/${work.slug || work.id}`} className={styles.carouselCard}>
       <div className={styles.carouselImageWrap}>
         {imgUrl ? (
           <img
@@ -38,7 +38,7 @@ function CarouselCard({ work }) {
         <h3 className={styles.carouselTitle}>{work.title}</h3>
         {work.client && <p className={styles.carouselClient}>{work.client}</p>}
       </div>
-    </a>
+    </Link>
   );
 }
 
