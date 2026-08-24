@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getHome, getEspecialidades } from '../../api';
 import './SecaoAbout.css';
 import { STRAPI_URL } from '../../config';
@@ -38,9 +39,15 @@ export default function SecaoAbout() {
               />
             )}
             <p className="secao-about__descricao">{about.descricao}</p>
-            <a href={about.link_url} className="secao-about__link">
-              {about.link_texto}
-            </a>
+            {about.link_url?.startsWith('/') ? (
+              <Link to={about.link_url} className="secao-about__link">
+                {about.link_texto}
+              </Link>
+            ) : (
+              <a href={about.link_url} className="secao-about__link" target="_blank" rel="noreferrer">
+                {about.link_texto}
+              </a>
+            )}
           </div>
         </div>
       </div>

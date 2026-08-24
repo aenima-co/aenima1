@@ -56,7 +56,13 @@ export default function Header() {
     <header className="site-header">
       {bannerTopo?.texto && bannerTopo?.ativo !== false && (
         <div className="announcement-bar">
-          <a href={bannerTopo.link} className="announcement-bar__text">{bannerTopo.texto}</a>
+          {bannerTopo.link?.startsWith('/') ? (
+            <Link to={bannerTopo.link} className="announcement-bar__text">{bannerTopo.texto}</Link>
+          ) : (
+            <a href={bannerTopo.link} className="announcement-bar__text" target="_blank" rel="noreferrer">
+              {bannerTopo.texto}
+            </a>
+          )}
         </div>
       )}
 
