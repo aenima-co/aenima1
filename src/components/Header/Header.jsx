@@ -113,6 +113,7 @@ export default function Header() {
         </nav>
 
         <div className="mobile-menu__actions">
+          <LanguageToggle />
           <Button variant="light" href={navbar?.contact_us?.link}>
             {navbar?.contact_us?.texto || 'Contact Us'}
           </Button>
