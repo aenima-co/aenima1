@@ -89,4 +89,5 @@ html {
   font-family: "Instrument Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   background: #f5f3f5;
+  overflow-x: hidden;
 }
