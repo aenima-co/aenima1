@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getDemoReel } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import './DemoReel.css';
-import { STRAPI_URL } from '../../config';
+import { resolveMediaUrl } from '../../config';
 
 function PlayIcon() {
   return (
@@ -101,7 +101,7 @@ export default function DemoReel() {
           {decor.map((img, i) => (
             <img
               key={img.id}
-              src={`${STRAPI_URL}${img.url}`}
+              src={resolveMediaUrl(img.url)}
               alt=""
               className={`demo-reel__decor demo-reel__decor--${i + 1}`}
             />

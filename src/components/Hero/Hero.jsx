@@ -3,7 +3,7 @@ import { getHome } from "../../api";
 import { useLang } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import "./Hero.css";
-import { STRAPI_URL } from "../../config";
+import { resolveMediaUrl } from "../../config";
 
 // Campos esperados em cada item de members_image no Strapi:
 //   foto     → Media (imagem do membro)
@@ -38,9 +38,8 @@ export default function Hero() {
   // Suporta tanto media múltipla (array) quanto single
   const resolveMedia = (field) => {
     if (!field) return null;
-    if (Array.isArray(field))
-      return field[0]?.url ? `${STRAPI_URL}${field[0].url}` : null;
-    if (field.url) return `${STRAPI_URL}${field.url}`;
+    if (Array.isArray(field)) return resolveMediaUrl(field[0]?.url);
+    if (field.url) return resolveMediaUrl(field.url);
     return null;
   };
 

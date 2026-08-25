@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getBlogPage } from "../../api";
 import styles from "./BlogPage.module.css";
-import { STRAPI_URL } from "../../config";
+import { resolveMediaUrl } from "../../config";
 
 export default function BlogPage() {
   const [page, setPage] = useState(null);
@@ -25,24 +25,24 @@ export default function BlogPage() {
     <div className={styles.page}>
       {/* Ícone 1 */}
       {icons[0]?.url && (
-        <img src={`${STRAPI_URL}${icons[0].url}`} alt="" className={styles.icon1} />
+        <img src={resolveMediaUrl(icons[0].url)} alt="" className={styles.icon1} />
       )}
 
       {/* Linha do título: ícone2 + title + ícone2 */}
       <div className={styles.titleRow}>
         {icons[1]?.url && (
-          <img src={`${STRAPI_URL}${icons[1].url}`} alt="" className={styles.icon2} />
+          <img src={resolveMediaUrl(icons[1].url)} alt="" className={styles.icon2} />
         )}
         {page.title && <h1 className={styles.title}>{page.title}</h1>}
         {icons[1]?.url && (
-          <img src={`${STRAPI_URL}${icons[1].url}`} alt="" className={styles.icon2} aria-hidden="true" />
+          <img src={resolveMediaUrl(icons[1].url)} alt="" className={styles.icon2} aria-hidden="true" />
         )}
       </div>
 
       {/* GIF loading bar */}
       {loadingBarUrl && (
         <img
-          src={`${STRAPI_URL}${loadingBarUrl}`}
+          src={resolveMediaUrl(loadingBarUrl)}
           alt=""
           className={styles.loadingBar}
           loop="true"
@@ -53,7 +53,7 @@ export default function BlogPage() {
       <div className={styles.subtitleRow}>
         {page.subtitle && <p className={styles.subtitle}>{page.subtitle}</p>}
         {icons[2]?.url && (
-          <img src={`${STRAPI_URL}${icons[2].url}`} alt="" className={styles.icon3} />
+          <img src={resolveMediaUrl(icons[2].url)} alt="" className={styles.icon3} />
         )}
       </div>
     </div>

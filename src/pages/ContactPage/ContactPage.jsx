@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { getContact, postContactSubmission } from "../../api";
 import { useLang } from "../../contexts/LanguageContext";
 import styles from "./ContactPage.module.css";
-import { STRAPI_URL } from "../../config";
+import { resolveMediaUrl } from "../../config";
 
 const ArrowIcon = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -117,7 +117,7 @@ function SocialIcons({ items, className }) {
   return (
     <div className={className}>
       {items.map((s, i) => {
-        const iconUrl = s.icon?.url ? `${STRAPI_URL}${s.icon.url}` : null;
+        const iconUrl = resolveMediaUrl(s.icon?.url);
         return (
           <a
             key={i}

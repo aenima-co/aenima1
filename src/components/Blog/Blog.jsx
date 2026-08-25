@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getPosts } from '../../api';
 import './Blog.css';
-import { STRAPI_URL } from '../../config';
+import { resolveMediaUrl } from '../../config';
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
@@ -13,8 +13,7 @@ export default function Blog() {
   if (!posts.length) return null;
 
   const getImagem = (post) => {
-    const url = post.imagem?.[0]?.url;
-    return url ? `${STRAPI_URL}${url}` : null;
+    return resolveMediaUrl(post.imagem?.[0]?.url);
   };
 
   return (
