@@ -2,11 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getWorkBySlug, getWorks } from "../../api";
 import styles from "./PortfolioPage.module.css";
-import { STRAPI_URL } from "../../config";
+import { resolveMediaUrl } from "../../config";
 
 function getCoverUrl(item) {
   if (!item) return null;
-  return item.url ? `${STRAPI_URL}${item.url}` : null;
+  return resolveMediaUrl(item.url);
 }
 
 function isFullWidthImage(item) {

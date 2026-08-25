@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLang } from '../../contexts/LanguageContext';
 import Button from '../Button/Button';
 import './BestWork.css';
-import { STRAPI_URL } from '../../config';
+import { resolveMediaUrl } from '../../config';
 
 export default function BestWork() {
   const { locale } = useLang();
@@ -23,8 +23,8 @@ export default function BestWork() {
   const getCover = (work) => {
     const cover = work.cover;
     if (!cover) return null;
-    if (Array.isArray(cover)) return cover[0]?.url ? `${STRAPI_URL}${cover[0].url}` : null;
-    return cover.url ? `${STRAPI_URL}${cover.url}` : null;
+    if (Array.isArray(cover)) return resolveMediaUrl(cover[0]?.url);
+    return resolveMediaUrl(cover.url);
   };
 
   return (

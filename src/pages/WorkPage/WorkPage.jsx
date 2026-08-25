@@ -4,16 +4,14 @@ import { getWorks, getWorkPage } from "../../api";
 import { useLang } from "../../contexts/LanguageContext";
 import Button from "../../components/Button/Button";
 import styles from "./WorkPage.module.css";
-import { STRAPI_URL } from "../../config";
+import { resolveMediaUrl } from "../../config";
 
 // ─── Card individual ──────────────────────────────────────────────────────────
 function WorkCard({ work, index }) {
   const firstCover = Array.isArray(work.cover) ? work.cover[0] : work.cover;
   const imageUrl = firstCover?.url
-    ? `${STRAPI_URL}${firstCover.url}`
-    : firstCover?.formats?.large?.url
-      ? `${STRAPI_URL}${firstCover.formats.large.url}`
-      : null;
+    ? resolveMediaUrl(firstCover.url)
+    : resolveMediaUrl(firstCover?.formats?.large?.url);
 
   const placeholders = [
     "#e8e4dc",

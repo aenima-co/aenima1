@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getHome, getEspecialidades } from '../../api';
 import './SecaoAbout.css';
-import { STRAPI_URL } from '../../config';
+import { resolveMediaUrl } from '../../config';
 
 export default function SecaoAbout() {
   const [about, setAbout] = useState(null);
@@ -33,7 +33,7 @@ export default function SecaoAbout() {
           <div className="secao-about__direita">
             {about.icone?.url && (
               <img
-                src={`${STRAPI_URL}${about.icone.url}`}
+                src={resolveMediaUrl(about.icone.url)}
                 alt="ícone"
                 className="secao-about__icone"
               />

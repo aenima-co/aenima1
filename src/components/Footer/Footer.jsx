@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getFooter } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import './Footer.css';
-import { STRAPI_URL } from '../../config';
+import { resolveMediaUrl } from '../../config';
 
 function LinkedInIcon() {
   return (
@@ -14,8 +14,8 @@ function LinkedInIcon() {
 
 function resolveMedia(field) {
   if (!field) return null;
-  if (Array.isArray(field)) return field[0]?.url ? `${STRAPI_URL}${field[0].url}` : null;
-  if (field.url) return `${STRAPI_URL}${field.url}`;
+  if (Array.isArray(field)) return resolveMediaUrl(field[0]?.url);
+  if (field.url) return resolveMediaUrl(field.url);
   return null;
 }
 

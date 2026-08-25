@@ -3,11 +3,11 @@ import { getAboutPage } from "../../api";
 import { useLang } from "../../contexts/LanguageContext";
 import styles from "./AboutPage.module.css";
 import Button from "../../components/Button/Button";
-import { STRAPI_URL } from "../../config";
+import { resolveMediaUrl } from "../../config";
 
 // ─── Card de Valor ────────────────────────────────────────────────────────────
 function ValueCard({ value }) {
-  const iconUrl = value.icon?.url ? `${STRAPI_URL}${value.icon.url}` : null;
+  const iconUrl = resolveMediaUrl(value.icon?.url);
 
   return (
     <div className={styles.valueCard}>
@@ -45,7 +45,7 @@ function MemberCard({ member }) {
   const photo = Array.isArray(member.member_pic)
     ? member.member_pic[0]
     : member.member_pic;
-  const photoUrl = photo?.url ? `${STRAPI_URL}${photo.url}` : null;
+  const photoUrl = resolveMediaUrl(photo?.url);
 
   return (
     <div className={styles.memberCard}>
@@ -124,7 +124,7 @@ export default function AboutPage() {
             <img
               src={
                 pageData?.right_cards?.[0]?.url
-                  ? `${STRAPI_URL}${pageData.right_cards[0].url}`
+                  ? resolveMediaUrl(pageData.right_cards[0].url)
                   : cardPixel
               }
               alt=""
@@ -134,7 +134,7 @@ export default function AboutPage() {
           <img
             src={
               pageData?.right_cards?.[1]?.url
-                ? `${STRAPI_URL}${pageData.right_cards[1].url}`
+                ? resolveMediaUrl(pageData.right_cards[1].url)
                 : cardOrange
             }
             alt=""
