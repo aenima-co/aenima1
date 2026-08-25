@@ -3,6 +3,7 @@ import { getDemoReel } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import './DemoReel.css';
 import { resolveMediaUrl } from '../../config';
+import { t } from '../../i18n/messages';
 
 function PlayIcon() {
   return (
@@ -24,7 +25,7 @@ function parseSrc(iframeStr) {
 }
 
 export default function DemoReel() {
-  const { locale } = useLang();
+  const { locale, lang } = useLang();
   const [data, setData] = useState(null);
   const [playing, setPlaying] = useState(false);
   const iframeRef = useRef(null);
@@ -90,7 +91,7 @@ export default function DemoReel() {
             <div className="demo-reel__overlay" onClick={() => setPlaying(true)}>
               <button
                 className="demo-reel__play-btn"
-                aria-label="Reproduzir vídeo"
+                aria-label={t(lang, 'demoReel.playVideo')}
                 onClick={(e) => { e.stopPropagation(); setPlaying(true); }}
               >
                 <PlayIcon />

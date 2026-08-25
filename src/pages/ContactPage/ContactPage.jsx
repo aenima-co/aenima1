@@ -3,6 +3,7 @@ import { getContact, postContactSubmission } from "../../api";
 import { useLang } from "../../contexts/LanguageContext";
 import styles from "./ContactPage.module.css";
 import { resolveMediaUrl } from "../../config";
+import { t } from "../../i18n/messages";
 
 const ArrowIcon = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,26 +28,26 @@ const WarningIcon = () => (
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const BANNER_DURATION_MS = 8000;
 
-function validateForm(formState) {
+function validateForm(formState, lang) {
   const errors = {};
-  if (!formState.name.trim()) errors.name = "Informe seu nome.";
+  if (!formState.name.trim()) errors.name = t(lang, "contactForm.nameRequired");
   if (!formState.email.trim() || !EMAIL_RE.test(formState.email.trim())) {
-    errors.email = "Informe um e-mail válido.";
+    errors.email = t(lang, "contactForm.emailInvalid");
   }
-  if (!formState.description.trim()) errors.description = "Conte um pouco mais do que você busca.";
+  if (!formState.description.trim()) errors.description = t(lang, "contactForm.descriptionRequired");
   return errors;
 }
 
-function friendlyFieldMessage(field) {
-  if (field === "email") return "Informe um e-mail válido.";
-  if (field === "description") return "Conte um pouco mais do que você busca.";
-  if (field === "name") return "Informe seu nome.";
-  return "Campo inválido.";
+function friendlyFieldMessage(field, lang) {
+  if (field === "email") return t(lang, "contactForm.emailInvalid");
+  if (field === "description") return t(lang, "contactForm.descriptionRequired");
+  if (field === "name") return t(lang, "contactForm.nameRequired");
+  return t(lang, "contactForm.invalidField");
 }
 
-function getBannerMessage(err) {
-  if (err.status && err.status < 500) return "Verifique os campos destacados e tente novamente.";
-  return "Não foi possível enviar sua mensagem. Tente novamente em instantes.";
+function getBannerMessage(err, lang) {
+  if (err.status && err.status < 500) return t(lang, "contactForm.clientErrorBanner");
+  return t(lang, "contactForm.serverErrorBanner");
 }
 
 const DISMISS_THRESHOLD_RATIO = 0.3;
@@ -136,7 +137,7 @@ function SocialIcons({ items, className }) {
 }
 
 export default function ContactPage() {
-  const { locale } = useLang();
+  const { locale, lang } = useLang();
   const [page, setPage] = useState(null);
   const [formState, setFormState] = useState({ name: "", email: "", description: "" });
   const [status, setStatus] = useState("idle"); // idle | sending | success | error
@@ -165,7 +166,7 @@ export default function ContactPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = validateForm(formState);
+    const errors = validateForm(formState, lang);
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       setStatus("idle");
@@ -182,11 +183,11 @@ export default function ContactPage() {
     } catch (err) {
       console.error("[ContactPage] erro ao enviar formulário:", err);
       setStatus("error");
-      setBannerMessage(getBannerMessage(err));
+      setBannerMessage(getBannerMessage(err, lang));
       const serverErrors = {};
       err.fieldErrors?.forEach((fe) => {
         const field = fe.path?.[0];
-        if (field) serverErrors[field] = friendlyFieldMessage(field);
+        if (field) serverErrors[field] = friendlyFieldMessage(field, lang);
       });
       setFieldErrors(serverErrors);
     }
@@ -255,7 +256,7 @@ export default function ContactPage() {
             disabled={status === "sending"}
           >
             <span className={`cta-btn__text ${styles.btnText}`}>
-              {status === "sending" ? "Enviando..." : ctaText}
+              {status === "sending" ? t(lang, "contactForm.sending") : ctaText}
             </span>
             <span className="cta-btn__circle">
               <ArrowIcon />
@@ -267,7 +268,7 @@ export default function ContactPage() {
           <DismissibleBanner
             variant="feedbackSuccess"
             icon={<CheckIcon />}
-            message="Mensagem enviada com sucesso! Retornaremos em breve."
+            message={t(lang, "contactForm.successBanner")}
             onDismiss={() => setStatus("idle")}
           />
         )}

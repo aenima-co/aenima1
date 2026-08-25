@@ -4,6 +4,7 @@ import { useLang } from "../../contexts/LanguageContext";
 import styles from "./AboutPage.module.css";
 import Button from "../../components/Button/Button";
 import { resolveMediaUrl } from "../../config";
+import { t } from "../../i18n/messages";
 
 // ─── Card de Valor ────────────────────────────────────────────────────────────
 function ValueCard({ value }) {
@@ -72,7 +73,7 @@ function MemberCard({ member }) {
 
 // ─── Página principal ─────────────────────────────────────────────────────────
 export default function AboutPage() {
-  const { locale } = useLang();
+  const { locale, lang } = useLang();
   const [pageData, setPageData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -90,7 +91,7 @@ export default function AboutPage() {
     load();
   }, [locale]);
 
-  if (loading) return <div className={styles.loading}>Carregando…</div>;
+  if (loading) return <div className={styles.loading}>{t(lang, "common.loading")}</div>;
 
   return (
     <div className={styles.page}>
