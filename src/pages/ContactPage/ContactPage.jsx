@@ -46,6 +46,7 @@ function friendlyFieldMessage(field, lang) {
 }
 
 function getBannerMessage(err, lang) {
+  if (err.status === 429) return t(lang, "contactForm.rateLimitedBanner");
   if (err.status && err.status < 500) return t(lang, "contactForm.clientErrorBanner");
   return t(lang, "contactForm.serverErrorBanner");
 }
