@@ -6,10 +6,11 @@ import LanguageToggle from '../LanguageToggle/LanguageToggle';
 import { getBannerTopo, getMenuItens, getNavbar } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import { resolveMediaUrl } from '../../config';
+import { t } from '../../i18n/messages';
 import './Header.css';
 
 export default function Header() {
-  const { locale } = useLang();
+  const { locale, lang } = useLang();
   const location = useLocation();
   const [indicatorStyle, setIndicatorStyle] = useState({});
   const itemRefs = useRef([]);
@@ -82,7 +83,7 @@ export default function Header() {
           <button
             className={`header-menu-toggle${menuAberto ? ' header-menu-toggle--open' : ''}`}
             onClick={() => setMenuAberto(!menuAberto)}
-            aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu'}
+            aria-label={menuAberto ? t(lang, 'header.closeMenu') : t(lang, 'header.openMenu')}
           >
             <span />
             <span />

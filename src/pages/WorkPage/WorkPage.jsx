@@ -5,6 +5,7 @@ import { useLang } from "../../contexts/LanguageContext";
 import Button from "../../components/Button/Button";
 import styles from "./WorkPage.module.css";
 import { resolveMediaUrl } from "../../config";
+import { t } from "../../i18n/messages";
 
 // ─── Card individual ──────────────────────────────────────────────────────────
 function WorkCard({ work, index }) {
@@ -56,7 +57,7 @@ function WorkCard({ work, index }) {
 
 // ─── Página principal ─────────────────────────────────────────────────────────
 export default function WorkPage() {
-  const { locale } = useLang();
+  const { locale, lang } = useLang();
   const [works, setWorks] = useState([]);
   const [pageData, setPageData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -98,11 +99,11 @@ export default function WorkPage() {
 
       {/* Grid */}
       {loading ? (
-        <div className={styles.loading}>Carregando…</div>
+        <div className={styles.loading}>{t(lang, "common.loading")}</div>
       ) : (
         <section className={styles.grid}>
           {works.length === 0 ? (
-            <p className={styles.empty}>Nenhum projeto cadastrado ainda.</p>
+            <p className={styles.empty}>{t(lang, "workPage.empty")}</p>
           ) : (
             works.map((work, i) => (
               <WorkCard key={work.id} work={work} index={i} />

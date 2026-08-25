@@ -3,6 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import { getWorkBySlug, getWorks } from "../../api";
 import styles from "./PortfolioPage.module.css";
 import { resolveMediaUrl } from "../../config";
+import { useLang } from "../../contexts/LanguageContext";
+import { t } from "../../i18n/messages";
 
 function getCoverUrl(item) {
   if (!item) return null;
@@ -45,6 +47,7 @@ function CarouselCard({ work }) {
 // ─── Página principal ─────────────────────────────────────────────────────────
 export default function PortfolioPage() {
   const { slug } = useParams();
+  const { lang } = useLang();
   const [work, setWork] = useState(null);
   const [works, setWorks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -93,9 +96,9 @@ export default function PortfolioPage() {
     load();
   }, [slug]);
 
-  if (loading) return <div className={styles.loading}>Carregando…</div>;
+  if (loading) return <div className={styles.loading}>{t(lang, "common.loading")}</div>;
   if (!work)
-    return <div className={styles.notFound}>Projeto não encontrado.</div>;
+    return <div className={styles.notFound}>{t(lang, "portfolioPage.notFound")}</div>;
 
   const covers = Array.isArray(work.cover)
     ? work.cover
