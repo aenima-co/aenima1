@@ -192,7 +192,7 @@
   .navbar {
     display: flex;
     align-items: center;
-    gap: clamp(48px, calc(10.43vw - 50.6px), 96px);
+    gap: clamp(36px, calc(10.43vw - 62.6px), 84px);
     justify-self: center;
     position: relative;
   }
