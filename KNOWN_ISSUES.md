@@ -14,3 +14,7 @@ A seção "// BLOG" da Home (`src/components/Blog/Blog.jsx`) está com `display:
    - Componente de página nos moldes de `src/pages/PortfolioPage/PortfolioPage.jsx` (que já faz esse papel para `/work/:slug`).
    - Função `getPostBySlug()` (ou similar) em `src/api.js`, análoga à `getWorkBySlug()` já existente.
 3. Os cards de post na Home (`Blog.jsx`) e na listagem (`src/pages/BlogPage/BlogPage.jsx`) linkam pra `/blog/:slug` — hoje esse link não navega pra lugar nenhum útil (rota inexistente), mas como a seção está escondida, ninguém consegue clicar nele por enquanto.
+
+## Página 404
+
+`src/pages/NotFoundPage/NotFoundPage.jsx`, capturada pela rota curinga (`<Route path="*">`) em `src/App.jsx`. Textos PT/EN embutidos no próprio componente (`const TEXT = {...}`) em vez de usar `src/i18n/messages.js` — foi criada numa branch separada da branch que introduziu esse dicionário, mantidas independentes de propósito. Se um dia mexer nos textos daqui, considere migrar pro dicionário central pra manter um padrão só.
