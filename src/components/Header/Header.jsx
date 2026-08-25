@@ -128,7 +128,11 @@ export default function Header() {
         </nav>
 
         <div className="mobile-menu__actions">
-          <Button variant="light" href={navbar?.contact_us?.link}>
+          <Button
+            variant="light"
+            href={navbar?.contact_us?.link}
+            onClick={() => setMenuAberto(false)}
+          >
             {navbar?.contact_us?.texto || 'Contact Us'}
           </Button>
         </div>
