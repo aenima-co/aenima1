@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 1026px;
+  min-height: 718px;
 }
 
 /* ── Linha 1: members + título ──────────────────────────────── */
@@ -259,12 +259,12 @@
 @media (min-width: 768px) {
   .footer {
     background-image: var(--bg-desktop);
-    min-height: 1300px;
+    min-height: 910px;
   }
 
   .footer__inner {
     padding: 48px clamp(20px, calc(3.5vw - 9.4px), 48px) 48px;
-    height: 1500px;
+    height: 1050px;
   }
 
   .footer__row1,
