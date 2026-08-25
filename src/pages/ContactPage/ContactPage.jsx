@@ -240,7 +240,7 @@ export default function ContactPage() {
           <label className={styles.label}>{form?.description_form}</label>
           <textarea
             className={`${styles.input} ${styles.textarea} ${fieldErrors.description ? styles.inputError : ""}`}
-            placeholder="Conte-nos um pouco mais do que busca :)"
+            placeholder={form?.description_placeholder}
             value={formState.description}
             onChange={updateField("description")}
             aria-invalid={Boolean(fieldErrors.description)}
