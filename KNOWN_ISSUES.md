@@ -12,10 +12,6 @@ Decisão consciente (2026-08-25): mensagens de validação de formulário, estad
 
 **Onde isso é usado hoje**: formulário de contato inteiro (`ContactPage.jsx` — validações, "Enviando...", banners de sucesso/erro), estados de carregamento (`AboutPage.jsx`, `WorkPage.jsx`, `PortfolioPage.jsx`), estados vazios/não encontrado (`WorkPage.jsx`, `PortfolioPage.jsx`), e os `aria-label` do menu hambúrguer (`Header.jsx`), do seletor de idioma (`LanguageToggle.jsx`) e do play do vídeo (`DemoReel.jsx`).
 
-## Campo `email` do rodapé vazio na versão em português
-
-Achado numa varredura de idiomas (2026-08-25): o content-type `Footer` no Strapi tem o campo `email` preenchido só na localização `en` — a versão `pt-BR` está vazia. Como `Footer.jsx` só renderiza a linha do e-mail se `footer.email` existir, essa linha inteira some do rodapé quando o site está em português. Não é bug de código — precisa preencher o campo no admin do Strapi (Content Manager → Footer → trocar pra locale pt-BR → campo `email`).
-
 ## Blog sem conteúdo real (seção escondida de propósito)
 
 A seção "// BLOG" da Home (`src/components/Blog/Blog.jsx`) está com `display: none` em [`Blog.css:5`](src/components/Blog/Blog.css#L5), sem nenhuma media query que reative isso em nenhuma largura de tela — fica sempre escondida, em qualquer dispositivo. Isso é intencional: ainda não há posts reais pra mostrar, só um post de exemplo/placeholder ("The Birth of Venus") cadastrado no Strapi.
