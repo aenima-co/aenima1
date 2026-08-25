@@ -1,6 +1,7 @@
 import React from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import { LanguageProvider } from "./contexts/LanguageContext";
+import { LanguageProvider, useLang } from "./contexts/LanguageContext";
+import { usePageTitle } from "./hooks/usePageTitle";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 import DemoReel from "./components/DemoReel/DemoReel";
@@ -16,15 +17,19 @@ import ContactPage from "./pages/ContactPage/ContactPage";
 
 import "./App.css";
 
-const Home = () => (
-  <>
-    <Hero />
-    <DemoReel />
-    <BestWork />
-    <SecaoAbout />
-    <Blog />
-  </>
-);
+const Home = () => {
+  const { lang } = useLang();
+  usePageTitle("home", lang);
+  return (
+    <>
+      <Hero />
+      <DemoReel />
+      <BestWork />
+      <SecaoAbout />
+      <Blog />
+    </>
+  );
+};
 
 const App = () => {
   return (

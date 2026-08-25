@@ -4,6 +4,7 @@ import { useLang } from "../../contexts/LanguageContext";
 import styles from "./AboutPage.module.css";
 import Button from "../../components/Button/Button";
 import { resolveMediaUrl } from "../../config";
+import { usePageTitle } from "../../hooks/usePageTitle";
 
 // ─── Card de Valor ────────────────────────────────────────────────────────────
 function ValueCard({ value }) {
@@ -72,7 +73,8 @@ function MemberCard({ member }) {
 
 // ─── Página principal ─────────────────────────────────────────────────────────
 export default function AboutPage() {
-  const { locale } = useLang();
+  const { locale, lang } = useLang();
+  usePageTitle("about", lang);
   const [pageData, setPageData] = useState(null);
   const [loading, setLoading] = useState(true);
 

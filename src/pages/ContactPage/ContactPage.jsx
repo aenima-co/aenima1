@@ -3,6 +3,7 @@ import { getContact, postContactSubmission } from "../../api";
 import { useLang } from "../../contexts/LanguageContext";
 import styles from "./ContactPage.module.css";
 import { resolveMediaUrl } from "../../config";
+import { usePageTitle } from "../../hooks/usePageTitle";
 
 const ArrowIcon = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -136,7 +137,8 @@ function SocialIcons({ items, className }) {
 }
 
 export default function ContactPage() {
-  const { locale } = useLang();
+  const { locale, lang } = useLang();
+  usePageTitle("contact", lang);
   const [page, setPage] = useState(null);
   const [formState, setFormState] = useState({ name: "", email: "", description: "" });
   const [status, setStatus] = useState("idle"); // idle | sending | success | error

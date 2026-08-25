@@ -3,6 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import { getWorkBySlug, getWorks } from "../../api";
 import styles from "./PortfolioPage.module.css";
 import { resolveMediaUrl } from "../../config";
+import { useLang } from "../../contexts/LanguageContext";
+import { usePageTitle } from "../../hooks/usePageTitle";
 
 function getCoverUrl(item) {
   if (!item) return null;
@@ -45,7 +47,9 @@ function CarouselCard({ work }) {
 // ─── Página principal ─────────────────────────────────────────────────────────
 export default function PortfolioPage() {
   const { slug } = useParams();
+  const { lang } = useLang();
   const [work, setWork] = useState(null);
+  usePageTitle("work", lang, work?.title);
   const [works, setWorks] = useState([]);
   const [loading, setLoading] = useState(true);
   const carouselRef = useRef(null);
