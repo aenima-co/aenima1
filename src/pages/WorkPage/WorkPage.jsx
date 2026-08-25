@@ -6,6 +6,7 @@ import Button from "../../components/Button/Button";
 import styles from "./WorkPage.module.css";
 import { resolveMediaUrl } from "../../config";
 import { t } from "../../i18n/messages";
+import { usePageTitle } from "../../hooks/usePageTitle";
 
 // ─── Card individual ──────────────────────────────────────────────────────────
 function WorkCard({ work, index }) {
@@ -58,6 +59,7 @@ function WorkCard({ work, index }) {
 // ─── Página principal ─────────────────────────────────────────────────────────
 export default function WorkPage() {
   const { locale, lang } = useLang();
+  usePageTitle("work", lang);
   const [works, setWorks] = useState([]);
   const [pageData, setPageData] = useState(null);
   const [loading, setLoading] = useState(true);

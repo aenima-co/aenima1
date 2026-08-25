@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import { getBlogPage } from "../../api";
 import styles from "./BlogPage.module.css";
 import { resolveMediaUrl } from "../../config";
+import { useLang } from "../../contexts/LanguageContext";
+import { usePageTitle } from "../../hooks/usePageTitle";
 
 export default function BlogPage() {
+  const { lang } = useLang();
+  usePageTitle("blog", lang);
   const [page, setPage] = useState(null);
 
   useEffect(() => {
