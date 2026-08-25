@@ -14,6 +14,7 @@ import WorkPage from "./pages/WorkPage/WorkPage";
 import PortfolioPage from "./pages/PortfolioPage/PortfolioPage";
 import BlogPage from "./pages/BlogPage/BlogPage";
 import ContactPage from "./pages/ContactPage/ContactPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 import "./App.css";
 
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/work/:slug" element={<PortfolioPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />
       </HashRouter>
