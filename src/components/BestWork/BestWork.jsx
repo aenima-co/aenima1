@@ -5,30 +5,29 @@ import { useLang } from '../../contexts/LanguageContext';
 import Button from '../Button/Button';
 import './BestWork.css';
 import { resolveMediaUrl } from '../../config';
-import LoadError from '../LoadError/LoadError';
+import { useLoadError } from '../../contexts/LoadErrorContext';
 
 export default function BestWork() {
   const { locale } = useLang();
   const [works, setWorks] = useState([]);
   const [botao, setBotao] = useState(null);
-  const [error, setError] = useState(false);
+  const { reportError, clearError } = useLoadError();
 
   function load() {
     getBestWorks()
       .then((data) => {
         setWorks(data);
-        setError(false);
+        clearError('bestWork');
       })
       .catch((err) => {
         console.error('[BestWork] erro ao carregar:', err);
-        setError(true);
+        reportError('bestWork', load);
       });
     getHome(locale).then((data) => setBotao(data?.botao_projeto)).catch(() => {});
   }
 
   useEffect(load, [locale]);
 
-  if (error) return <LoadError onRetry={load} />;
   if (!works.length) return null;
 
   const [principal, ...secundarios] = works;

@@ -3,7 +3,7 @@ import { getFooter } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import './Footer.css';
 import { resolveMediaUrl } from '../../config';
-import LoadError from '../LoadError/LoadError';
+import { useLoadError } from '../../contexts/LoadErrorContext';
 
 function LinkedInIcon() {
   return (
@@ -60,7 +60,7 @@ export default function Footer() {
   const { locale } = useLang();
   const [footer, setFooter] = useState(null);
   const [members, setMembers] = useState([]);
-  const [error, setError] = useState(false);
+  const { reportError, clearError } = useLoadError();
   const clock = useClock();
 
   function load() {
@@ -68,11 +68,11 @@ export default function Footer() {
       .then(data => {
         setFooter(data);
         setMembers(data?.memberCard || []);
-        setError(false);
+        clearError('footer');
       })
       .catch((err) => {
         console.error('[Footer] erro ao carregar:', err);
-        setError(true);
+        reportError('footer', load);
       });
   }
 
@@ -95,8 +95,6 @@ export default function Footer() {
       }}
     >
       <div className="footer__inner">
-
-        {error && <LoadError onRetry={load} />}
 
         <div className="footer__top-area">
 

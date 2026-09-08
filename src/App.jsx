@@ -1,7 +1,9 @@
 import React from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider, useLang } from "./contexts/LanguageContext";
+import { LoadErrorProvider } from "./contexts/LoadErrorContext";
 import { usePageTitle } from "./hooks/usePageTitle";
+import LoadErrorBanner from "./components/LoadErrorBanner/LoadErrorBanner";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 import DemoReel from "./components/DemoReel/DemoReel";
@@ -35,19 +37,22 @@ const Home = () => {
 const App = () => {
   return (
     <LanguageProvider>
-      <HashRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/work" element={<WorkPage />} />
-          <Route path="/work/:slug" element={<PortfolioPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-        <Footer />
-      </HashRouter>
+      <LoadErrorProvider>
+        <HashRouter>
+          <LoadErrorBanner />
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/work" element={<WorkPage />} />
+            <Route path="/work/:slug" element={<PortfolioPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          <Footer />
+        </HashRouter>
+      </LoadErrorProvider>
     </LanguageProvider>
   );
 };

@@ -1,7 +1,8 @@
 import { useLang } from '../../contexts/LanguageContext';
+import { useLoadError } from '../../contexts/LoadErrorContext';
 import { t } from '../../i18n/messages';
 import Button from '../Button/Button';
-import './LoadError.css';
+import './LoadErrorBanner.css';
 
 function AlertIcon() {
   return (
@@ -13,19 +14,21 @@ function AlertIcon() {
   );
 }
 
-export default function LoadError({ onRetry }) {
+export default function LoadErrorBanner() {
   const { lang } = useLang();
+  const { hasErrors, retryAll } = useLoadError();
+
+  if (!hasErrors) return null;
+
   return (
-    <div className="load-error">
-      <span className="load-error__icon">
+    <div className="load-error-banner" role="status">
+      <span className="load-error-banner__icon">
         <AlertIcon />
       </span>
-      <p className="load-error__text">{t(lang, 'common.loadError')}</p>
-      {onRetry && (
-        <Button className="load-error__retry" onClick={onRetry}>
-          {t(lang, 'common.retry')}
-        </Button>
-      )}
+      <p className="load-error-banner__text">{t(lang, 'common.loadError')}</p>
+      <Button className="load-error-banner__retry" onClick={retryAll}>
+        {t(lang, 'common.retry')}
+      </Button>
     </div>
   );
 }

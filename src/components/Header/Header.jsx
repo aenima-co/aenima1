@@ -7,7 +7,7 @@ import { getBannerTopo, getMenuItens, getNavbar } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import { resolveMediaUrl } from '../../config';
 import { t } from '../../i18n/messages';
-import LoadError from '../LoadError/LoadError';
+import { useLoadError } from '../../contexts/LoadErrorContext';
 import './Header.css';
 
 export default function Header() {
@@ -20,7 +20,7 @@ export default function Header() {
   const [menuItens, setMenuItens] = useState([]);
   const [navbar, setNavbar] = useState(null);
   const [menuAberto, setMenuAberto] = useState(false);
-  const [error, setError] = useState(false);
+  const { reportError, clearError } = useLoadError();
 
   const activeIndex = menuItens.findIndex((item) => item.link === location.pathname);
   const logoObj = Array.isArray(navbar?.logo) ? navbar.logo[0] : navbar?.logo;
@@ -31,11 +31,11 @@ export default function Header() {
     getMenuItens(locale)
       .then((data) => {
         setMenuItens(data);
-        setError(false);
+        clearError('header');
       })
       .catch((err) => {
         console.error('[Header] erro ao carregar menu:', err);
-        setError(true);
+        reportError('header', load);
       });
     getNavbar(locale).then(setNavbar).catch(() => {});
   }
@@ -78,8 +78,6 @@ export default function Header() {
           )}
         </div>
       )}
-
-      {error && <LoadError onRetry={load} />}
 
       <div className="header-nav">
         <Link to="/">
