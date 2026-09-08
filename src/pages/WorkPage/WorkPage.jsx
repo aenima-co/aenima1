@@ -7,6 +7,7 @@ import styles from "./WorkPage.module.css";
 import { resolveMediaUrl } from "../../config";
 import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
+import { useLoadError } from "../../contexts/LoadErrorContext";
 
 // ─── Card individual ──────────────────────────────────────────────────────────
 function WorkCard({ work, index }) {
@@ -63,6 +64,8 @@ export default function WorkPage() {
   const [works, setWorks] = useState([]);
   const [pageData, setPageData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const { reportError, clearError } = useLoadError();
 
   useEffect(() => {
     async function load() {
@@ -73,8 +76,12 @@ export default function WorkPage() {
         ]);
         setWorks(worksData || []);
         setPageData(page);
+        setError(false);
+        clearError("workPage");
       } catch (err) {
         console.error("[WorkPage] erro ao carregar:", err);
+        setError(true);
+        reportError("workPage", load);
       } finally {
         setLoading(false);
       }
@@ -105,7 +112,7 @@ export default function WorkPage() {
       ) : (
         <section className={styles.grid}>
           {works.length === 0 ? (
-            <p className={styles.empty}>{t(lang, "workPage.empty")}</p>
+            !error && <p className={styles.empty}>{t(lang, "workPage.empty")}</p>
           ) : (
             works.map((work, i) => (
               <WorkCard key={work.id} work={work} index={i} />

@@ -5,6 +5,7 @@ import styles from "./ContactPage.module.css";
 import { resolveMediaUrl } from "../../config";
 import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
+import { useLoadError } from "../../contexts/LoadErrorContext";
 
 const ArrowIcon = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -146,9 +147,21 @@ export default function ContactPage() {
   const [status, setStatus] = useState("idle"); // idle | sending | success | error
   const [bannerMessage, setBannerMessage] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
+  const { reportError, clearError } = useLoadError();
 
   useEffect(() => {
-    getContact(locale).then(setPage);
+    function load() {
+      getContact(locale)
+        .then((data) => {
+          setPage(data);
+          clearError("contactPage");
+        })
+        .catch((err) => {
+          console.error("[ContactPage] erro ao carregar:", err);
+          reportError("contactPage", load);
+        });
+    }
+    load();
   }, [locale]);
 
   useEffect(() => {

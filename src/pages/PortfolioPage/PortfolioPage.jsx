@@ -6,6 +6,7 @@ import { resolveMediaUrl } from "../../config";
 import { useLang } from "../../contexts/LanguageContext";
 import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
+import { useLoadError } from "../../contexts/LoadErrorContext";
 
 function getCoverUrl(item) {
   if (!item) return null;
@@ -53,6 +54,8 @@ export default function PortfolioPage() {
   usePageTitle("work", lang, work?.title);
   const [works, setWorks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const { reportError, clearError } = useLoadError();
   const carouselRef = useRef(null);
   const dragState = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
 
@@ -89,8 +92,12 @@ export default function PortfolioPage() {
         ]);
         setWork(workData);
         setWorks(worksData || []);
+        setError(false);
+        clearError("portfolioPage");
       } catch (err) {
         console.error("[PortfolioPage] erro:", err);
+        setError(true);
+        reportError("portfolioPage", load);
       } finally {
         setLoading(false);
       }
@@ -100,7 +107,7 @@ export default function PortfolioPage() {
 
   if (loading) return <div className={styles.loading}>{t(lang, "common.loading")}</div>;
   if (!work)
-    return <div className={styles.notFound}>{t(lang, "portfolioPage.notFound")}</div>;
+    return error ? null : <div className={styles.notFound}>{t(lang, "portfolioPage.notFound")}</div>;
 
   const covers = Array.isArray(work.cover)
     ? work.cover
