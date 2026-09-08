@@ -4,6 +4,7 @@ import { useLang } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import "./Hero.css";
 import { resolveMediaUrl } from "../../config";
+import { useLoadError } from "../../contexts/LoadErrorContext";
 
 // Campos esperados em cada item de members_image no Strapi:
 //   foto     → Media (imagem do membro)
@@ -28,10 +29,21 @@ function LinkedInIcon() {
 export default function Hero() {
   const { locale } = useLang();
   const [hero, setHero] = useState(null);
+  const { reportError, clearError } = useLoadError();
 
-  useEffect(() => {
-    getHome(locale).then((data) => data && setHero(data.hero));
-  }, [locale]);
+  function load() {
+    getHome(locale)
+      .then((data) => {
+        data && setHero(data.hero);
+        clearError("hero");
+      })
+      .catch((err) => {
+        console.error("[Hero] erro ao carregar:", err);
+        reportError("hero", load);
+      });
+  }
+
+  useEffect(load, [locale]);
 
   if (!hero) return null;
 

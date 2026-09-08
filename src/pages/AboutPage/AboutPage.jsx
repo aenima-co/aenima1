@@ -6,6 +6,7 @@ import Button from "../../components/Button/Button";
 import { resolveMediaUrl } from "../../config";
 import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
+import { useLoadError } from "../../contexts/LoadErrorContext";
 import cardPixel from "../../assets/img/about-card-pixel.png";
 import cardOrange from "../../assets/img/about-card-orange.png";
 
@@ -80,14 +81,17 @@ export default function AboutPage() {
   usePageTitle("about", lang);
   const [pageData, setPageData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { reportError, clearError } = useLoadError();
 
   useEffect(() => {
     async function load() {
       try {
         const page = await getAboutPage(locale);
         setPageData(page);
+        clearError("aboutPage");
       } catch (err) {
         console.error("[AboutPage] erro ao carregar:", err);
+        reportError("aboutPage", load);
       } finally {
         setLoading(false);
       }

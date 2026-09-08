@@ -2,13 +2,25 @@ import { useEffect, useState } from 'react';
 import { getPosts } from '../../api';
 import './Blog.css';
 import { resolveMediaUrl } from '../../config';
+import { useLoadError } from '../../contexts/LoadErrorContext';
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
+  const { reportError, clearError } = useLoadError();
 
-  useEffect(() => {
-    getPosts(true).then(setPosts);
-  }, []);
+  function load() {
+    getPosts(true)
+      .then((data) => {
+        setPosts(data);
+        clearError('blog');
+      })
+      .catch((err) => {
+        console.error('[Blog] erro ao carregar:', err);
+        reportError('blog', load);
+      });
+  }
+
+  useEffect(load, []);
 
   if (!posts.length) return null;
 

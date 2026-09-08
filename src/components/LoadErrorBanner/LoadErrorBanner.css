@@ -1,0 +1,57 @@
+.load-error-banner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: min(90vw, 360px);
+  padding: 32px 28px;
+  background: #f5f3f5;
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(10, 11, 21, 0.18);
+  text-align: center;
+}
+
+.load-error-banner__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(234, 66, 2, 0.1);
+  color: #ea4202;
+  flex-shrink: 0;
+}
+
+.load-error-banner__text {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #0a0b15;
+  margin: 0;
+}
+
+/* Botão menor que o CTA padrão do site, pra caber num card de aviso */
+.load-error-banner .load-error-banner__retry.cta-btn {
+  padding: 6px 8px 6px 18px;
+  gap: 10px;
+}
+
+.load-error-banner .load-error-banner__retry .cta-btn__text {
+  font-size: 14px;
+}
+
+.load-error-banner .load-error-banner__retry .cta-btn__circle {
+  width: 26px;
+  height: 26px;
+}
+
+.load-error-banner .load-error-banner__retry .cta-btn__arrow {
+  width: 10px;
+  height: 10px;
+}

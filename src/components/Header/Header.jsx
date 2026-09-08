@@ -7,6 +7,7 @@ import { getBannerTopo, getMenuItens, getNavbar } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import { resolveMediaUrl } from '../../config';
 import { t } from '../../i18n/messages';
+import { useLoadError } from '../../contexts/LoadErrorContext';
 import './Header.css';
 
 export default function Header() {
@@ -19,16 +20,27 @@ export default function Header() {
   const [menuItens, setMenuItens] = useState([]);
   const [navbar, setNavbar] = useState(null);
   const [menuAberto, setMenuAberto] = useState(false);
+  const { reportError, clearError } = useLoadError();
 
   const activeIndex = menuItens.findIndex((item) => item.link === location.pathname);
   const logoObj = Array.isArray(navbar?.logo) ? navbar.logo[0] : navbar?.logo;
   const logoSrc = logoObj?.url ? resolveMediaUrl(logoObj.url) : localLogo;
 
-  useEffect(() => {
-    getBannerTopo(locale).then(setBannerTopo);
-    getMenuItens(locale).then(setMenuItens);
-    getNavbar(locale).then(setNavbar);
-  }, [locale]);
+  function load() {
+    getBannerTopo(locale).then(setBannerTopo).catch(() => {});
+    getMenuItens(locale)
+      .then((data) => {
+        setMenuItens(data);
+        clearError('header');
+      })
+      .catch((err) => {
+        console.error('[Header] erro ao carregar menu:', err);
+        reportError('header', load);
+      });
+    getNavbar(locale).then(setNavbar).catch(() => {});
+  }
+
+  useEffect(load, [locale]);
 
   const updateIndicator = (index) => {
     const el = itemRefs.current[index];

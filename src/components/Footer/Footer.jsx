@@ -3,6 +3,7 @@ import { getFooter } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import './Footer.css';
 import { resolveMediaUrl } from '../../config';
+import { useLoadError } from '../../contexts/LoadErrorContext';
 
 function LinkedInIcon() {
   return (
@@ -59,14 +60,23 @@ export default function Footer() {
   const { locale } = useLang();
   const [footer, setFooter] = useState(null);
   const [members, setMembers] = useState([]);
+  const { reportError, clearError } = useLoadError();
   const clock = useClock();
 
-  useEffect(() => {
-    getFooter(locale).then(data => {
-      setFooter(data);
-      setMembers(data?.memberCard || []);
-    });
-  }, [locale]);
+  function load() {
+    getFooter(locale)
+      .then(data => {
+        setFooter(data);
+        setMembers(data?.memberCard || []);
+        clearError('footer');
+      })
+      .catch((err) => {
+        console.error('[Footer] erro ao carregar:', err);
+        reportError('footer', load);
+      });
+  }
+
+  useEffect(load, [locale]);
 
   const bgDesktop = resolveMedia(footer?.background);
   const bgMobile = resolveMedia(footer?.backmobile);
