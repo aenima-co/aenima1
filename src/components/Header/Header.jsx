@@ -7,6 +7,7 @@ import { getBannerTopo, getMenuItens, getNavbar } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import { resolveMediaUrl } from '../../config';
 import { t } from '../../i18n/messages';
+import LoadError from '../LoadError/LoadError';
 import './Header.css';
 
 export default function Header() {
@@ -19,15 +20,19 @@ export default function Header() {
   const [menuItens, setMenuItens] = useState([]);
   const [navbar, setNavbar] = useState(null);
   const [menuAberto, setMenuAberto] = useState(false);
+  const [error, setError] = useState(false);
 
   const activeIndex = menuItens.findIndex((item) => item.link === location.pathname);
   const logoObj = Array.isArray(navbar?.logo) ? navbar.logo[0] : navbar?.logo;
   const logoSrc = logoObj?.url ? resolveMediaUrl(logoObj.url) : localLogo;
 
   useEffect(() => {
-    getBannerTopo(locale).then(setBannerTopo);
-    getMenuItens(locale).then(setMenuItens);
-    getNavbar(locale).then(setNavbar);
+    getBannerTopo(locale).then(setBannerTopo).catch(() => {});
+    getMenuItens(locale).then(setMenuItens).catch((err) => {
+      console.error('[Header] erro ao carregar menu:', err);
+      setError(true);
+    });
+    getNavbar(locale).then(setNavbar).catch(() => {});
   }, [locale]);
 
   const updateIndicator = (index) => {
@@ -66,6 +71,8 @@ export default function Header() {
           )}
         </div>
       )}
+
+      {error && <LoadError />}
 
       <div className="header-nav">
         <Link to="/">

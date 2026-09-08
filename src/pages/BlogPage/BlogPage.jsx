@@ -4,19 +4,24 @@ import styles from "./BlogPage.module.css";
 import { resolveMediaUrl } from "../../config";
 import { useLang } from "../../contexts/LanguageContext";
 import { usePageTitle } from "../../hooks/usePageTitle";
+import LoadError from "../../components/LoadError/LoadError";
 
 export default function BlogPage() {
   const { lang } = useLang();
   usePageTitle("blog", lang);
   const [page, setPage] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    getBlogPage().then((data) => {
-      console.log("[blog-page]", data);
-      setPage(data);
-    });
+    getBlogPage()
+      .then(setPage)
+      .catch((err) => {
+        console.error("[BlogPage] erro ao carregar:", err);
+        setError(true);
+      });
   }, []);
 
+  if (error) return <LoadError />;
   if (!page) return null;
 
   const icons = page.botton_icon ?? [];

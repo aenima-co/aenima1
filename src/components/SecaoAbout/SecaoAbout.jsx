@@ -3,16 +3,24 @@ import { Link } from 'react-router-dom';
 import { getHome, getEspecialidades } from '../../api';
 import './SecaoAbout.css';
 import { resolveMediaUrl } from '../../config';
+import LoadError from '../LoadError/LoadError';
 
 export default function SecaoAbout() {
   const [about, setAbout] = useState(null);
   const [especialidades, setEspecialidades] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    getHome().then((data) => setAbout(data?.secao_about_preview));
-    getEspecialidades().then(setEspecialidades);
+    getHome()
+      .then((data) => setAbout(data?.secao_about_preview))
+      .catch((err) => {
+        console.error('[SecaoAbout] erro ao carregar:', err);
+        setError(true);
+      });
+    getEspecialidades().then(setEspecialidades).catch(() => {});
   }, []);
 
+  if (error) return <LoadError />;
   if (!about) return null;
 
   return (

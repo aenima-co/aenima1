@@ -4,6 +4,7 @@ import { useLang } from '../../contexts/LanguageContext';
 import './DemoReel.css';
 import { resolveMediaUrl } from '../../config';
 import { t } from '../../i18n/messages';
+import LoadError from '../LoadError/LoadError';
 
 function PlayIcon() {
   return (
@@ -28,10 +29,16 @@ export default function DemoReel() {
   const { locale, lang } = useLang();
   const [data, setData] = useState(null);
   const [playing, setPlaying] = useState(false);
+  const [error, setError] = useState(false);
   const iframeRef = useRef(null);
 
   useEffect(() => {
-    getDemoReel(locale).then(setData);
+    getDemoReel(locale)
+      .then(setData)
+      .catch((err) => {
+        console.error('[DemoReel] erro ao carregar:', err);
+        setError(true);
+      });
   }, [locale]);
 
   useEffect(() => {
@@ -57,6 +64,7 @@ export default function DemoReel() {
     return () => window.removeEventListener('message', onMessage);
   }, [playing]);
 
+  if (error) return <LoadError />;
   if (!data) return null;
 
   const { demo_titulo, video_link, stickers } = data;
