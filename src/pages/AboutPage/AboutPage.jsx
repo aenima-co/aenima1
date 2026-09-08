@@ -6,6 +6,8 @@ import Button from "../../components/Button/Button";
 import { resolveMediaUrl } from "../../config";
 import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
+import cardPixel from "../../assets/img/about-card-pixel.png";
+import cardOrange from "../../assets/img/about-card-orange.png";
 
 // ─── Card de Valor ────────────────────────────────────────────────────────────
 function ValueCard({ value }) {
