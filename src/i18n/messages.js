@@ -32,6 +32,7 @@ const messages = {
     },
     demoReel: {
       playVideo: "Reproduzir vídeo",
+      unavailable: "Não foi possível carregar o vídeo agora.",
     },
     workPage: {
       empty: "Nenhum projeto cadastrado ainda.",
@@ -67,6 +68,7 @@ const messages = {
     },
     demoReel: {
       playVideo: "Play video",
+      unavailable: "Couldn't load the video right now.",
     },
     workPage: {
       empty: "No projects yet.",

@@ -66,6 +66,40 @@
   display: block;
 }
 
+/* ── Fallback (embed indisponível) ──────────────────────────── */
+
+.demo-reel__fallback {
+  position: absolute;
+  inset: 0;
+  border-radius: 36.24px;
+  background: #f5f3f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  padding: 24px;
+}
+
+.demo-reel__fallback-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(234, 66, 2, 0.1);
+  color: #ea4202;
+}
+
+.demo-reel__fallback-text {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 14px;
+  color: #55555c;
+  margin: 0;
+}
+
 /* ── Custom play overlay ────────────────────────────────────── */
 
 .demo-reel__overlay {

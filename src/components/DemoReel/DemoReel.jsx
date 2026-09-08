@@ -14,6 +14,23 @@ function PlayIcon() {
   );
 }
 
+function AlertIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="10" r="9" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M10 5.5V11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="10" cy="14.25" r="1" fill="currentColor" />
+    </svg>
+  );
+}
+
+// Vimeo não expõe pro parent se o embed falhou (ex: 401 de domínio não
+// autorizado) — um iframe cross-origin sempre dispara "load" mesmo quando
+// mostra a própria página de erro dele. O jeito de perceber a falha é
+// esperar o "ready" que o player manda via postMessage quando carrega de
+// verdade; se não chegar dentro do prazo, assumimos que o embed falhou.
+const EMBED_READY_TIMEOUT_MS = 7000;
+
 const VIMEO_CLEAN = 'title=0&byline=0&portrait=0&badge=0&controls=0&dnt=1';
 
 function parseSrc(iframeStr) {
@@ -29,6 +46,7 @@ export default function DemoReel() {
   const { locale, lang } = useLang();
   const [data, setData] = useState(null);
   const [playing, setPlaying] = useState(false);
+  const [embedFailed, setEmbedFailed] = useState(false);
   const { reportError, clearError } = useLoadError();
   const iframeRef = useRef(null);
 
@@ -45,6 +63,28 @@ export default function DemoReel() {
   }
 
   useEffect(load, [locale]);
+
+  useEffect(() => {
+    setEmbedFailed(false);
+    let ready = false;
+
+    function onReadyCheck(e) {
+      try {
+        const msg = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+        if (msg.event === 'ready') ready = true;
+      } catch (_) {}
+    }
+
+    window.addEventListener('message', onReadyCheck);
+    const timer = setTimeout(() => {
+      if (!ready) setEmbedFailed(true);
+    }, EMBED_READY_TIMEOUT_MS);
+
+    return () => {
+      window.removeEventListener('message', onReadyCheck);
+      clearTimeout(timer);
+    };
+  }, [data]);
 
   useEffect(() => {
     if (!playing) return;
@@ -88,27 +128,38 @@ export default function DemoReel() {
 
       <div className="demo-reel__stage">
         <div className="demo-reel__wrapper">
-          {baseSrc && (
-            <iframe
-              ref={iframeRef}
-              className="demo-reel__iframe"
-              src={activeSrc}
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-              title="Demo Reel"
-            />
-          )}
-
-          {!playing && (
-            <div className="demo-reel__overlay" onClick={() => setPlaying(true)}>
-              <button
-                className="demo-reel__play-btn"
-                aria-label={t(lang, 'demoReel.playVideo')}
-                onClick={(e) => { e.stopPropagation(); setPlaying(true); }}
-              >
-                <PlayIcon />
-              </button>
+          {embedFailed ? (
+            <div className="demo-reel__fallback">
+              <span className="demo-reel__fallback-icon">
+                <AlertIcon />
+              </span>
+              <p className="demo-reel__fallback-text">{t(lang, 'demoReel.unavailable')}</p>
             </div>
+          ) : (
+            <>
+              {baseSrc && (
+                <iframe
+                  ref={iframeRef}
+                  className="demo-reel__iframe"
+                  src={activeSrc}
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  title="Demo Reel"
+                />
+              )}
+
+              {!playing && (
+                <div className="demo-reel__overlay" onClick={() => setPlaying(true)}>
+                  <button
+                    className="demo-reel__play-btn"
+                    aria-label={t(lang, 'demoReel.playVideo')}
+                    onClick={(e) => { e.stopPropagation(); setPlaying(true); }}
+                  >
+                    <PlayIcon />
+                  </button>
+                </div>
+              )}
+            </>
           )}
 
           {decor.map((img, i) => (
