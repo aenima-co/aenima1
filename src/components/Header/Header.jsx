@@ -26,14 +26,21 @@ export default function Header() {
   const logoObj = Array.isArray(navbar?.logo) ? navbar.logo[0] : navbar?.logo;
   const logoSrc = logoObj?.url ? resolveMediaUrl(logoObj.url) : localLogo;
 
-  useEffect(() => {
+  function load() {
     getBannerTopo(locale).then(setBannerTopo).catch(() => {});
-    getMenuItens(locale).then(setMenuItens).catch((err) => {
-      console.error('[Header] erro ao carregar menu:', err);
-      setError(true);
-    });
+    getMenuItens(locale)
+      .then((data) => {
+        setMenuItens(data);
+        setError(false);
+      })
+      .catch((err) => {
+        console.error('[Header] erro ao carregar menu:', err);
+        setError(true);
+      });
     getNavbar(locale).then(setNavbar).catch(() => {});
-  }, [locale]);
+  }
+
+  useEffect(load, [locale]);
 
   const updateIndicator = (index) => {
     const el = itemRefs.current[index];
@@ -72,7 +79,7 @@ export default function Header() {
         </div>
       )}
 
-      {error && <LoadError />}
+      {error && <LoadError onRetry={load} />}
 
       <div className="header-nav">
         <Link to="/">

@@ -10,17 +10,22 @@ export default function SecaoAbout() {
   const [especialidades, setEspecialidades] = useState([]);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
+  function load() {
     getHome()
-      .then((data) => setAbout(data?.secao_about_preview))
+      .then((data) => {
+        setAbout(data?.secao_about_preview);
+        setError(false);
+      })
       .catch((err) => {
         console.error('[SecaoAbout] erro ao carregar:', err);
         setError(true);
       });
     getEspecialidades().then(setEspecialidades).catch(() => {});
-  }, []);
+  }
 
-  if (error) return <LoadError />;
+  useEffect(load, []);
+
+  if (error) return <LoadError onRetry={load} />;
   if (!about) return null;
 
   return (

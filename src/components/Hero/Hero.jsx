@@ -31,16 +31,21 @@ export default function Hero() {
   const [hero, setHero] = useState(null);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
+  function load() {
     getHome(locale)
-      .then((data) => data && setHero(data.hero))
+      .then((data) => {
+        data && setHero(data.hero);
+        setError(false);
+      })
       .catch((err) => {
         console.error("[Hero] erro ao carregar:", err);
         setError(true);
       });
-  }, [locale]);
+  }
 
-  if (error) return <LoadError />;
+  useEffect(load, [locale]);
+
+  if (error) return <LoadError onRetry={load} />;
   if (!hero) return null;
 
   // Suporta tanto media múltipla (array) quanto single

@@ -13,17 +13,22 @@ export default function BestWork() {
   const [botao, setBotao] = useState(null);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
+  function load() {
     getBestWorks()
-      .then(setWorks)
+      .then((data) => {
+        setWorks(data);
+        setError(false);
+      })
       .catch((err) => {
         console.error('[BestWork] erro ao carregar:', err);
         setError(true);
       });
     getHome(locale).then((data) => setBotao(data?.botao_projeto)).catch(() => {});
-  }, [locale]);
+  }
 
-  if (error) return <LoadError />;
+  useEffect(load, [locale]);
+
+  if (error) return <LoadError onRetry={load} />;
   if (!works.length) return null;
 
   const [principal, ...secundarios] = works;

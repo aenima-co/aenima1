@@ -8,16 +8,21 @@ export default function Blog() {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
+  function load() {
     getPosts(true)
-      .then(setPosts)
+      .then((data) => {
+        setPosts(data);
+        setError(false);
+      })
       .catch((err) => {
         console.error('[Blog] erro ao carregar:', err);
         setError(true);
       });
-  }, []);
+  }
 
-  if (error) return <LoadError />;
+  useEffect(load, []);
+
+  if (error) return <LoadError onRetry={load} />;
   if (!posts.length) return null;
 
   const getImagem = (post) => {

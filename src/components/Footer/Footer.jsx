@@ -63,17 +63,20 @@ export default function Footer() {
   const [error, setError] = useState(false);
   const clock = useClock();
 
-  useEffect(() => {
+  function load() {
     getFooter(locale)
       .then(data => {
         setFooter(data);
         setMembers(data?.memberCard || []);
+        setError(false);
       })
       .catch((err) => {
         console.error('[Footer] erro ao carregar:', err);
         setError(true);
       });
-  }, [locale]);
+  }
+
+  useEffect(load, [locale]);
 
   const bgDesktop = resolveMedia(footer?.background);
   const bgMobile = resolveMedia(footer?.backmobile);
@@ -93,7 +96,7 @@ export default function Footer() {
     >
       <div className="footer__inner">
 
-        {error && <LoadError />}
+        {error && <LoadError onRetry={load} />}
 
         <div className="footer__top-area">
 

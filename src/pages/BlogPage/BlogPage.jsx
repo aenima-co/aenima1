@@ -12,16 +12,21 @@ export default function BlogPage() {
   const [page, setPage] = useState(null);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
+  function load() {
     getBlogPage()
-      .then(setPage)
+      .then((data) => {
+        setPage(data);
+        setError(false);
+      })
       .catch((err) => {
         console.error("[BlogPage] erro ao carregar:", err);
         setError(true);
       });
-  }, []);
+  }
 
-  if (error) return <LoadError />;
+  useEffect(load, []);
+
+  if (error) return <LoadError onRetry={load} />;
   if (!page) return null;
 
   const icons = page.botton_icon ?? [];

@@ -9,6 +9,7 @@ const messages = {
     common: {
       loading: "Carregando…",
       loadError: "Não foi possível carregar esse conteúdo agora.",
+      retry: "Tentar novamente",
     },
     contactForm: {
       nameRequired: "Informe seu nome.",
@@ -43,6 +44,7 @@ const messages = {
     common: {
       loading: "Loading…",
       loadError: "Couldn't load this content right now.",
+      retry: "Try again",
     },
     contactForm: {
       nameRequired: "Please enter your name.",

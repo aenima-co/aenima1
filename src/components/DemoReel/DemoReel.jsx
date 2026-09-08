@@ -32,14 +32,19 @@ export default function DemoReel() {
   const [error, setError] = useState(false);
   const iframeRef = useRef(null);
 
-  useEffect(() => {
+  function load() {
     getDemoReel(locale)
-      .then(setData)
+      .then((data) => {
+        setData(data);
+        setError(false);
+      })
       .catch((err) => {
         console.error('[DemoReel] erro ao carregar:', err);
         setError(true);
       });
-  }, [locale]);
+  }
+
+  useEffect(load, [locale]);
 
   useEffect(() => {
     if (!playing) return;
@@ -64,7 +69,7 @@ export default function DemoReel() {
     return () => window.removeEventListener('message', onMessage);
   }, [playing]);
 
-  if (error) return <LoadError />;
+  if (error) return <LoadError onRetry={load} />;
   if (!data) return null;
 
   const { demo_titulo, video_link, stickers } = data;
