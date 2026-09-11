@@ -5,6 +5,7 @@ import { LoadErrorProvider } from "./contexts/LoadErrorContext";
 import { usePageTitle } from "./hooks/usePageTitle";
 import LoadErrorBanner from "./components/LoadErrorBanner/LoadErrorBanner";
 import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 import DemoReel from "./components/DemoReel/DemoReel";
@@ -64,6 +65,7 @@ const App = () => {
     <LanguageProvider>
       <LoadErrorProvider>
         <HashRouter>
+          <ScrollToTop />
           <LoadErrorBanner />
           <Header />
           <Routes>
