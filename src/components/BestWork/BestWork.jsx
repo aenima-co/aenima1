@@ -9,12 +9,16 @@ import { useLoadError } from '../../contexts/LoadErrorContext';
 import { Sentry } from '../../sentry';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
-export default function BestWork() {
+export default function BestWork({ onSettled }) {
   const { locale } = useLang();
   const [works, setWorks] = useState([]);
   const [botao, setBotao] = useState(null);
   const { reportError, clearError } = useLoadError();
   const loadRef = useRef(() => {});
+  const onSettledRef = useRef(onSettled);
+  useEffect(() => {
+    onSettledRef.current = onSettled;
+  }, [onSettled]);
 
   const load = useCallback(() => {
     getBestWorks()
@@ -26,7 +30,8 @@ export default function BestWork() {
         console.error('[BestWork] erro ao carregar:', err);
         Sentry.captureException(err);
         reportError('bestWork', () => loadRef.current());
-      });
+      })
+      .finally(() => onSettledRef.current?.());
     getHome(locale).then((data) => setBotao(data?.botao_projeto)).catch(() => {});
   }, [locale, reportError, clearError]);
 

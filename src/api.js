@@ -2,11 +2,32 @@ import { STRAPI_URL } from "./config";
 
 const API_URL = `${STRAPI_URL}/api`;
 
+// Cache simples por URL, só pra dentro da sessão (some ao recarregar a
+// página). Existe pra dois casos reais: (1) componentes independentes que
+// acabam pedindo exatamente o mesmo endpoint ao montar juntos (ex: Hero,
+// BestWork e SecaoAbout todos leem /api/home) — sem isso, viram N
+// requisições de rede idênticas em vez de 1; (2) voltar a uma rota já
+// visitada na mesma sessão fica instantâneo em vez de refazer o fetch.
+// `res.clone()` permite cada chamador ler o body (.json()) independentemente
+// sem consumir a Response compartilhada.
+const requestCache = new Map();
+
+function cachedFetch(url) {
+  if (!requestCache.has(url)) {
+    const promise = fetch(url).catch((err) => {
+      requestCache.delete(url);
+      throw err;
+    });
+    requestCache.set(url, promise);
+  }
+  return requestCache.get(url).then((res) => res.clone());
+}
+
 // Tenta com locale; se o content type não tiver i18n habilitado no Strapi (404/400), retorna sem locale
 async function withLocaleFallback(urlWithLocale, urlWithoutLocale) {
-  let res = await fetch(urlWithLocale);
+  let res = await cachedFetch(urlWithLocale);
   if (res.status === 404 || res.status === 400) {
-    res = await fetch(urlWithoutLocale);
+    res = await cachedFetch(urlWithoutLocale);
   }
   if (!res.ok) return null;
   const json = await res.json();
@@ -38,7 +59,7 @@ export async function getProjetos(apenasDestaque = false) {
   const filtro = apenasDestaque
     ? "?filters[destaque]=true&sort=ordem&populate=*"
     : "?sort=ordem&populate=*";
-  const res = await fetch(`${API_URL}/projetos${filtro}`);
+  const res = await cachedFetch(`${API_URL}/projetos${filtro}`);
   const data = await res.json();
   return data.data;
 }
@@ -47,19 +68,19 @@ export async function getPosts(apenasDestaque = false) {
   const filtro = apenasDestaque
     ? "?filters[destaque]=true&sort=ordem&populate=*"
     : "?sort=ordem&populate=*";
-  const res = await fetch(`${API_URL}/posts${filtro}`);
+  const res = await cachedFetch(`${API_URL}/posts${filtro}`);
   const data = await res.json();
   return data.data;
 }
 
 export async function getEspecialistas() {
-  const res = await fetch(`${API_URL}/especialistas`);
+  const res = await cachedFetch(`${API_URL}/especialistas`);
   const data = await res.json();
   return data.data;
 }
 
 export async function getEspecialidades() {
-  const res = await fetch(`${API_URL}/especialidades?sort=ordem`);
+  const res = await cachedFetch(`${API_URL}/especialidades?sort=ordem`);
   const data = await res.json();
   return data.data;
 }
@@ -95,7 +116,7 @@ export async function getFooter(locale = "pt-BR") {
 }
 
 export async function getValues() {
-  const res = await fetch(`${API_URL}/values?sort=order&populate=*`);
+  const res = await cachedFetch(`${API_URL}/values?sort=order&populate=*`);
   if (!res.ok) {
     console.error("[getValues] erro HTTP:", res.status);
     return null;
@@ -105,7 +126,7 @@ export async function getValues() {
 }
 
 export async function getTeamMembers() {
-  const res = await fetch(`${API_URL}/team-members?sort=order&populate=*`);
+  const res = await cachedFetch(`${API_URL}/team-members?sort=order&populate=*`);
   if (!res.ok) {
     console.error("[getTeamMembers] erro HTTP:", res.status);
     return null;
@@ -122,7 +143,7 @@ export async function getWorkPage(locale = "pt-BR") {
 }
 
 export async function getBestWorks() {
-  const res = await fetch(
+  const res = await cachedFetch(
     `${API_URL}/works?filters[bestWork][$eq]=true&populate=cover&sort=createdAt:desc`,
   );
   if (!res.ok) return [];
@@ -131,7 +152,7 @@ export async function getBestWorks() {
 }
 
 export async function getWorks() {
-  const res = await fetch(
+  const res = await cachedFetch(
     `${API_URL}/works?populate=cover&sort=createdAt:desc`,
   );
 
@@ -146,7 +167,7 @@ export async function getWorks() {
 
 export async function getWorkBySlug(slugOrId) {
   // Try by slug first
-  const bySlug = await fetch(
+  const bySlug = await cachedFetch(
     `${API_URL}/works?filters[slug][$eq]=${encodeURIComponent(
       slugOrId,
     )}&populate=*`,
@@ -164,7 +185,7 @@ export async function getWorkBySlug(slugOrId) {
   // expects documentId, not the numeric id, so filter the collection
   // instead of hitting that route directly.
   if (!isNaN(slugOrId)) {
-    const byId = await fetch(
+    const byId = await cachedFetch(
       `${API_URL}/works?filters[id][$eq]=${encodeURIComponent(
         slugOrId,
       )}&populate=*`,
@@ -194,7 +215,7 @@ export async function getContact(locale = "pt-BR") {
 }
 
 export async function getBlogPage() {
-  const res = await fetch(`${API_URL}/blog-page?populate=*`);
+  const res = await cachedFetch(`${API_URL}/blog-page?populate=*`);
   if (!res.ok) return null;
   const data = await res.json();
   return data.data ?? null;

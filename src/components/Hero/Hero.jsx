@@ -28,11 +28,19 @@ function LinkedInIcon() {
   );
 }
 
-export default function Hero() {
+export default function Hero({ onSettled }) {
   const { locale } = useLang();
   const [hero, setHero] = useState(null);
   const { reportError, clearError } = useLoadError();
   const loadRef = useRef(() => {});
+  // Ref em vez de dependência do useCallback abaixo: o pai (Home) passa uma
+  // arrow function nova a cada render que muda o readyMap, e colocar
+  // onSettled nas deps recriaria `load` (e o useEffect que chama load())
+  // toda vez que qualquer seção terminasse de carregar — refetch em loop.
+  const onSettledRef = useRef(onSettled);
+  useEffect(() => {
+    onSettledRef.current = onSettled;
+  }, [onSettled]);
 
   const load = useCallback(() => {
     getHome(locale)
@@ -44,7 +52,8 @@ export default function Hero() {
         console.error("[Hero] erro ao carregar:", err);
         Sentry.captureException(err);
         reportError("hero", () => loadRef.current());
-      });
+      })
+      .finally(() => onSettledRef.current?.());
   }, [locale, reportError, clearError]);
 
   useEffect(() => {

@@ -44,7 +44,7 @@ function parseSrc(iframeStr) {
   return `${url}${sep}${VIMEO_CLEAN}`;
 }
 
-export default function DemoReel() {
+export default function DemoReel({ onSettled }) {
   const { locale, lang } = useLang();
   const [data, setData] = useState(null);
   const [playing, setPlaying] = useState(false);
@@ -52,6 +52,10 @@ export default function DemoReel() {
   const { reportError, clearError } = useLoadError();
   const iframeRef = useRef(null);
   const loadRef = useRef(() => {});
+  const onSettledRef = useRef(onSettled);
+  useEffect(() => {
+    onSettledRef.current = onSettled;
+  }, [onSettled]);
 
   const load = useCallback(() => {
     getDemoReel(locale)
@@ -63,7 +67,8 @@ export default function DemoReel() {
         console.error('[DemoReel] erro ao carregar:', err);
         Sentry.captureException(err);
         reportError('demoReel', () => loadRef.current());
-      });
+      })
+      .finally(() => onSettledRef.current?.());
   }, [locale, reportError, clearError]);
 
   useEffect(() => {

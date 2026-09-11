@@ -7,11 +7,15 @@ import { useLoadError } from '../../contexts/LoadErrorContext';
 import { Sentry } from '../../sentry';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
-export default function SecaoAbout() {
+export default function SecaoAbout({ onSettled }) {
   const [about, setAbout] = useState(null);
   const [especialidades, setEspecialidades] = useState([]);
   const { reportError, clearError } = useLoadError();
   const loadRef = useRef(() => {});
+  const onSettledRef = useRef(onSettled);
+  useEffect(() => {
+    onSettledRef.current = onSettled;
+  }, [onSettled]);
 
   const load = useCallback(() => {
     getHome()
@@ -23,7 +27,8 @@ export default function SecaoAbout() {
         console.error('[SecaoAbout] erro ao carregar:', err);
         Sentry.captureException(err);
         reportError('secaoAbout', () => loadRef.current());
-      });
+      })
+      .finally(() => onSettledRef.current?.());
     getEspecialidades().then(setEspecialidades).catch(() => {});
   }, [reportError, clearError]);
 
