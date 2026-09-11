@@ -130,7 +130,7 @@ export default function AboutPage() {
               <p className={styles.heroCardTextContent}>
                 {pageData?.card_text || "We craft unique websites creating"}
               </p>
-              <Button href="/contact">Contact Us</Button>
+              <Button href="/contact">{pageData?.cta_button_label || "Contact Us"}</Button>
             </div>
             <img
               src={
