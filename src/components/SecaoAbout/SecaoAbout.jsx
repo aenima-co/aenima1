@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getHome, getEspecialidades } from '../../api';
 import './SecaoAbout.css';
@@ -9,8 +9,9 @@ export default function SecaoAbout() {
   const [about, setAbout] = useState(null);
   const [especialidades, setEspecialidades] = useState([]);
   const { reportError, clearError } = useLoadError();
+  const loadRef = useRef(() => {});
 
-  function load() {
+  const load = useCallback(() => {
     getHome()
       .then((data) => {
         setAbout(data?.secao_about_preview);
@@ -18,12 +19,15 @@ export default function SecaoAbout() {
       })
       .catch((err) => {
         console.error('[SecaoAbout] erro ao carregar:', err);
-        reportError('secaoAbout', load);
+        reportError('secaoAbout', () => loadRef.current());
       });
     getEspecialidades().then(setEspecialidades).catch(() => {});
-  }
+  }, [reportError, clearError]);
 
-  useEffect(load, []);
+  useEffect(() => {
+    loadRef.current = load;
+    load();
+  }, [load]);
 
   if (!about) return null;
 

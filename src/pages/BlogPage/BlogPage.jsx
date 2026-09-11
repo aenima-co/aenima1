@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getBlogPage } from "../../api";
 import styles from "./BlogPage.module.css";
 import { resolveMediaUrl } from "../../config";
@@ -11,8 +11,9 @@ export default function BlogPage() {
   usePageTitle("blog", lang);
   const [page, setPage] = useState(null);
   const { reportError, clearError } = useLoadError();
+  const loadRef = useRef(() => {});
 
-  function load() {
+  const load = useCallback(() => {
     getBlogPage()
       .then((data) => {
         setPage(data);
@@ -20,11 +21,14 @@ export default function BlogPage() {
       })
       .catch((err) => {
         console.error("[BlogPage] erro ao carregar:", err);
-        reportError("blogPage", load);
+        reportError("blogPage", () => loadRef.current());
       });
-  }
+  }, [reportError, clearError]);
 
-  useEffect(load, []);
+  useEffect(() => {
+    loadRef.current = load;
+    load();
+  }, [load]);
 
   if (!page) return null;
 
@@ -58,7 +62,6 @@ export default function BlogPage() {
           src={resolveMediaUrl(loadingBarUrl)}
           alt=""
           className={styles.loadingBar}
-          loop="true"
         />
       )}
 

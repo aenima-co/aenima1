@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import { useState, useRef, useLayoutEffect, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import localLogo from '../../assets/img/logo.svg';
 import Button from '../Button/Button';
@@ -21,12 +21,13 @@ export default function Header() {
   const [navbar, setNavbar] = useState(null);
   const [menuAberto, setMenuAberto] = useState(false);
   const { reportError, clearError } = useLoadError();
+  const loadRef = useRef(() => {});
 
   const activeIndex = menuItens.findIndex((item) => item.link === location.pathname);
   const logoObj = Array.isArray(navbar?.logo) ? navbar.logo[0] : navbar?.logo;
   const logoSrc = logoObj?.url ? resolveMediaUrl(logoObj.url) : localLogo;
 
-  function load() {
+  const load = useCallback(() => {
     getBannerTopo(locale).then(setBannerTopo).catch(() => {});
     getMenuItens(locale)
       .then((data) => {
@@ -35,12 +36,15 @@ export default function Header() {
       })
       .catch((err) => {
         console.error('[Header] erro ao carregar menu:', err);
-        reportError('header', load);
+        reportError('header', () => loadRef.current());
       });
     getNavbar(locale).then(setNavbar).catch(() => {});
-  }
+  }, [locale, reportError, clearError]);
 
-  useEffect(load, [locale]);
+  useEffect(() => {
+    loadRef.current = load;
+    load();
+  }, [load]);
 
   const updateIndicator = (index) => {
     const el = itemRefs.current[index];

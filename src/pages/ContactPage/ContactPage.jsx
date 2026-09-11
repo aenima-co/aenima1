@@ -162,7 +162,7 @@ export default function ContactPage() {
         });
     }
     load();
-  }, [locale]);
+  }, [locale, reportError, clearError]);
 
   useEffect(() => {
     if (status !== "success" && status !== "error") return;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getBestWorks, getHome } from '../../api';
 import { Link } from 'react-router-dom';
 import { useLang } from '../../contexts/LanguageContext';
@@ -12,8 +12,9 @@ export default function BestWork() {
   const [works, setWorks] = useState([]);
   const [botao, setBotao] = useState(null);
   const { reportError, clearError } = useLoadError();
+  const loadRef = useRef(() => {});
 
-  function load() {
+  const load = useCallback(() => {
     getBestWorks()
       .then((data) => {
         setWorks(data);
@@ -21,12 +22,15 @@ export default function BestWork() {
       })
       .catch((err) => {
         console.error('[BestWork] erro ao carregar:', err);
-        reportError('bestWork', load);
+        reportError('bestWork', () => loadRef.current());
       });
     getHome(locale).then((data) => setBotao(data?.botao_projeto)).catch(() => {});
-  }
+  }, [locale, reportError, clearError]);
 
-  useEffect(load, [locale]);
+  useEffect(() => {
+    loadRef.current = load;
+    load();
+  }, [load]);
 
   if (!works.length) return null;
 
