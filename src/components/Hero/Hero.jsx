@@ -6,6 +6,7 @@ import "./Hero.css";
 import { resolveMediaUrl } from "../../config";
 import { useLoadError } from "../../contexts/LoadErrorContext";
 import { Sentry } from "../../sentry";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 // Campos esperados em cada item de members_image no Strapi:
 //   foto     → Media (imagem do membro)
@@ -51,7 +52,7 @@ export default function Hero() {
     load();
   }, [load]);
 
-  if (!hero) return null;
+  if (!hero) return <LoadingSpinner />;
 
   // Suporta tanto media múltipla (array) quanto single
   const resolveMedia = (field) => {
