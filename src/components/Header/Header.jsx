@@ -8,6 +8,7 @@ import { useLang } from '../../contexts/LanguageContext';
 import { resolveMediaUrl } from '../../config';
 import { t } from '../../i18n/messages';
 import { useLoadError } from '../../contexts/LoadErrorContext';
+import { Sentry } from '../../sentry';
 import './Header.css';
 
 export default function Header() {
@@ -36,6 +37,7 @@ export default function Header() {
       })
       .catch((err) => {
         console.error('[Header] erro ao carregar menu:', err);
+        Sentry.captureException(err);
         reportError('header', () => loadRef.current());
       });
     getNavbar(locale).then(setNavbar).catch(() => {});

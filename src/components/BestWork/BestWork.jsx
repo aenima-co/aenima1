@@ -6,6 +6,7 @@ import Button from '../Button/Button';
 import './BestWork.css';
 import { resolveMediaUrl } from '../../config';
 import { useLoadError } from '../../contexts/LoadErrorContext';
+import { Sentry } from '../../sentry';
 
 export default function BestWork() {
   const { locale } = useLang();
@@ -22,6 +23,7 @@ export default function BestWork() {
       })
       .catch((err) => {
         console.error('[BestWork] erro ao carregar:', err);
+        Sentry.captureException(err);
         reportError('bestWork', () => loadRef.current());
       });
     getHome(locale).then((data) => setBotao(data?.botao_projeto)).catch(() => {});

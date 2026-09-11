@@ -7,6 +7,7 @@ import { resolveMediaUrl } from "../../config";
 import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
 import { useLoadError } from "../../contexts/LoadErrorContext";
+import { Sentry } from "../../sentry";
 import cardPixel from "../../assets/img/about-card-pixel.png";
 import cardOrange from "../../assets/img/about-card-orange.png";
 
@@ -91,6 +92,7 @@ export default function AboutPage() {
         clearError("aboutPage");
       } catch (err) {
         console.error("[AboutPage] erro ao carregar:", err);
+        Sentry.captureException(err);
         reportError("aboutPage", load);
       } finally {
         setLoading(false);

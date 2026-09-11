@@ -7,6 +7,7 @@ import { useLang } from "../../contexts/LanguageContext";
 import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
 import { useLoadError } from "../../contexts/LoadErrorContext";
+import { Sentry } from "../../sentry";
 
 function getCoverUrl(item) {
   if (!item) return null;
@@ -96,6 +97,7 @@ export default function PortfolioPage() {
         clearError("portfolioPage");
       } catch (err) {
         console.error("[PortfolioPage] erro:", err);
+        Sentry.captureException(err);
         setError(true);
         reportError("portfolioPage", load);
       } finally {

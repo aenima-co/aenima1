@@ -4,6 +4,7 @@ import { useLang } from '../../contexts/LanguageContext';
 import './Footer.css';
 import { resolveMediaUrl } from '../../config';
 import { useLoadError } from '../../contexts/LoadErrorContext';
+import { Sentry } from '../../sentry';
 
 function LinkedInIcon() {
   return (
@@ -73,6 +74,7 @@ export default function Footer() {
       })
       .catch((err) => {
         console.error('[Footer] erro ao carregar:', err);
+        Sentry.captureException(err);
         reportError('footer', () => loadRef.current());
       });
   }, [locale, reportError, clearError]);

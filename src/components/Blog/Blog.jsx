@@ -3,6 +3,7 @@ import { getPosts } from '../../api';
 import './Blog.css';
 import { resolveMediaUrl } from '../../config';
 import { useLoadError } from '../../contexts/LoadErrorContext';
+import { Sentry } from '../../sentry';
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
@@ -17,6 +18,7 @@ export default function Blog() {
       })
       .catch((err) => {
         console.error('[Blog] erro ao carregar:', err);
+        Sentry.captureException(err);
         reportError('blog', () => loadRef.current());
       });
   }, [reportError, clearError]);

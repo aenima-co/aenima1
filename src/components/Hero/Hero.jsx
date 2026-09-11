@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import "./Hero.css";
 import { resolveMediaUrl } from "../../config";
 import { useLoadError } from "../../contexts/LoadErrorContext";
+import { Sentry } from "../../sentry";
 
 // Campos esperados em cada item de members_image no Strapi:
 //   foto     → Media (imagem do membro)
@@ -40,6 +41,7 @@ export default function Hero() {
       })
       .catch((err) => {
         console.error("[Hero] erro ao carregar:", err);
+        Sentry.captureException(err);
         reportError("hero", () => loadRef.current());
       });
   }, [locale, reportError, clearError]);

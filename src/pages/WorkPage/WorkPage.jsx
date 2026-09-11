@@ -8,6 +8,7 @@ import { resolveMediaUrl } from "../../config";
 import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
 import { useLoadError } from "../../contexts/LoadErrorContext";
+import { Sentry } from "../../sentry";
 
 // ─── Card individual ──────────────────────────────────────────────────────────
 function WorkCard({ work, index }) {
@@ -80,6 +81,7 @@ export default function WorkPage() {
         clearError("workPage");
       } catch (err) {
         console.error("[WorkPage] erro ao carregar:", err);
+        Sentry.captureException(err);
         setError(true);
         reportError("workPage", load);
       } finally {
