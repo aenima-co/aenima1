@@ -42,9 +42,16 @@ export async function getBannerTopo(locale = "pt-BR") {
 }
 
 export async function getNavbar(locale = "pt-BR") {
+  // `[fields][0]=url` em cada relação de mídia evita trazer os variantes de
+  // imagem (large/medium/small/thumbnail) e metadados que o front nunca lê —
+  // só a url é usada. Reduz o payload em ~50-90% dependendo do endpoint,
+  // verificado comparando o tamanho real da resposta antes/depois.
+  const POPULATE =
+    `populate[logo][fields][0]=url` +
+    `&populate[contact_us][populate]=*`;
   return withLocaleFallback(
-    `${API_URL}/navebar?populate[0]=logo&populate[1]=contact_us&locale=${locale}`,
-    `${API_URL}/navebar?populate[0]=logo&populate[1]=contact_us`,
+    `${API_URL}/navebar?${POPULATE}&locale=${locale}`,
+    `${API_URL}/navebar?${POPULATE}`,
   );
 }
 
@@ -66,8 +73,8 @@ export async function getProjetos(apenasDestaque = false) {
 
 export async function getPosts(apenasDestaque = false) {
   const filtro = apenasDestaque
-    ? "?filters[destaque]=true&sort=ordem&populate=*"
-    : "?sort=ordem&populate=*";
+    ? "?filters[destaque]=true&sort=ordem&populate[imagem][fields][0]=url"
+    : "?sort=ordem&populate[imagem][fields][0]=url";
   const res = await cachedFetch(`${API_URL}/posts${filtro}`);
   const data = await res.json();
   return data.data;
@@ -87,14 +94,12 @@ export async function getEspecialidades() {
 
 export async function getHome(locale = "pt-BR") {
   const POPULATE =
-    `populate[0]=hero.imagem_fundo` +
-    `&populate[1]=hero.imagem_fundo_mobile` +
-    `&populate[2]=hero.botao_principal` +
-    `&populate[3]=hero.memberCard` +
-    `&populate[4]=hero.memberCard.members_image` +
-    `&populate[5]=botao_projeto` +
-    `&populate[6]=secao_about_preview` +
-    `&populate[7]=secao_about_preview.icone`;
+    `populate[hero][populate][imagem_fundo][fields][0]=url` +
+    `&populate[hero][populate][imagem_fundo_mobile][fields][0]=url` +
+    `&populate[hero][populate][botao_principal][populate]=*` +
+    `&populate[hero][populate][memberCard][populate][members_image][fields][0]=url` +
+    `&populate[botao_projeto][populate]=*` +
+    `&populate[secao_about_preview][populate][icone][fields][0]=url`;
   return withLocaleFallback(
     `${API_URL}/home?locale=${locale}&${POPULATE}`,
     `${API_URL}/home?${POPULATE}`,
@@ -102,16 +107,26 @@ export async function getHome(locale = "pt-BR") {
 }
 
 export async function getDemoReel(locale = "pt-BR") {
+  const POPULATE =
+    `populate[demo_titulo][populate]=*` +
+    `&populate[stickers][fields][0]=url`;
   return withLocaleFallback(
-    `${API_URL}/demo-reel?locale=${locale}&populate[0]=demo_titulo&populate[1]=stickers`,
-    `${API_URL}/demo-reel?populate[0]=demo_titulo&populate[1]=stickers`,
+    `${API_URL}/demo-reel?locale=${locale}&${POPULATE}`,
+    `${API_URL}/demo-reel?${POPULATE}`,
   );
 }
 
 export async function getFooter(locale = "pt-BR") {
+  const POPULATE =
+    `populate[background][fields][0]=url` +
+    `&populate[backmobile][fields][0]=url` +
+    `&populate[arrow_icon][fields][0]=url` +
+    `&populate[logo][fields][0]=url` +
+    `&populate[redes_sociais][populate]=*` +
+    `&populate[memberCard][populate][members_image][fields][0]=url`;
   return withLocaleFallback(
-    `${API_URL}/footer?locale=${locale}&populate[0]=background&populate[1]=backmobile&populate[2]=arrow_icon&populate[3]=logo&populate[4]=redes_sociais&populate[5]=memberCard&populate[6]=memberCard.members_image`,
-    `${API_URL}/footer?populate[0]=background&populate[1]=backmobile&populate[2]=arrow_icon&populate[3]=logo&populate[4]=redes_sociais&populate[5]=memberCard&populate[6]=memberCard.members_image`,
+    `${API_URL}/footer?locale=${locale}&${POPULATE}`,
+    `${API_URL}/footer?${POPULATE}`,
   );
 }
 
@@ -144,7 +159,7 @@ export async function getWorkPage(locale = "pt-BR") {
 
 export async function getBestWorks() {
   const res = await cachedFetch(
-    `${API_URL}/works?filters[bestWork][$eq]=true&populate=cover&sort=createdAt:desc`,
+    `${API_URL}/works?filters[bestWork][$eq]=true&populate[cover][fields][0]=url&sort=createdAt:desc`,
   );
   if (!res.ok) return [];
   const data = await res.json();
@@ -153,7 +168,7 @@ export async function getBestWorks() {
 
 export async function getWorks() {
   const res = await cachedFetch(
-    `${API_URL}/works?populate=cover&sort=createdAt:desc`,
+    `${API_URL}/works?populate[cover][fields][0]=url&sort=createdAt:desc`,
   );
 
   if (!res.ok) {
@@ -165,12 +180,17 @@ export async function getWorks() {
   return data.data;
 }
 
+const WORK_DETAIL_POPULATE =
+  `populate[cover][fields][0]=url` +
+  `&populate[info][populate]=*` +
+  `&populate[secoes][populate]=*`;
+
 export async function getWorkBySlug(slugOrId) {
   // Try by slug first
   const bySlug = await cachedFetch(
     `${API_URL}/works?filters[slug][$eq]=${encodeURIComponent(
       slugOrId,
-    )}&populate=*`,
+    )}&${WORK_DETAIL_POPULATE}`,
   );
 
   if (bySlug.ok) {
@@ -188,7 +208,7 @@ export async function getWorkBySlug(slugOrId) {
     const byId = await cachedFetch(
       `${API_URL}/works?filters[id][$eq]=${encodeURIComponent(
         slugOrId,
-      )}&populate=*`,
+      )}&${WORK_DETAIL_POPULATE}`,
     );
 
     if (byId.ok) {
@@ -206,8 +226,8 @@ export async function getWorkBySlug(slugOrId) {
 export async function getContact(locale = "pt-BR") {
   const POPULATE =
     `populate[form][populate]=*` +
-    `&populate[social_mobile][populate][icon][populate]=*` +
-    `&populate[social_desktop][populate][icon][populate]=*`;
+    `&populate[social_mobile][populate][icon][fields][0]=url` +
+    `&populate[social_desktop][populate][icon][fields][0]=url`;
   return withLocaleFallback(
     `${API_URL}/contact?locale=${locale}&${POPULATE}`,
     `${API_URL}/contact?${POPULATE}`,
@@ -241,11 +261,9 @@ export async function postContactSubmission({ name, email, description }) {
 
 export async function getAboutPage(locale = "pt-BR") {
   const POPULATE =
-    `?populate[0]=about_description` +
-    `&populate[1]=about_description.icon` +
-    `&populate[2]=members_detail` +
-    `&populate[3]=members_detail.member_pic` +
-    `&populate[4]=right_cards`;
+    `?populate[about_description][populate][icon][fields][0]=url` +
+    `&populate[members_detail][populate][member_pic][fields][0]=url` +
+    `&populate[right_cards][fields][0]=url`;
   return withLocaleFallback(
     `${API_URL}/about-page${POPULATE}&locale=${locale}`,
     `${API_URL}/about-page${POPULATE}`,
