@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getFooter } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import './Footer.css';
@@ -62,8 +62,9 @@ export default function Footer() {
   const [members, setMembers] = useState([]);
   const { reportError, clearError } = useLoadError();
   const clock = useClock();
+  const loadRef = useRef(() => {});
 
-  function load() {
+  const load = useCallback(() => {
     getFooter(locale)
       .then(data => {
         setFooter(data);
@@ -72,11 +73,14 @@ export default function Footer() {
       })
       .catch((err) => {
         console.error('[Footer] erro ao carregar:', err);
-        reportError('footer', load);
+        reportError('footer', () => loadRef.current());
       });
-  }
+  }, [locale, reportError, clearError]);
 
-  useEffect(load, [locale]);
+  useEffect(() => {
+    loadRef.current = load;
+    load();
+  }, [load]);
 
   const bgDesktop = resolveMedia(footer?.background);
   const bgMobile = resolveMedia(footer?.backmobile);
@@ -130,7 +134,7 @@ export default function Footer() {
                   })}
                 </div>
               )}
-              <p className="footer__title">Let's collaborate</p>
+              <p className="footer__title">Let&apos;s collaborate</p>
             </div>
 
             {footer?.email && (

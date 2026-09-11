@@ -97,7 +97,7 @@ export default function AboutPage() {
       }
     }
     load();
-  }, [locale]);
+  }, [locale, reportError, clearError]);
 
   if (loading) return <div className={styles.loading}>{t(lang, "common.loading")}</div>;
 

@@ -103,7 +103,7 @@ export default function PortfolioPage() {
       }
     }
     load();
-  }, [slug]);
+  }, [slug, reportError, clearError]);
 
   if (loading) return <div className={styles.loading}>{t(lang, "common.loading")}</div>;
   if (!work)

@@ -87,7 +87,7 @@ export default function WorkPage() {
       }
     }
     load();
-  }, [locale]);
+  }, [locale, reportError, clearError]);
 
   return (
     <div className={styles.page}>

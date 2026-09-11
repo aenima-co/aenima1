@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getHome } from "../../api";
 import { useLang } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
@@ -30,8 +30,9 @@ export default function Hero() {
   const { locale } = useLang();
   const [hero, setHero] = useState(null);
   const { reportError, clearError } = useLoadError();
+  const loadRef = useRef(() => {});
 
-  function load() {
+  const load = useCallback(() => {
     getHome(locale)
       .then((data) => {
         data && setHero(data.hero);
@@ -39,11 +40,14 @@ export default function Hero() {
       })
       .catch((err) => {
         console.error("[Hero] erro ao carregar:", err);
-        reportError("hero", load);
+        reportError("hero", () => loadRef.current());
       });
-  }
+  }, [locale, reportError, clearError]);
 
-  useEffect(load, [locale]);
+  useEffect(() => {
+    loadRef.current = load;
+    load();
+  }, [load]);
 
   if (!hero) return null;
 

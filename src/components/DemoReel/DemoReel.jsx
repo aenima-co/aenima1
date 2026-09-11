@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getDemoReel } from '../../api';
 import { useLang } from '../../contexts/LanguageContext';
 import './DemoReel.css';
@@ -49,8 +49,9 @@ export default function DemoReel() {
   const [embedFailed, setEmbedFailed] = useState(false);
   const { reportError, clearError } = useLoadError();
   const iframeRef = useRef(null);
+  const loadRef = useRef(() => {});
 
-  function load() {
+  const load = useCallback(() => {
     getDemoReel(locale)
       .then((data) => {
         setData(data);
@@ -58,20 +59,25 @@ export default function DemoReel() {
       })
       .catch((err) => {
         console.error('[DemoReel] erro ao carregar:', err);
-        reportError('demoReel', load);
+        reportError('demoReel', () => loadRef.current());
       });
-  }
-
-  useEffect(load, [locale]);
+  }, [locale, reportError, clearError]);
 
   useEffect(() => {
-    setEmbedFailed(false);
+    loadRef.current = load;
+    load();
+  }, [load]);
+
+  useEffect(() => {
     let ready = false;
 
     function onReadyCheck(e) {
       try {
         const msg = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-        if (msg.event === 'ready') ready = true;
+        if (msg.event === 'ready') {
+          ready = true;
+          setEmbedFailed(false);
+        }
       } catch (_) {}
     }
 

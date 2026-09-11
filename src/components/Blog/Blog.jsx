@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getPosts } from '../../api';
 import './Blog.css';
 import { resolveMediaUrl } from '../../config';
@@ -7,8 +7,9 @@ import { useLoadError } from '../../contexts/LoadErrorContext';
 export default function Blog() {
   const [posts, setPosts] = useState([]);
   const { reportError, clearError } = useLoadError();
+  const loadRef = useRef(() => {});
 
-  function load() {
+  const load = useCallback(() => {
     getPosts(true)
       .then((data) => {
         setPosts(data);
@@ -16,11 +17,14 @@ export default function Blog() {
       })
       .catch((err) => {
         console.error('[Blog] erro ao carregar:', err);
-        reportError('blog', load);
+        reportError('blog', () => loadRef.current());
       });
-  }
+  }, [reportError, clearError]);
 
-  useEffect(load, []);
+  useEffect(() => {
+    loadRef.current = load;
+    load();
+  }, [load]);
 
   if (!posts.length) return null;
 
