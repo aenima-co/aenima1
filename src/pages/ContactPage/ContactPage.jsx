@@ -57,14 +57,23 @@ const DISMISS_THRESHOLD_RATIO = 0.3;
 
 function DismissibleBanner({ variant, icon, message, onDismiss }) {
   const [dragX, setDragX] = useState(0);
+  // Espelham draggingRef/widthRef só pra leitura durante a renderização
+  // (opacity/transition abaixo). A lógica do gesto em si continua nos refs,
+  // atualizados na hora — atualização de estado do React não é síncrona,
+  // e um arrasto precisa responder ao primeiro pointermove sem esperar
+  // um novo render.
+  const [isDraggingStyle, setIsDraggingStyle] = useState(false);
+  const [widthStyle, setWidthStyle] = useState(1);
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
   const widthRef = useRef(1);
 
   const handlePointerDown = (e) => {
     draggingRef.current = true;
+    setIsDraggingStyle(true);
     startXRef.current = e.clientX;
     widthRef.current = e.currentTarget.offsetWidth || 1;
+    setWidthStyle(widthRef.current);
     e.currentTarget.setPointerCapture(e.pointerId);
   };
 
@@ -76,6 +85,7 @@ function DismissibleBanner({ variant, icon, message, onDismiss }) {
   const endDrag = () => {
     if (!draggingRef.current) return;
     draggingRef.current = false;
+    setIsDraggingStyle(false);
     if (Math.abs(dragX) > widthRef.current * DISMISS_THRESHOLD_RATIO) {
       onDismiss();
     } else {
@@ -83,7 +93,7 @@ function DismissibleBanner({ variant, icon, message, onDismiss }) {
     }
   };
 
-  const opacity = Math.max(1 - Math.abs(dragX) / widthRef.current, 0);
+  const opacity = Math.max(1 - Math.abs(dragX) / widthStyle, 0);
 
   return (
     <div
@@ -92,7 +102,7 @@ function DismissibleBanner({ variant, icon, message, onDismiss }) {
       style={{
         transform: `translateX(${dragX}px)`,
         opacity,
-        transition: draggingRef.current ? "none" : "transform 0.2s ease, opacity 0.2s ease",
+        transition: isDraggingStyle ? "none" : "transform 0.2s ease, opacity 0.2s ease",
         touchAction: "pan-y",
         cursor: "grab",
       }}
