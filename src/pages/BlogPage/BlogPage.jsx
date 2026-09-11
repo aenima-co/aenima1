@@ -5,6 +5,7 @@ import { resolveMediaUrl } from "../../config";
 import { useLang } from "../../contexts/LanguageContext";
 import { usePageTitle } from "../../hooks/usePageTitle";
 import { useLoadError } from "../../contexts/LoadErrorContext";
+import { Sentry } from "../../sentry";
 
 export default function BlogPage() {
   const { lang } = useLang();
@@ -21,6 +22,7 @@ export default function BlogPage() {
       })
       .catch((err) => {
         console.error("[BlogPage] erro ao carregar:", err);
+        Sentry.captureException(err);
         reportError("blogPage", () => loadRef.current());
       });
   }, [reportError, clearError]);

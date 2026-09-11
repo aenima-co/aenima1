@@ -4,6 +4,7 @@ import { getHome, getEspecialidades } from '../../api';
 import './SecaoAbout.css';
 import { resolveMediaUrl } from '../../config';
 import { useLoadError } from '../../contexts/LoadErrorContext';
+import { Sentry } from '../../sentry';
 
 export default function SecaoAbout() {
   const [about, setAbout] = useState(null);
@@ -19,6 +20,7 @@ export default function SecaoAbout() {
       })
       .catch((err) => {
         console.error('[SecaoAbout] erro ao carregar:', err);
+        Sentry.captureException(err);
         reportError('secaoAbout', () => loadRef.current());
       });
     getEspecialidades().then(setEspecialidades).catch(() => {});

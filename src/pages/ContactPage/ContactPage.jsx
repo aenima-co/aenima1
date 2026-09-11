@@ -6,6 +6,7 @@ import { resolveMediaUrl } from "../../config";
 import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
 import { useLoadError } from "../../contexts/LoadErrorContext";
+import { Sentry } from "../../sentry";
 
 const ArrowIcon = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -168,6 +169,7 @@ export default function ContactPage() {
         })
         .catch((err) => {
           console.error("[ContactPage] erro ao carregar:", err);
+          Sentry.captureException(err);
           reportError("contactPage", load);
         });
     }
@@ -208,6 +210,13 @@ export default function ContactPage() {
       setFormState({ name: "", email: "", description: "" });
     } catch (err) {
       console.error("[ContactPage] erro ao enviar formulário:", err);
+      // Rate limit (429) e erro de validação (4xx) são comportamento
+      // esperado, já tratado visualmente pro usuário — só reporta pro
+      // Sentry falha de rede de verdade ou erro do servidor (5xx), que são
+      // os casos que exigem atenção de alguém do time.
+      if (!err.status || err.status >= 500) {
+        Sentry.captureException(err);
+      }
       setStatus("error");
       setBannerMessage(getBannerMessage(err, lang));
       const serverErrors = {};

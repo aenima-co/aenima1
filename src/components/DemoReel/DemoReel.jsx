@@ -5,6 +5,7 @@ import './DemoReel.css';
 import { resolveMediaUrl } from '../../config';
 import { t } from '../../i18n/messages';
 import { useLoadError } from '../../contexts/LoadErrorContext';
+import { Sentry } from '../../sentry';
 
 function PlayIcon() {
   return (
@@ -59,6 +60,7 @@ export default function DemoReel() {
       })
       .catch((err) => {
         console.error('[DemoReel] erro ao carregar:', err);
+        Sentry.captureException(err);
         reportError('demoReel', () => loadRef.current());
       });
   }, [locale, reportError, clearError]);
