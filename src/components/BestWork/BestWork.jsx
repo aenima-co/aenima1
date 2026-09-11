@@ -7,6 +7,7 @@ import './BestWork.css';
 import { resolveMediaUrl } from '../../config';
 import { useLoadError } from '../../contexts/LoadErrorContext';
 import { Sentry } from '../../sentry';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 export default function BestWork() {
   const { locale } = useLang();
@@ -34,7 +35,7 @@ export default function BestWork() {
     load();
   }, [load]);
 
-  if (!works.length) return null;
+  if (!works.length) return <LoadingSpinner />;
 
   const [principal, ...secundarios] = works;
 

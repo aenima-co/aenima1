@@ -6,6 +6,7 @@ import { useLang } from "../../contexts/LanguageContext";
 import { usePageTitle } from "../../hooks/usePageTitle";
 import { useLoadError } from "../../contexts/LoadErrorContext";
 import { Sentry } from "../../sentry";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 export default function BlogPage() {
   const { lang } = useLang();
@@ -32,7 +33,7 @@ export default function BlogPage() {
     load();
   }, [load]);
 
-  if (!page) return null;
+  if (!page) return <LoadingSpinner />;
 
   const icons = page.botton_icon ?? [];
   const loadingBar = page.loading_bar;

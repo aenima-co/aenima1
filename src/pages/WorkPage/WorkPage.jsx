@@ -9,6 +9,7 @@ import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
 import { useLoadError } from "../../contexts/LoadErrorContext";
 import { Sentry } from "../../sentry";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 // ─── Card individual ──────────────────────────────────────────────────────────
 function WorkCard({ work, index }) {
@@ -110,7 +111,7 @@ export default function WorkPage() {
 
       {/* Grid */}
       {loading ? (
-        <div className={styles.loading}>{t(lang, "common.loading")}</div>
+        <LoadingSpinner />
       ) : (
         <section className={styles.grid}>
           {works.length === 0 ? (

@@ -5,6 +5,7 @@ import './SecaoAbout.css';
 import { resolveMediaUrl } from '../../config';
 import { useLoadError } from '../../contexts/LoadErrorContext';
 import { Sentry } from '../../sentry';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 export default function SecaoAbout() {
   const [about, setAbout] = useState(null);
@@ -31,7 +32,7 @@ export default function SecaoAbout() {
     load();
   }, [load]);
 
-  if (!about) return null;
+  if (!about) return <LoadingSpinner />;
 
   return (
     <section className="secao-about">

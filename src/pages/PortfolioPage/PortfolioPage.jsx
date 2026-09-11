@@ -8,6 +8,7 @@ import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
 import { useLoadError } from "../../contexts/LoadErrorContext";
 import { Sentry } from "../../sentry";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 function getCoverUrl(item) {
   if (!item) return null;
@@ -107,7 +108,7 @@ export default function PortfolioPage() {
     load();
   }, [slug, reportError, clearError]);
 
-  if (loading) return <div className={styles.loading}>{t(lang, "common.loading")}</div>;
+  if (loading) return <LoadingSpinner />;
   if (!work)
     return error ? null : <div className={styles.notFound}>{t(lang, "portfolioPage.notFound")}</div>;
 

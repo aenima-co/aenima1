@@ -6,6 +6,7 @@ import { resolveMediaUrl } from '../../config';
 import { t } from '../../i18n/messages';
 import { useLoadError } from '../../contexts/LoadErrorContext';
 import { Sentry } from '../../sentry';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 function PlayIcon() {
   return (
@@ -117,7 +118,7 @@ export default function DemoReel() {
     return () => window.removeEventListener('message', onMessage);
   }, [playing]);
 
-  if (!data) return null;
+  if (!data) return <LoadingSpinner />;
 
   const { demo_titulo, video_link, stickers } = data;
   const baseSrc = parseSrc(video_link);

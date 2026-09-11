@@ -4,10 +4,10 @@ import { useLang } from "../../contexts/LanguageContext";
 import styles from "./AboutPage.module.css";
 import Button from "../../components/Button/Button";
 import { resolveMediaUrl } from "../../config";
-import { t } from "../../i18n/messages";
 import { usePageTitle } from "../../hooks/usePageTitle";
 import { useLoadError } from "../../contexts/LoadErrorContext";
 import { Sentry } from "../../sentry";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import cardPixel from "../../assets/img/about-card-pixel.png";
 import cardOrange from "../../assets/img/about-card-orange.png";
 
@@ -101,7 +101,7 @@ export default function AboutPage() {
     load();
   }, [locale, reportError, clearError]);
 
-  if (loading) return <div className={styles.loading}>{t(lang, "common.loading")}</div>;
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className={styles.page}>
