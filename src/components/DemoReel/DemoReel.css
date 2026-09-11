@@ -47,9 +47,12 @@
 
 .demo-reel__wrapper {
   position: relative;
-  width: 100%;
-  max-width: 1184px;
+  width: auto;
   height: 666px;
+  /* Vídeo atual (Vimeo) é retrato, 240×322 — largura calculada a partir
+     dessa proporção em vez de fixa, pra não esticar/cortar o vídeo. Se
+     o vídeo trocar de novo por um de outra proporção, atualize aqui. */
+  aspect-ratio: 240 / 322;
   border-radius: 36.24px;
   overflow: visible;
 }
@@ -178,8 +181,9 @@
   }
 
   .demo-reel__wrapper {
+    width: 100%;
     height: auto;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 240 / 322;
     border-radius: 16px;
   }
 
